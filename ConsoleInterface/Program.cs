@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Renamer;
 
 namespace ConsoleInterface
 {
@@ -6,7 +6,14 @@ namespace ConsoleInterface
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ConsoleTexts console = new ConsoleTexts();
+
+            (int mode, string path) dto = console.Execute();
+
+            BatchRenamer renamer = new BatchRenamer();
+            renamer.Execute(dto.mode, dto.path);
+
+            ConsoleTexts.Finished();
         }
     }
 }

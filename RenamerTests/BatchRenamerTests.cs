@@ -3,7 +3,7 @@ using Xunit;
 
 namespace RenamerTests
 {
-    public class UnitTest1
+    public class BatchRenamertests
     {
         [Fact]
         public void Test1()

@@ -8,6 +8,17 @@ namespace RenamerTests
     {
 		public PathRewriter subject = new PathRewriter();
 
+		[Fact]
+		public void WhenInputFileDoesNotHaveAnExtension_ItReturnsNull()
+		{
+			string inputPath = "/Users/Me";
+			DateTime creationDate = new DateTime(2000, 12, 31);
+
+			string result = subject.Execute(inputPath, creationDate);
+
+			Assert.Null(result);
+		}
+
         [Fact]
         public void WhenRenamingToDate_ItShouldFormatToCreationDate()
         {

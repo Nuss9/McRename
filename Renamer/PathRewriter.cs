@@ -13,6 +13,8 @@ namespace Renamer
 			string directoryPath = Path.GetDirectoryName(path);
 			string extension = Path.GetExtension(path);
 
+			if(extension == "") { return null; }
+
 			string result = directoryPath + "/" + creationDate + extension;
 
 			return result.Replace("\\", "/");

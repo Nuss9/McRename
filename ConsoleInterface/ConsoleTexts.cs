@@ -23,7 +23,8 @@ namespace ConsoleInterface
         {
             Console.WriteLine("----------------------------");
             Console.WriteLine("      Finished.");
-            Thread.Sleep(1000);
+			Console.WriteLine("");
+            SimulateWaitingWithMessage("Closing application");
             Environment.Exit(0);
         }
         private static string RequestDirectory()
@@ -36,21 +37,27 @@ namespace ConsoleInterface
                     return fullPath;
                 }
                 else {
-                    Thread.Sleep(500);
-                    Console.Write("Input directory not found. Try again");
-                    Thread.Sleep(500);
-                    Console.Write(".");
-                    Thread.Sleep(500);
-                    Console.Write(".");
-                    Thread.Sleep(500);
-                    Console.Write(".");
-                    Thread.Sleep(2000);
-                    Console.Clear();
+					SimulateWaitingWithMessage("Input directory not found. Try again");
+                    Console.WriteLine("");
                 }
             }
 		}
 
-        private int RequestMode()
+		private static void SimulateWaitingWithMessage(string message)
+		{
+					Thread.Sleep(500);
+                    Console.Write($"{message}");
+                    Thread.Sleep(500);
+                    Console.Write(".");
+                    Thread.Sleep(500);
+                    Console.Write(".");
+                    Thread.Sleep(500);
+                    Console.Write(".");
+					Console.WriteLine("");
+                    Thread.Sleep(2000);
+		}
+
+		private int RequestMode()
         {
             Console.WriteLine("Specify the format of the new filenames:");
             Console.WriteLine("1) YYYYMMDD_HHMMSS");

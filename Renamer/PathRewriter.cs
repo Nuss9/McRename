@@ -18,7 +18,7 @@ namespace Renamer
 			return result.Replace("\\", "/");
 		}
 
-		private bool IsDirectory(string path)
+		private static bool IsDirectory(string path)
 		{
 			return !Path.HasExtension(path);
 		}

@@ -49,14 +49,15 @@ namespace ConsoleInterface
                     Thread.Sleep(2000);
                     Console.Clear();
                 }
-            }        }
+            }
+		}
 
         private int RequestMode()
         {
             Console.WriteLine("Specify the format of the new filenames:");
             Console.WriteLine("1) YYYYMMDD_HHMMSS");
             Console.WriteLine("2) YYYMMDD");
-            
+
             string mode = Console.ReadLine();
 
             return int.Parse(mode);

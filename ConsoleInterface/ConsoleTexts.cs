@@ -57,8 +57,12 @@ namespace ConsoleInterface
             Console.WriteLine("Specify the format of the new filenames:");
             Console.WriteLine("1) YYYYMMDD_HHMMSS");
             Console.WriteLine("2) YYYMMDD");
+			Console.WriteLine("------------");
+			Console.Write("  Mode: ");
 
             string mode = Console.ReadLine();
+
+			Console.WriteLine("");
 
             return int.Parse(mode);
         }

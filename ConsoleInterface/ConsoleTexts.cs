@@ -4,9 +4,9 @@ using System.Threading;
 
 namespace ConsoleInterface
 {
-    internal class ConsoleTexts
+    internal static class ConsoleTexts
     {
-        public (int, string) Execute()
+        public static (int, string) Execute()
         {
             Console.Clear();
             Console.Title = "- - - Batch renamer - - -";
@@ -57,7 +57,7 @@ namespace ConsoleInterface
                     Thread.Sleep(2000);
 		}
 
-		private int RequestMode()
+		private static int RequestMode()
         {
             Console.WriteLine("Specify the format of the new filenames:");
             Console.WriteLine("1) YYYYMMDD_HHMMSS");

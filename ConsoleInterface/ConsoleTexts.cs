@@ -28,8 +28,6 @@ namespace ConsoleInterface
         }
         private static string RequestDirectory()
         {
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
             while(true) {
                 Console.Write("Please provide the desktop folder to rename its content: ");
                 string inputDirectory = Console.ReadLine();

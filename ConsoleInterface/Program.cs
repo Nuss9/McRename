@@ -8,7 +8,7 @@ namespace ConsoleInterface
         private static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-                .AddSingleton<IRename, BatchRenamer>()
+                .AddSingleton<IRename, FileRenamer>()
                 .BuildServiceProvider();
 
             (int mode, string path) dto = ConsoleTexts.Execute();

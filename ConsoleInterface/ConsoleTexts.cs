@@ -31,7 +31,7 @@ namespace ConsoleInterface
         {
             while(true) {
                 Console.Write("Please provide the desktop folder to rename its content: ");
-                string inputDirectory = Console.ReadLine();
+                string inputDirectory = Console.ReadLine().Replace(" ", "\u0020");
                 string fullPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + inputDirectory;
                 if(Directory.Exists(fullPath)) {
                     return fullPath;

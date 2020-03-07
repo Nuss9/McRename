@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Renamer
 {
-    public class BatchRenamer
+    public class BatchRenamer : IRename
     {
         public void Execute(int mode, string path)
         {

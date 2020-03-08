@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Renamer
 {
-    public class PathRewriter
+    public class FileRenamer2
     {
 
 	}

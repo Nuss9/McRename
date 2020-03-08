@@ -4,9 +4,9 @@ using Xunit;
 
 namespace RenamerTests
 {
-    public class PathRewriterTests
+    public class FileRenamer2Tests
     {
-		public PathRewriter subject = new PathRewriter();
+		public FileRenamer2 subject = new FileRenamer2();
 
 		[Fact]
 		public void When_ItShould()

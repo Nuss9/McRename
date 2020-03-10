@@ -43,7 +43,7 @@ namespace ConsoleInterface
             }
 		}
 
-		private static void SimulateWaitingWithMessage(string message)
+		public static void SimulateWaitingWithMessage(string message)
 		{
 					Thread.Sleep(500);
                     Console.Write($"{message}");

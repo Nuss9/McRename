@@ -1,4 +1,3 @@
-using System;
 using Renamer;
 using Xunit;
 
@@ -8,10 +7,10 @@ namespace RenamerTests
     {
 		public FileRenamer2 subject = new FileRenamer2();
 
-		[Fact]
-		public void When_ItShould()
-		{
+        [Fact]
+        public void WhenTheresNoFileToRename_ItShouldReturnAnEmptyList()
+        {
 
-		}
+        }
     }
 }

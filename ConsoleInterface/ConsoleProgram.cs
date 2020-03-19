@@ -13,12 +13,12 @@ namespace ConsoleInterface
             string[] fileEntries = Directory.GetFiles(targetDirectory);
 
             var filesInformation = new List<FileInfoDto>();
-            
+
             foreach(string file in fileEntries) {
                 filesInformation.Add(
                     new FileInfoDto(
                         file,
-                        Path.GetExtension(file), 
+                        Path.GetExtension(file),
                         File.GetCreationTime(file)
                     )
                 );
@@ -35,7 +35,7 @@ namespace ConsoleInterface
                 Console.Write("Please provide the desktop folder to rename its content: ");
                 string inputDirectory = Console.ReadLine().Replace(" ", "\u0020");
                 string fullPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + inputDirectory;
-                
+
                 if(Directory.Exists(fullPath)) {
                     return fullPath;
                 }

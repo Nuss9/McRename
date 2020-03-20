@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace Renamer
 {
     public interface IRename
     {
-        void Execute(RenameInstructions instructions);
+	    Dictionary<string, string> Execute(RenameInstructions instructions);
     }
 }

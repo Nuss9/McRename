@@ -14,10 +14,10 @@ namespace RenamerTests
         public void WhenRenameModeIsUnknown_ItShouldReturnAnEmptyDictionary()
         {
 	        var instructions = new RenameInstructions(RenameMode.Unknown, new List<FileInformation>());
-			
+
             var result = subject.Execute(instructions);
             var expected = new Dictionary<string, string >();
-            
+
             Assert.Equal(expected, result);
         }
 
@@ -36,8 +36,8 @@ namespace RenamerTests
 	        {
 		        { $"{s}Users{s}nuss{s}Desktop{s}fileA.txt", $"{s}Users{s}nuss{s}Desktop{s}1.txt"}
 	        };
-            
+
             Assert.Equal(expected, result);
         }
     }
-}   
+}  

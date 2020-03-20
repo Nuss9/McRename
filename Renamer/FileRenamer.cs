@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Renamer
 {
@@ -23,7 +22,7 @@ namespace Renamer
 			string newPath = $"{pathToDirectory}{s}1{extension}";
 
 			proposal.Add(path, newPath);
-			
+
 			return proposal;
 		}
 	}

@@ -15,13 +15,17 @@ namespace Renamer
 				return proposal;
 			}
 
-			string path = instructions.Files.FirstOrDefault().Path;
-			char s = Path.DirectorySeparatorChar;
-			string pathToDirectory = Path.GetDirectoryName(path);
-			string extension = Path.GetExtension(path);
-			string newPath = $"{pathToDirectory}{s}1{extension}";
+			char separator = Path.DirectorySeparatorChar;
 
-			proposal.Add(path, newPath);
+			for (int i = 0; i < instructions.Files.Count; i++)
+			{
+				var path = instructions.Files[i].Path;
+				var directory = Path.GetDirectoryName(path);
+				var extension = Path.GetExtension(path);
+				var newPath = $"{directory}{separator}{i+1}{extension}";
+
+				proposal.Add(path, newPath);
+			}
 
 			return proposal;
 		}

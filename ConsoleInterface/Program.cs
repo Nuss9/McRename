@@ -11,15 +11,12 @@ namespace ConsoleInterface
                 .AddSingleton<IRename, FileRenamer>()
                 .BuildServiceProvider();
 
-            //(int mode, string path) dto = ConsoleTexts.Execute();
-            //RenameInstructionsDto dto = ConsoleProgram.GetInstructions();
-            var result = ConsoleProgram.GetInstructions();
+            var instructions = ConsoleProgram.GetInstructions();
 
             var renamer = serviceProvider.GetService<IRename>();
+			renamer.Execute(instructions);
 
-            //renamer.Execute(dto.mode, dto.path);
-
-            ConsoleTexts.Finished();
+            ConsoleProgram.Finished();
         }
     }
 }

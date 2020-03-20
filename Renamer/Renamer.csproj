@@ -6,6 +6,5 @@
 
   <ItemGroup>
     <Compile Remove="DirectoryDto.cs" />
-    <Compile Remove="FileInformation.cs" />
   </ItemGroup>
 </Project>

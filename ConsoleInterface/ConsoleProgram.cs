@@ -1,22 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Renamer;
 
 namespace ConsoleInterface
 {
     public static class ConsoleProgram
     {
-        public static RenameInstructionsDto GetInstructions()
+        public static RenameInstructions GetInstructions()
         {
             string targetDirectory = RequestDirectory();
             string[] fileEntries = Directory.GetFiles(targetDirectory);
 
-            var filesInformation = new List<FileInfoDto>();
+            var filesInformation = new List<FileInformation>();
 
             foreach(string file in fileEntries) {
                 filesInformation.Add(
-                    new FileInfoDto(
+                    new FileInformation(
                         file,
                         Path.GetExtension(file),
                         File.GetCreationTime(file)
@@ -24,9 +25,13 @@ namespace ConsoleInterface
                 );
             };
 
-            int mode = RequestMode();
+			RenameMode mode = RenameMode.Unknown;
 
-            return new RenameInstructionsDto(mode, filesInformation);
+			while(mode == RenameMode.Unknown) {
+				mode = RequestMode();
+			}
+
+            return new RenameInstructions(mode, filesInformation);
         }
 
         private static string RequestDirectory()
@@ -40,15 +45,16 @@ namespace ConsoleInterface
                     return fullPath;
                 }
                 else {
-					ConsoleTexts.SimulateWaitingWithMessage("Input directory not found. Try again");
+					SimulateWaitingWithMessage("Input directory not found. Try again");
                     Console.WriteLine("");
                 }
             }
 		}
 
-		private static int RequestMode()
+		private static RenameMode RequestMode()
         {
             Console.WriteLine("Specify the format of the new filenames:");
+            Console.WriteLine("1) Increasing numbers");
             Console.WriteLine("1) YYYYMMDD_HHMMSS");
             Console.WriteLine("2) YYYMMDD");
             Console.WriteLine("------------");
@@ -58,7 +64,33 @@ namespace ConsoleInterface
 
             Console.WriteLine("");
 
-            return int.Parse(mode);
-        }
+			return (int.Parse(mode)) switch
+			{
+				_ => RenameMode.Unknown,
+			};
+		}
+
+		private static void SimulateWaitingWithMessage(string message)
+		{
+			Thread.Sleep(500);
+			Console.Write($"{message}");
+			Thread.Sleep(500);
+			Console.Write(".");
+			Thread.Sleep(500);
+			Console.Write(".");
+			Thread.Sleep(500);
+			Console.Write(".");
+			Console.WriteLine("");
+			Thread.Sleep(2000);
+		}
+
+		internal static void Finished()
+		{
+			Console.WriteLine("----------------------------");
+			Console.WriteLine("      Finished.");
+			Console.WriteLine("");
+			SimulateWaitingWithMessage("Closing application");
+			Environment.Exit(0);
+		}
     }
 }

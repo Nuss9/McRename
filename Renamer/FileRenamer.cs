@@ -12,7 +12,7 @@ namespace Renamer
 		{
 			var proposal = new Dictionary<string, string>();
 
-			if (instructions.Files.Count == 0)
+			if (instructions.Mode == RenameMode.Unknown || instructions.Files.Count == 0)
 			{
 				return proposal;
 			}

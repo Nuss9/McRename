@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Renamer
 {
@@ -14,6 +16,8 @@ namespace Renamer
 			{
 				return proposal;
 			}
+
+			instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
 			char separator = Path.DirectorySeparatorChar;
 

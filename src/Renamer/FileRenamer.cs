@@ -24,7 +24,16 @@ namespace Renamer
 				var path = instructions.Files[i].Path;
 				var directory = Path.GetDirectoryName(path);
 				var extension = Path.GetExtension(path);
-				var newPath = $"{directory}{separator}{i+1}{extension}";
+
+				string newPath;
+				if(instructions.Mode == RenameMode.Numerical) {
+					newPath = $"{directory}{separator}{i+1}{extension}";
+				}
+				else {
+					string dateFormat = "yyyyMMdd";
+					var creationDate = instructions.Files[i].CreationDateTime.ToString(dateFormat);
+					newPath = $"{directory}{separator}{creationDate}{extension}";
+				}
 
 				proposal.Add(path, newPath);
 			}

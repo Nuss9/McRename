@@ -3,6 +3,7 @@ namespace Renamer
 	public enum RenameMode
 	{
 		Unknown,
-		Numerical
-	}
+		Numerical,
+        Date
+    }
 }

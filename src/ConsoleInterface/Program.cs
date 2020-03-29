@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ConsoleInterface.Texts;
+using Microsoft.Extensions.DependencyInjection;
 using Renamer;
 
 namespace ConsoleInterface
@@ -11,14 +12,14 @@ namespace ConsoleInterface
                 .AddSingleton<IRename, FileRenamer>()
                 .BuildServiceProvider();
 
-            var instructions = ConsoleProgram.GetInstructions();
+            var instructions = PathRewriter.GetInstructions();
 
             var renamer = serviceProvider.GetService<IRename>();
 			var proposal = renamer.Rename(instructions);
 
             PathRewriter.Rewrite(proposal);
 
-            ConsoleProgram.Finished();
+            StandardTexts.Finished();
         }
     }
 }

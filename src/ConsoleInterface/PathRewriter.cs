@@ -2,28 +2,43 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using ConsoleInterface.Texts;
+using Renamer;
 
 namespace ConsoleInterface
 {
     public static class PathRewriter
     {
+        public static RenameInstructions GetInstructions()
+        {
+            string targetDirectory = QuestionTexts.RequestDirectory();
+            string[] fileEntries = Directory.GetFiles(targetDirectory);
+
+            var filesInformation = new List<FileInformation>();
+
+            foreach(string file in fileEntries) {
+                filesInformation.Add(
+                    new FileInformation(
+                        file,
+                        Path.GetExtension(file),
+                        File.GetCreationTime(file)
+                    )
+                );
+            };
+
+			RenameMode mode = RenameMode.Unknown;
+
+			while(mode == RenameMode.Unknown) {
+				mode = QuestionTexts.RequestMode();
+			}
+
+            return new RenameInstructions(mode, filesInformation);
+        }
         public static void Rewrite(Dictionary<string, string> proposal) {
             
-            Console.WriteLine("Proposing the following name changes:");
-            Console.WriteLine("-------------------------------------");
-            Console.WriteLine("");
+            StandardTexts.ProposeFilenameChanges(proposal);
 
-            foreach(KeyValuePair<string, string> pair in proposal) {
-                string original = Path.GetFileName(pair.Key);
-                string proposed = Path.GetFileName(pair.Value);
-                
-                Console.WriteLine($"{original} > {proposed}");
-            }
-
-            Console.WriteLine("");
-            Console.WriteLine("-------------------------------------");
-
-            var execute = AskPermission();
+            var execute = QuestionTexts.AskPermission();
 
             if(execute) {
                 RewriteFilePaths(proposal);
@@ -40,24 +55,6 @@ namespace ConsoleInterface
         {
             foreach(KeyValuePair<string, string> pair in proposal) {
                 File.Move(pair.Key, pair.Value);
-            }
-        }
-
-        private static bool AskPermission()
-        {
-            while(true) {
-                Console.WriteLine("");
-                Console.Write("Accept the proposed name changes (Y/n)? ");
-                var answer = Console.ReadLine().ToLower();
-
-                if(answer == string.Empty || answer == "y") {
-                    return true;
-                }
-                else if(answer == "n") {
-                    return false;
-                }
-
-                Console.WriteLine("Error parsing input. Retry.");
             }
         }
     }

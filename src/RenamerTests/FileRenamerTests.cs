@@ -19,7 +19,7 @@ namespace RenamerTests
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow)
 	        });
 
-            var result = subject.Execute(instructions);
+            var result = subject.Rename(instructions);
             var expected = new Dictionary<string, string >();
 
             Assert.Equal(expected, result);
@@ -30,7 +30,7 @@ namespace RenamerTests
         {
 			var instructions = new RenameInstructions(RenameMode.Numerical, new List<FileInformation>());
 
-			var result = subject.Execute(instructions);
+			var result = subject.Rename(instructions);
 			var expected = new Dictionary<string, string>();
 
 			Assert.Equal(expected, result);
@@ -44,7 +44,7 @@ namespace RenamerTests
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow)
 	        });
 
-	        var result = subject.Execute(instructions);
+	        var result = subject.Rename(instructions);
 	        var expected = new Dictionary<string, string>
 	        {
 		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"}
@@ -62,7 +62,7 @@ namespace RenamerTests
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
 	        });
 
-	        var result = subject.Execute(instructions);
+	        var result = subject.Rename(instructions);
 	        var expected = new Dictionary<string, string>
 	        {
 		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"},
@@ -82,7 +82,7 @@ namespace RenamerTests
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
 			});
 
-			var result = subject.Execute(instructions);
+			var result = subject.Rename(instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}2.txt"},

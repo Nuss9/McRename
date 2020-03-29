@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Renamer
 {
 	public class FileRenamer : IRename
 	{
-		public Dictionary<string, string> Execute(RenameInstructions instructions)
+		public Dictionary<string, string> Rename(RenameInstructions instructions)
 		{
 			var proposal = new Dictionary<string, string>();
 

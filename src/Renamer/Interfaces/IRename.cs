@@ -4,6 +4,6 @@ namespace Renamer
 {
     public interface IRename
     {
-	    Dictionary<string, string> Execute(RenameInstructions instructions);
+	    Dictionary<string, string> Rename(RenameInstructions instructions);
     }
 }

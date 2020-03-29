@@ -54,9 +54,9 @@ namespace ConsoleInterface
 		private static RenameMode RequestMode()
         {
             Console.WriteLine("Specify the format of the new filenames:");
-            Console.WriteLine("1) Increasing numbers");
-            Console.WriteLine("1) YYYYMMDD_HHMMSS");
-            Console.WriteLine("2) YYYMMDD");
+            Console.WriteLine("1) Numerical");
+            Console.WriteLine("2) Date_Time: YYYYMMDD_HHMMSS");
+            Console.WriteLine("3) Date: YYYMMDD");
             Console.WriteLine("------------");
             Console.Write("  Mode: ");
 
@@ -66,6 +66,7 @@ namespace ConsoleInterface
 
 			return (int.Parse(mode)) switch
 			{
+                1 => RenameMode.Numerical,
 				_ => RenameMode.Unknown,
 			};
 		}

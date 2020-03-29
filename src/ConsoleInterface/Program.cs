@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Generic;
+using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 using Renamer;
 
 namespace ConsoleInterface
@@ -14,7 +16,9 @@ namespace ConsoleInterface
             var instructions = ConsoleProgram.GetInstructions();
 
             var renamer = serviceProvider.GetService<IRename>();
-			renamer.Execute(instructions);
+			var proposal = renamer.Rename(instructions);
+
+            PathRewriter.Rewrite(proposal);
 
             ConsoleProgram.Finished();
         }

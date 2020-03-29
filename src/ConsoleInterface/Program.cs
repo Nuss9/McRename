@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Renamer;
 
 namespace ConsoleInterface

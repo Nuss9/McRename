@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Renamer
 {
@@ -26,12 +27,33 @@ namespace Renamer
 				var extension = Path.GetExtension(path);
 
 				string newPath;
+
 				if(instructions.Mode == RenameMode.Numerical) {
 					newPath = $"{directory}{separator}{i+1}{extension}";
 				}
 				else {
 					string dateFormat = "yyyyMMdd";
 					var creationDate = instructions.Files[i].CreationDateTime.ToString(dateFormat);
+
+					int duplicateCounter = 1;
+
+					if(proposal.Any()) {
+						if(proposal.Values.Last().EndsWith($"{creationDate}{extension}")) {
+							string lastKey = proposal.Keys.Last();
+							proposal.Remove(lastKey);
+							proposal.Add(lastKey, $"{directory}{separator}{creationDate}_({duplicateCounter}){extension}");
+
+							duplicateCounter++;
+							creationDate += $"_({duplicateCounter})";
+							duplicateCounter++;
+						} else if(proposal.Values.Last().Contains(creationDate)) {
+							creationDate += $"_({duplicateCounter})";
+							duplicateCounter++;
+						} else {
+							duplicateCounter = 1;
+						}
+					}
+
 					newPath = $"{directory}{separator}{creationDate}{extension}";
 				}
 

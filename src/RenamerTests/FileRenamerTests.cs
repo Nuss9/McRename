@@ -109,5 +109,25 @@ namespace RenamerTests
 
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		public void WhenRenamingMultipleFilesToDateWithTheSameCreationDate_ItShouldAddNumbers()
+		{
+			var instructions = new RenameInstructions(RenameMode.Date, new List<FileInformation>
+			{
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01))
+			});
+
+			var result = subject.Rename(instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(1).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(2).txt"},
+
+			};
+
+			Assert.Equal(expected, result);
+		}
 	}
 }

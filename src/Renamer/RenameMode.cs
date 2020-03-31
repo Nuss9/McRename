@@ -4,6 +4,7 @@ namespace Renamer
 	{
 		Unknown,
 		Numerical,
-        Date
+        Date,
+        DateTime
     }
 }

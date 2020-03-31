@@ -32,7 +32,12 @@ namespace Renamer
 					newPath = $"{directory}{separator}{i+1}{extension}";
 				}
 				else {
-					string dateFormat = "yyyyMMdd";
+					string dateFormat;
+					if(instructions.Mode == RenameMode.Date) {
+						dateFormat = "yyyyMMdd";
+					} else {
+						dateFormat = "yyyyMMdd_HHmmss";
+					}
 					var creationDate = instructions.Files[i].CreationDateTime.ToString(dateFormat);
 
 					int duplicateCounter = 1;

@@ -19,6 +19,7 @@ namespace Renamer
 			instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
 			char separator = Path.DirectorySeparatorChar;
+			int duplicateCounter = 1;
 
 			for (int i = 0; i < instructions.Files.Count; i++)
 			{
@@ -39,8 +40,6 @@ namespace Renamer
 						dateFormat = "yyyyMMdd_HHmmss";
 					}
 					var creationDate = instructions.Files[i].CreationDateTime.ToString(dateFormat);
-
-					int duplicateCounter = 1;
 
 					if(proposal.Any()) {
 						if(proposal.Values.Last().EndsWith($"{creationDate}{extension}")) {

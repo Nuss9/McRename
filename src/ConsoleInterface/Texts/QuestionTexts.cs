@@ -27,8 +27,8 @@ namespace ConsoleInterface.Texts
         {
             Console.WriteLine("Specify the format of the new filenames:");
             Console.WriteLine("1) Numerical");
-            Console.WriteLine("2) Date_Time: YYYYMMDD_HHMMSS");
-            Console.WriteLine("3) Date: YYYMMDD");
+            Console.WriteLine("2) Date: YYYMMDD");
+            Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
             Console.WriteLine("------------");
             Console.Write("  Mode: ");
 
@@ -39,6 +39,8 @@ namespace ConsoleInterface.Texts
 			return (int.Parse(mode)) switch
 			{
                 1 => RenameMode.Numerical,
+                2 => RenameMode.Date,
+                3 => RenameMode.DateTime,
 				_ => RenameMode.Unknown,
 			};
 		}

@@ -115,16 +115,21 @@ namespace RenamerTests
 		{
 			var instructions = new RenameInstructions(RenameMode.Date, new List<FileInformation>
 			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01))
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 30, 12, 00, 00)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileC.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileD.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileE.txt",".txt", new DateTime(2021, 01, 01, 09, 00, 00))
 			});
 
 			var result = subject.Rename(instructions);
 			var expected = new Dictionary<string, string>
 			{
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(1).txt"},
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(2).txt"},
-
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201230.txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(1).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileC.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(2).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileD.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_(3).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileE.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20210101.txt"},
 			};
 
 			Assert.Equal(expected, result);

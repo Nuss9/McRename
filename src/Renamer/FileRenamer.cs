@@ -64,6 +64,11 @@ namespace Renamer
 				proposal.Add(path, newPath);
 			}
 
+			if(proposal.Values.Distinct().Count() != proposal.Values.Count()) {
+				proposal.Clear();
+				proposal.Add("Error message", "Aborted renaming due to duplicates in end result.");
+			}
+
 			return proposal;
 		}
 	}

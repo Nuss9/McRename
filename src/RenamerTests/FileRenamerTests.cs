@@ -151,5 +151,11 @@ namespace RenamerTests
 
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		public void BeforeReturningTheProposedNameChanges_ItShouldValidateAgainstDuplicates()
+		{
+			// How to test this?
+		}
 	}
 }

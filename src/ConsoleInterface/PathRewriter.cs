@@ -27,9 +27,9 @@ namespace ConsoleInterface
                 );
             };
 
-			RenameMode mode = RenameMode.Unknown;
+			ComposeMode mode = ComposeMode.Unknown;
 
-			while(mode == RenameMode.Unknown) {
+			while(mode == ComposeMode.Unknown) {
 				mode = QuestionTexts.RequestMode();
 			}
 

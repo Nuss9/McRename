@@ -11,7 +11,7 @@ namespace Renamer
 		{
 			var proposal = new Dictionary<string, string>();
 
-			if (instructions.Mode == RenameMode.Unknown || instructions.Files.Count == 0)
+			if (instructions.Mode == ComposeMode.Unknown || instructions.Files.Count == 0)
 			{
 				return proposal;
 			}
@@ -29,12 +29,12 @@ namespace Renamer
 
 				string newPath;
 
-				if(instructions.Mode == RenameMode.Numerical) {
+				if(instructions.Mode == ComposeMode.Numerical) {
 					newPath = $"{directory}{separator}{i+1}{extension}";
 				}
 				else {
 					string dateFormat;
-					if(instructions.Mode == RenameMode.Date) {
+					if(instructions.Mode == ComposeMode.Date) {
 						dateFormat = "yyyyMMdd";
 					} else {
 						dateFormat = "yyyyMMdd_HHmmss";

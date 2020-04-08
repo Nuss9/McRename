@@ -4,10 +4,10 @@ namespace Renamer
 {
     public class RenameInstructions
 	{
-		public RenameMode Mode { get; set; }
+		public ComposeMode Mode { get; set; }
 		public List<FileInformation> Files { get; set; }
 
-		public RenameInstructions(RenameMode mode, List<FileInformation> files)
+		public RenameInstructions(ComposeMode mode, List<FileInformation> files)
 		{
 			Mode = mode;
 			Files = files;

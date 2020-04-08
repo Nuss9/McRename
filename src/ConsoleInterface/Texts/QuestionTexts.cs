@@ -23,7 +23,7 @@ namespace ConsoleInterface.Texts
             }
 		}
 
-        public static RenameMode RequestMode()
+        public static ComposeMode RequestMode()
         {
             Console.WriteLine("Specify the format of the new filenames:");
             Console.WriteLine("1) Numerical");
@@ -38,10 +38,10 @@ namespace ConsoleInterface.Texts
 
 			return (int.Parse(mode)) switch
 			{
-                1 => RenameMode.Numerical,
-                2 => RenameMode.Date,
-                3 => RenameMode.DateTime,
-				_ => RenameMode.Unknown,
+                1 => ComposeMode.Numerical,
+                2 => ComposeMode.Date,
+                3 => ComposeMode.DateTime,
+				_ => ComposeMode.Unknown,
 			};
 		}
 

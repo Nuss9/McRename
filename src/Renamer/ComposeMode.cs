@@ -1,6 +1,6 @@
 namespace Renamer
 {
-	public enum RenameMode
+	public enum ComposeMode
 	{
 		Unknown,
 		Numerical,

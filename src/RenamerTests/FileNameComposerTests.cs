@@ -12,9 +12,9 @@ namespace RenamerTests
 		char s = Path.DirectorySeparatorChar;
 
 		[Fact]
-        public void WhenRenameModeIsUnknown_ItShouldReturnAnEmptyDictionary()
+        public void WhenComposeModeIsUnknown_ItShouldReturnAnEmptyDictionary()
         {
-	        var instructions = new RenameInstructions(RenameMode.Unknown, new List<FileInformation>
+	        var instructions = new RenameInstructions(ComposeMode.Unknown, new List<FileInformation>
 	        {
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow)
 	        });
@@ -28,7 +28,7 @@ namespace RenamerTests
         [Fact]
         public void WhenFileInformationListIsEmpty_ItShouldReturnAnEmptyDictionary()
         {
-			var instructions = new RenameInstructions(RenameMode.Numerical, new List<FileInformation>());
+			var instructions = new RenameInstructions(ComposeMode.Numerical, new List<FileInformation>());
 
 			var result = subject.Rename(instructions);
 			var expected = new Dictionary<string, string>();
@@ -39,7 +39,7 @@ namespace RenamerTests
         [Fact]
         public void WhenRenamingOneFileNumerical_ItShouldStartAtOne()
         {
-	        var instructions = new RenameInstructions(RenameMode.Numerical, new List<FileInformation>
+	        var instructions = new RenameInstructions(ComposeMode.Numerical, new List<FileInformation>
 	        {
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow)
 	        });
@@ -56,7 +56,7 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingMultipleFilesNumerically_ItShouldIncrementEachFilenameByOne()
 		{
-			var instructions = new RenameInstructions(RenameMode.Numerical, new List<FileInformation>
+			var instructions = new RenameInstructions(ComposeMode.Numerical, new List<FileInformation>
 	        {
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow),
 		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
@@ -76,7 +76,7 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingMultipleFilesNumerically_ItShouldDoSoBasedOnTheirCreationDateTime()
 		{
-			var instructions = new RenameInstructions(RenameMode.Numerical, new List<FileInformation>
+			var instructions = new RenameInstructions(ComposeMode.Numerical, new List<FileInformation>
 			{
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow.AddDays(1)),
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
@@ -96,7 +96,7 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingOneFileToDate_ItShouldBeRenamedToItsCreationDate()
 		{
-			var instructions = new RenameInstructions(RenameMode.Date, new List<FileInformation>
+			var instructions = new RenameInstructions(ComposeMode.Date, new List<FileInformation>
 			{
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01))
 			});
@@ -113,7 +113,7 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingMultipleFilesToDateWithTheSameCreationDate_ItShouldAddNumbers()
 		{
-			var instructions = new RenameInstructions(RenameMode.Date, new List<FileInformation>
+			var instructions = new RenameInstructions(ComposeMode.Date, new List<FileInformation>
 			{
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 30, 12, 00, 00)),
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
@@ -138,7 +138,7 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingOneFileToDateTime_ItShouldBeRenamedToItsCreationDateTime()
 		{
-			var instructions = new RenameInstructions(RenameMode.DateTime, new List<FileInformation>
+			var instructions = new RenameInstructions(ComposeMode.DateTime, new List<FileInformation>
 			{
 				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01))
 			});

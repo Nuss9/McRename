@@ -32,19 +32,20 @@ namespace ConsoleInterface.Texts
 
         public static void ProposeFilenameChanges(Dictionary<string, string> proposal)
         {
-            Console.WriteLine("Proposing the following name changes:");
-            Console.WriteLine("-------------------------------------");
-            Console.WriteLine("");
+            Console.WriteLine("   Proposing the following name changes:");
+			Console.WriteLine("");
+            Console.WriteLine(" -------------------------------------------------------------");
+			Console.WriteLine("{0, -2} {1, -26} {2, -3} {3, -26} {4, 2}", "|",  "Original file names", "", "New file names", "|");
+            Console.WriteLine(" -------------------------------------------------------------");
 
             foreach(KeyValuePair<string, string> pair in proposal) {
-                string original = Path.GetFileName(pair.Key);
-                string proposed = Path.GetFileName(pair.Value);
-                
-                Console.WriteLine($"{original} > {proposed}");
+                string originalName = Path.GetFileName(pair.Key);
+                string proposedName = Path.GetFileName(pair.Value);
+				Console.WriteLine("{0, -2} {1, -26} {2, -3} {3, -26} {4, 2}", "|",  originalName, " > ", proposedName, "|");
             }
 
-            Console.WriteLine("");
-            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(" -------------------------------------------------------------");
+			Console.WriteLine("");
         }
     }
 }

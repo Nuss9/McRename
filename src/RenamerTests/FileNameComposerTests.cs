@@ -6,9 +6,9 @@ using Xunit;
 
 namespace RenamerTests
 {
-    public class FileRenamerTests
+    public class FileNameComposerTests
     {
-		public FileRenamer subject = new FileRenamer();
+		public FileNameComposer subject = new FileNameComposer();
 		char s = Path.DirectorySeparatorChar;
 
 		[Fact]

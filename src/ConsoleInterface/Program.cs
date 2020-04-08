@@ -9,7 +9,7 @@ namespace ConsoleInterface
         private static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-                .AddSingleton<IRename, FileRenamer>()
+                .AddSingleton<IRename, FileNameComposer>()
                 .BuildServiceProvider();
 
             var instructions = PathRewriter.GetInstructions();

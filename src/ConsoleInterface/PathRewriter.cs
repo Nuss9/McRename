@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using ConsoleInterface.Texts;
 using Renamer;
@@ -36,6 +37,11 @@ namespace ConsoleInterface
         }
         public static void Rewrite(Dictionary<string, string> proposal)
 		{
+			if(proposal.TryGetValue("Error message", out string message)) {
+				StandardTexts.DisplayError(message);
+				StandardTexts.Finished();
+			}
+
             StandardTexts.ProposeFilenameChanges(proposal);
 
             var execute = QuestionTexts.AskPermission();

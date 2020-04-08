@@ -21,6 +21,15 @@ namespace ConsoleInterface.Texts
 			Thread.Sleep(2000);
 		}
 
+		public static void DisplayError(string errorMessage)
+		{
+			SimulateWaitingWithMessage("An error occurred");
+			Console.WriteLine(errorMessage);
+			Console.WriteLine("");
+			Console.WriteLine("Renaming aborted.");
+			Console.WriteLine("");
+		}
+
 		public static void Finished()
 		{
 			Console.WriteLine("----------------------------");

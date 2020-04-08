@@ -7,7 +7,7 @@ namespace Renamer
 {
 	public class FileNameComposer : IRename
 	{
-		public Dictionary<string, string> Rename(RenameInstructions instructions)
+		public Dictionary<string, string> Rename(ComposeInstructions instructions)
 		{
 			var proposal = new Dictionary<string, string>();
 

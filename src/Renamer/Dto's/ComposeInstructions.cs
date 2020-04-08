@@ -2,12 +2,12 @@
 
 namespace Renamer
 {
-    public class RenameInstructions
+    public class ComposeInstructions
 	{
 		public ComposeMode Mode { get; set; }
 		public List<FileInformation> Files { get; set; }
 
-		public RenameInstructions(ComposeMode mode, List<FileInformation> files)
+		public ComposeInstructions(ComposeMode mode, List<FileInformation> files)
 		{
 			Mode = mode;
 			Files = files;

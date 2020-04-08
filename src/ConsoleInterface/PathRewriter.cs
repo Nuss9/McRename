@@ -10,7 +10,7 @@ namespace ConsoleInterface
 {
     public static class PathRewriter
     {
-        public static RenameInstructions GetInstructions()
+        public static ComposeInstructions GetInstructions()
         {
             string targetDirectory = QuestionTexts.RequestDirectory();
             string[] fileEntries = Directory.GetFiles(targetDirectory);
@@ -33,7 +33,7 @@ namespace ConsoleInterface
 				mode = QuestionTexts.RequestMode();
 			}
 
-            return new RenameInstructions(mode, filesInformation);
+            return new ComposeInstructions(mode, filesInformation);
         }
         public static void Rewrite(Dictionary<string, string> proposal)
 		{

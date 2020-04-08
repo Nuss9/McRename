@@ -34,8 +34,8 @@ namespace ConsoleInterface
 
             return new RenameInstructions(mode, filesInformation);
         }
-        public static void Rewrite(Dictionary<string, string> proposal) {
-            
+        public static void Rewrite(Dictionary<string, string> proposal)
+		{
             StandardTexts.ProposeFilenameChanges(proposal);
 
             var execute = QuestionTexts.AskPermission();

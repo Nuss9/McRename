@@ -34,6 +34,7 @@ namespace ConsoleInterface
 
             return new ComposeInstructions(mode, filesInformation);
         }
+
         public static void Rewrite(Dictionary<string, string> proposal)
 		{
 			if(proposal.TryGetValue("Error message", out string message)) {

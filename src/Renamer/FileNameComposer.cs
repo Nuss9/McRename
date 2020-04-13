@@ -7,6 +7,9 @@ namespace Renamer
 {
 	public class FileNameComposer : IRename
 	{
+        private int DuplicateCounter = 1;
+        private readonly char Separator = Path.DirectorySeparatorChar;
+
 		public Dictionary<string, string> Rename(ComposeInstructions instructions)
 		{
 			var proposal = new Dictionary<string, string>();
@@ -18,9 +21,6 @@ namespace Renamer
 
 			instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
-			char separator = Path.DirectorySeparatorChar;
-			int duplicateCounter = 1;
-
 			for (int i = 0; i < instructions.Files.Count; i++)
 			{
 				var path = instructions.Files[i].Path;
@@ -30,7 +30,7 @@ namespace Renamer
 				string newPath;
 
 				if(instructions.Mode == ComposeMode.Numerical) {
-					newPath = $"{directory}{separator}{i+1}{extension}";
+					newPath = $"{directory}{Separator}{i+1}{extension}";
 				}
 				else {
 					string dateFormat;
@@ -45,20 +45,20 @@ namespace Renamer
 						if(proposal.Values.Last().EndsWith($"{creationDate}{extension}")) {
 							string lastKey = proposal.Keys.Last();
 							proposal.Remove(lastKey);
-							proposal.Add(lastKey, $"{directory}{separator}{creationDate}_({duplicateCounter}){extension}");
+							proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({DuplicateCounter}){extension}");
 
-							duplicateCounter++;
-							creationDate += $"_({duplicateCounter})";
-							duplicateCounter++;
+							DuplicateCounter++;
+							creationDate += $"_({DuplicateCounter})";
+							DuplicateCounter++;
 						} else if(proposal.Values.Last().Contains(creationDate)) {
-							creationDate += $"_({duplicateCounter})";
-							duplicateCounter++;
+							creationDate += $"_({DuplicateCounter})";
+							DuplicateCounter++;
 						} else {
-							duplicateCounter = 1;
+							DuplicateCounter = 1;
 						}
 					}
 
-					newPath = $"{directory}{separator}{creationDate}{extension}";
+					newPath = $"{directory}{Separator}{creationDate}{extension}";
 				}
 
 				proposal.Add(path, newPath);

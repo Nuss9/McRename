@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Renamer
 {
-	public class FileNameComposer : IRename
+    public class FileNameComposer : IRename
 	{
         private int DuplicateCounter = 1;
         private readonly char Separator = Path.DirectorySeparatorChar;

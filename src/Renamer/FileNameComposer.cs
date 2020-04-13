@@ -64,12 +64,18 @@ namespace Renamer
 				proposal.Add(path, newPath);
 			}
 
-			if(proposal.Values.Distinct().Count() != proposal.Values.Count()) {
-				proposal.Clear();
-				proposal.Add("Error message", "Aborted renaming due to duplicates in end result.");
-			}
+            ControlDuplicateValues(proposal);
 
-			return proposal;
-		}
-	}
+            return proposal;
+        }
+
+        private static void ControlDuplicateValues(Dictionary<string, string> proposal)
+        {
+            if (proposal.Values.Distinct().Count() != proposal.Values.Count())
+            {
+                proposal.Clear();
+                proposal.Add("Error message", "Aborted renaming due to duplicates in end result.");
+            }
+        }
+    }
 }

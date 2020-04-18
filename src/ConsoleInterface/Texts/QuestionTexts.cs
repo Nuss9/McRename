@@ -29,6 +29,7 @@ namespace ConsoleInterface.Texts
             Console.WriteLine("1) Numerical");
             Console.WriteLine("2) Date: YYYMMDD");
             Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
+            Console.WriteLine("4) Custom text");
             Console.WriteLine("------------");
             Console.Write("  Mode: ");
 
@@ -41,9 +42,36 @@ namespace ConsoleInterface.Texts
                 1 => ComposeMode.Numerical,
                 2 => ComposeMode.Date,
                 3 => ComposeMode.DateTime,
-				_ => ComposeMode.Unknown,
+                4 => ComposeMode.CustomText,
+                _ => ComposeMode.Unknown,
 			};
 		}
+
+        internal static string RequestCustomText()
+        {
+            string text;
+
+            while(true)
+            {
+                Console.Write("Please specify the custom text for all files: ");
+                text = Console.ReadLine();
+                Console.WriteLine("");
+
+                if(string.IsNullOrWhiteSpace(text)) {
+                    Console.Write("Input invalid. ");
+                }
+                else if(text.Length > 15) {
+                    Console.Write("Input too long (max. 15 characters).");
+                }
+                else
+                {
+                    return text;
+                }
+
+                StandardTexts.SimulateWaitingWithMessage("Retry");
+            }
+
+        }
 
         public static bool AskPermission()
         {

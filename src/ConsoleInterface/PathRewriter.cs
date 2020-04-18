@@ -32,6 +32,11 @@ namespace ConsoleInterface
 				mode = QuestionTexts.RequestMode();
 			}
 
+            if(mode == ComposeMode.CustomText) {
+                string customText = QuestionTexts.RequestCustomText();
+                return new ComposeInstructions(mode, customText, filesInformation);
+            }
+
             return new ComposeInstructions(mode, filesInformation);
         }
 

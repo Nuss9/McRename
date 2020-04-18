@@ -12,7 +12,7 @@ namespace RenamerTests
         readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
-        public void WhenComposeModeIsUnknown_ItShouldReturnAnEmptyDictionary()
+        public void WhenComposeModeIsUnknown_ItShouldReturnAnErrorMessage()
         {
 	        var instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>
 	        {
@@ -20,18 +20,18 @@ namespace RenamerTests
 	        });
 
             var result = subject.Rename(instructions);
-            var expected = new Dictionary<string, string >();
+            var expected = new Dictionary<string, string> { { "Error message", "Compose mode unknown."} };
 
             Assert.Equal(expected, result);
         }
 
         [Fact]
-        public void WhenFileInformationListIsEmpty_ItShouldReturnAnEmptyDictionary()
+        public void WhenFileInformationListIsEmpty_ItShouldReturnAnErrorMessage()
         {
 			var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>());
 
 			var result = subject.Rename(instructions);
-			var expected = new Dictionary<string, string>();
+			var expected = new Dictionary<string, string> { { "Error message", "No files found in selected directory." } };
 
 			Assert.Equal(expected, result);
         }
@@ -155,6 +155,8 @@ namespace RenamerTests
 		[Fact]
 		public void BeforeReturningTheProposedNameChanges_ItShouldValidateAgainstDuplicates()
 		{
+			var expected = new Dictionary<string, string> { { "Error message", "Aborted renaming due to duplicates in end result." } };
+
 			// How to test this?
 		}
         /*

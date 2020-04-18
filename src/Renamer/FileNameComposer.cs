@@ -33,6 +33,9 @@ namespace Renamer
                 case ComposeMode.Numerical:
                     ComposeNumerically();
                     break;
+                case ComposeMode.CustomText:
+                    ComposeWithCustomText();
+                    break;
                 default:
                     ComposeByCreationDateTime();
                     break;
@@ -41,6 +44,21 @@ namespace Renamer
             ControlDuplicateValues(Proposal);
 
             return Proposal;
+        }
+
+        private void ComposeWithCustomText()
+        {
+            string customText = Instructions.CustomText;
+            string directory = Path.GetDirectoryName(Instructions.Files[0].Path);
+            var extension = Path.GetExtension(Instructions.Files[0].Path);
+
+            int counter = 1;
+
+            foreach (var file in Instructions.Files)
+            {
+                string newPath = $"{directory}{Separator}{customText}_({counter++}){extension}";
+                Proposal.Add(file.Path, newPath);
+            }
         }
 
         private void ComposeByCreationDateTime()

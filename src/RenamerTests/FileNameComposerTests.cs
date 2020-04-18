@@ -159,7 +159,7 @@ namespace RenamerTests
 
 			// How to test this?
 		}
-        /*
+
         [Fact]
         public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
 		{
@@ -180,6 +180,6 @@ namespace RenamerTests
 			};
 
 			Assert.Equal(expected, result);
-		}*/
+		}
 	}
 }

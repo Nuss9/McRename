@@ -9,7 +9,7 @@ namespace RenamerTests
     public class FileNameComposerTests
     {
 		public FileNameComposer subject = new FileNameComposer();
-		char s = Path.DirectorySeparatorChar;
+        readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
         public void WhenComposeModeIsUnknown_ItShouldReturnAnEmptyDictionary()
@@ -157,5 +157,27 @@ namespace RenamerTests
 		{
 			// How to test this?
 		}
+        /*
+        [Fact]
+        public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
+		{
+			var instructions = new ComposeInstructions(
+                ComposeMode.CustomText,
+                "Holiday_Pictures",
+                new List<FileInformation>
+			    {
+				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow),
+				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
+			    });
+
+			var result = subject.Rename(instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(2).txt"},
+			};
+
+			Assert.Equal(expected, result);
+		}*/
 	}
 }

@@ -5,6 +5,7 @@ namespace Renamer
 		Unknown,
 		Numerical,
         Date,
-        DateTime
+        DateTime,
+        CustomText
     }
 }

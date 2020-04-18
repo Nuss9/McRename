@@ -35,7 +35,7 @@ namespace Renamer
                     ComposeNumerically();
                     break;
                 default:
-                    ComposeByDate();
+                    ComposeByCreationDateTime();
                     break;
             }
 
@@ -44,7 +44,7 @@ namespace Renamer
             return Proposal;
         }
 
-        private void ComposeByDate()
+        private void ComposeByCreationDateTime()
         {
             foreach (var file in Instructions.Files)
             {

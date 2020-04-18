@@ -10,14 +10,13 @@ namespace Renamer
         private int DuplicateCounter = 1;
         private readonly char Separator = Path.DirectorySeparatorChar;
 		private ComposeInstructions Instructions;
+		private Dictionary<string, string> Proposal = new Dictionary<string, string>();
 
 		public Dictionary<string, string> Rename(ComposeInstructions instructions)
 		{
-			var proposal = new Dictionary<string, string>();
-
 			if (instructions.Mode == ComposeMode.Unknown || instructions.Files.Count == 0)
 			{
-				return proposal;
+				return Proposal;
 			}
             else
             {
@@ -46,16 +45,16 @@ namespace Renamer
 					}
 					var creationDate = Instructions.Files[i].CreationDateTime.ToString(dateFormat);
 
-					if(proposal.Any()) {
-						if(proposal.Values.Last().EndsWith($"{creationDate}{extension}")) {
-							string lastKey = proposal.Keys.Last();
-							proposal.Remove(lastKey);
-							proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({DuplicateCounter}){extension}");
+					if(Proposal.Any()) {
+						if(Proposal.Values.Last().EndsWith($"{creationDate}{extension}")) {
+							string lastKey = Proposal.Keys.Last();
+							Proposal.Remove(lastKey);
+							Proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({DuplicateCounter}){extension}");
 
 							DuplicateCounter++;
 							creationDate += $"_({DuplicateCounter})";
 							DuplicateCounter++;
-						} else if(proposal.Values.Last().Contains(creationDate)) {
+						} else if(Proposal.Values.Last().Contains(creationDate)) {
 							creationDate += $"_({DuplicateCounter})";
 							DuplicateCounter++;
 						} else {
@@ -66,20 +65,20 @@ namespace Renamer
 					newPath = $"{directory}{Separator}{creationDate}{extension}";
 				}
 
-				proposal.Add(path, newPath);
+				Proposal.Add(path, newPath);
 			}
 
-            ControlDuplicateValues(proposal);
+            ControlDuplicateValues(Proposal);
 
-            return proposal;
+            return Proposal;
         }
 
-        private static void ControlDuplicateValues(Dictionary<string, string> proposal)
+        private static void ControlDuplicateValues(Dictionary<string, string> Proposal)
         {
-            if (proposal.Values.Distinct().Count() != proposal.Values.Count())
+            if (Proposal.Values.Distinct().Count() != Proposal.Values.Count())
             {
-                proposal.Clear();
-                proposal.Add("Error message", "Aborted renaming due to duplicates in end result.");
+                Proposal.Clear();
+                Proposal.Add("Error message", "Aborted renaming due to duplicates in end result.");
             }
         }
     }

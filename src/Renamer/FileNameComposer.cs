@@ -9,6 +9,7 @@ namespace Renamer
 	{
         private int DuplicateCounter = 1;
         private readonly char Separator = Path.DirectorySeparatorChar;
+		private ComposeInstructions Instructions;
 
 		public Dictionary<string, string> Rename(ComposeInstructions instructions)
 		{
@@ -18,28 +19,32 @@ namespace Renamer
 			{
 				return proposal;
 			}
+            else
+            {
+				Instructions = instructions;
+            }
 
-			instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
+			Instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
-			for (int i = 0; i < instructions.Files.Count; i++)
+			for (int i = 0; i < Instructions.Files.Count; i++)
 			{
-				var path = instructions.Files[i].Path;
+				var path = Instructions.Files[i].Path;
 				var directory = Path.GetDirectoryName(path);
 				var extension = Path.GetExtension(path);
 
 				string newPath;
 
-				if(instructions.Mode == ComposeMode.Numerical) {
+				if(Instructions.Mode == ComposeMode.Numerical) {
 					newPath = $"{directory}{Separator}{i+1}{extension}";
 				}
 				else {
 					string dateFormat;
-					if(instructions.Mode == ComposeMode.Date) {
+					if(Instructions.Mode == ComposeMode.Date) {
 						dateFormat = "yyyyMMdd";
 					} else {
 						dateFormat = "yyyyMMdd_HHmmss";
 					}
-					var creationDate = instructions.Files[i].CreationDateTime.ToString(dateFormat);
+					var creationDate = Instructions.Files[i].CreationDateTime.ToString(dateFormat);
 
 					if(proposal.Any()) {
 						if(proposal.Values.Last().EndsWith($"{creationDate}{extension}")) {

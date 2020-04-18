@@ -7,7 +7,6 @@ namespace Renamer
 {
     public class FileNameComposer : IRename
 	{
-        private int DuplicateCounter = 1;
         private readonly char Separator = Path.DirectorySeparatorChar;
 		private ComposeInstructions Instructions;
 		private Dictionary<string, string> Proposal = new Dictionary<string, string>();
@@ -46,6 +45,8 @@ namespace Renamer
 
         private void ComposeByCreationDateTime()
         {
+            int duplicateCounter = 1;
+
             foreach (var file in Instructions.Files)
             {
                 var path = file.Path;
@@ -69,20 +70,20 @@ namespace Renamer
                     {
                         string lastKey = Proposal.Keys.Last();
                         Proposal.Remove(lastKey);
-                        Proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({DuplicateCounter}){extension}");
+                        Proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({duplicateCounter}){extension}");
 
-                        DuplicateCounter++;
-                        creationDate += $"_({DuplicateCounter})";
-                        DuplicateCounter++;
+                        duplicateCounter++;
+                        creationDate += $"_({duplicateCounter})";
+                        duplicateCounter++;
                     }
                     else if (Proposal.Values.Last().Contains(creationDate))
                     {
-                        creationDate += $"_({DuplicateCounter})";
-                        DuplicateCounter++;
+                        creationDate += $"_({duplicateCounter})";
+                        duplicateCounter++;
                     }
                     else
                     {
-                        DuplicateCounter = 1;
+                        duplicateCounter = 1;
                     }
                 }
 

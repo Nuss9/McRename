@@ -26,9 +26,10 @@ namespace RenamerTests
         [Fact]
         public void WhenFileInformationListIsEmpty_ItShouldReturnAnErrorMessage()
         {
-			var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>());
+			ResetInstructions();
+			SetComposeMode(ComposeMode.Numerical);
 
-			var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string> { { "Error message", "No files found in selected directory." } };
 
 			Assert.Equal(expected, result);
@@ -180,9 +181,14 @@ namespace RenamerTests
 			Assert.Equal(expected, result);
 		}
 
-		private void ResetInstructions()
-		{
+        private void ResetInstructions()
+        {
 			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
-		}
+        }
+
+        private void SetComposeMode(ComposeMode mode)
+        {
+			Instructions.Mode = mode;
+        }
 	}
 }

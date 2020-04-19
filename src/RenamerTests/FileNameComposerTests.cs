@@ -9,17 +9,15 @@ namespace RenamerTests
     public class FileNameComposerTests
     {
 		public FileNameComposer subject = new FileNameComposer();
+		private ComposeInstructions Instructions;
         readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
         public void WhenComposeModeIsUnknown_ItShouldReturnAnErrorMessage()
         {
-	        var instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>
-	        {
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow)
-	        });
+			ResetInstructions();
 
-            var result = subject.Rename(instructions);
+            var result = subject.Rename(Instructions);
             var expected = new Dictionary<string, string> { { "Error message", "Compose mode unknown."} };
 
             Assert.Equal(expected, result);
@@ -180,6 +178,11 @@ namespace RenamerTests
 			};
 
 			Assert.Equal(expected, result);
+		}
+
+		private void ResetInstructions()
+		{
+			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 		}
 	}
 }

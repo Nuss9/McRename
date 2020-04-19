@@ -36,6 +36,9 @@ namespace Renamer
                 case ComposeMode.CustomText:
                     ComposeWithCustomText();
                     break;
+                case ComposeMode.Truncation:
+                    ComposeWithTruncation();
+                    break;
                 default:
                     ComposeByCreationDateTime();
                     break;
@@ -44,6 +47,14 @@ namespace Renamer
             ControlDuplicateValues(Proposal);
 
             return Proposal;
+        }
+
+        private void ComposeWithTruncation()
+        {
+            if(!Instructions.Files[0].Path.Contains(Instructions.CustomText))
+            {
+                Proposal = ErrorMessage("Custom text to truncate not found in filenames.");
+            }
         }
 
         private void ComposeWithCustomText()

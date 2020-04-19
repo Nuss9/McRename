@@ -6,6 +6,7 @@ namespace Renamer
 		Numerical,
         Date,
         DateTime,
-        CustomText
+        CustomText,
+        Truncation,
     }
 }

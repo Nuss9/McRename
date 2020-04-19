@@ -173,17 +173,17 @@ namespace RenamerTests
 		}
 
         [Fact]
-        public void WhenRenamingWithTruncationDoesNotFindCustomText_ItShouldReturnAnError()
+        public void WhenTruncationTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
         {
 			SetDefaultInstructions();
 			SetComposeMode(ComposeMode.Truncation);
-			SetCustomText("fileB");
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
+			SetCustomText("fileC");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
 			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
-				{ "Error message", "Custom text to truncate not found in filenames."}
+				{ "Error message", "Custom text to truncate not found in any filename."}
 			};
 
 			Assert.Equal(expected, result);

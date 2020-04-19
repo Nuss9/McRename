@@ -15,7 +15,7 @@ namespace RenamerTests
 		[Fact]
         public void WhenComposeModeIsUnknown_ItShouldReturnAnErrorMessage()
         {
-			ResetInstructions();
+			SetDefaultInstructions();
 
             var result = subject.Rename(Instructions);
             var expected = new Dictionary<string, string> { { "Error message", "Compose mode unknown."} };
@@ -26,7 +26,7 @@ namespace RenamerTests
         [Fact]
         public void WhenFileInformationListIsEmpty_ItShouldReturnAnErrorMessage()
         {
-			ResetInstructions();
+			SetDefaultInstructions();
 			SetComposeMode(ComposeMode.Numerical);
 
 			var result = subject.Rename(Instructions);
@@ -38,12 +38,11 @@ namespace RenamerTests
         [Fact]
         public void WhenRenamingOneFileNumerical_ItShouldStartAtOne()
         {
-	        var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>
-	        {
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow)
-	        });
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Numerical);
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
 
-	        var result = subject.Rename(instructions);
+	        var result = subject.Rename(Instructions);
 	        var expected = new Dictionary<string, string>
 	        {
 		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"}
@@ -181,7 +180,7 @@ namespace RenamerTests
 			Assert.Equal(expected, result);
 		}
 
-        private void ResetInstructions()
+        private void SetDefaultInstructions()
         {
 			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
         }
@@ -190,5 +189,18 @@ namespace RenamerTests
         {
 			Instructions.Mode = mode;
         }
+
+		private void SetFiles(List<(string name, DateTime created)> files)
+		{
+			foreach (var file in files)
+			{
+				Instructions.Files.Add(
+					new FileInformation(
+						$"{s}Users{s}JohnDoe{s}Desktop{s}{file.name}.txt",
+						file.created
+					)
+				);
+			}
+		}
 	}
 }

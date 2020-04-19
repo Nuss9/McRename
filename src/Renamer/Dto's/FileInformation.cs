@@ -7,7 +7,7 @@ namespace Renamer
 		public string Path { get; }
 		public DateTime CreationDateTime { get; }
 
-		public FileInformation(string path, string extension, DateTime creationDateTime)
+		public FileInformation(string path, DateTime creationDateTime)
 		{
 			Path = path;
 			CreationDateTime = creationDateTime;

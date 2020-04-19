@@ -20,7 +20,6 @@ namespace ConsoleInterface
                 filesInformation.Add(
                     new FileInformation(
                         file,
-                        Path.GetExtension(file),
                         File.GetCreationTime(file)
                     )
                 );

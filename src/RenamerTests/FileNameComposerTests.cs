@@ -40,7 +40,7 @@ namespace RenamerTests
         {
 	        var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>
 	        {
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow)
+		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow)
 	        });
 
 	        var result = subject.Rename(instructions);
@@ -57,8 +57,8 @@ namespace RenamerTests
 		{
 			var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>
 	        {
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow),
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
+		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow),
+		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.UtcNow)
 	        });
 
 	        var result = subject.Rename(instructions);
@@ -77,8 +77,8 @@ namespace RenamerTests
 		{
 			var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>
 			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow.AddDays(1)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow.AddDays(1)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.UtcNow)
 			});
 
 			var result = subject.Rename(instructions);
@@ -97,7 +97,7 @@ namespace RenamerTests
 		{
 			var instructions = new ComposeInstructions(ComposeMode.Date, new List<FileInformation>
 			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01))
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 12, 31, 12, 30, 01))
 			});
 
 			var result = subject.Rename(instructions);
@@ -114,11 +114,11 @@ namespace RenamerTests
 		{
 			var instructions = new ComposeInstructions(ComposeMode.Date, new List<FileInformation>
 			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 30, 12, 00, 00)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileC.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileD.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileE.txt",".txt", new DateTime(2021, 01, 01, 09, 00, 00))
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 12, 30, 12, 00, 00)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileC.txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileD.txt", new DateTime(2020, 12, 31, 12, 30, 01)),
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileE.txt", new DateTime(2021, 01, 01, 09, 00, 00))
 			});
 
 			var result = subject.Rename(instructions);
@@ -139,7 +139,7 @@ namespace RenamerTests
 		{
 			var instructions = new ComposeInstructions(ComposeMode.DateTime, new List<FileInformation>
 			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", new DateTime(2020, 12, 31, 12, 30, 01))
+				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 12, 31, 12, 30, 01))
 			});
 
 			var result = subject.Rename(instructions);
@@ -167,8 +167,8 @@ namespace RenamerTests
                 "Holiday_Pictures",
                 new List<FileInformation>
 			    {
-				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",".txt", DateTime.UtcNow),
-				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt",".txt", DateTime.UtcNow)
+				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow),
+				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.UtcNow)
 			    });
 
 			var result = subject.Rename(instructions);

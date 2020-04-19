@@ -25,26 +25,37 @@ namespace ConsoleInterface.Texts
 
         public static ComposeMode RequestMode()
         {
-            Console.WriteLine("Specify the format of the new filenames:");
-            Console.WriteLine("1) Numerical");
-            Console.WriteLine("2) Date: YYYMMDD");
-            Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
-            Console.WriteLine("4) Custom text");
-            Console.WriteLine("------------");
-            Console.Write("  Mode: ");
+            while (true)
+            {
+                Console.WriteLine("Specify the format of the new filenames:");
+                Console.WriteLine("1) Numerical");
+                Console.WriteLine("2) Date: YYYMMDD");
+                Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
+                Console.WriteLine("4) Custom text");
+                Console.WriteLine("------------");
+                Console.Write("  Mode: ");
+                string input = Console.ReadLine();
+                Console.WriteLine("");
 
-            string mode = Console.ReadLine();
-
-            Console.WriteLine("");
-
-			return (int.Parse(mode)) switch
-			{
-                1 => ComposeMode.Numerical,
-                2 => ComposeMode.Date,
-                3 => ComposeMode.DateTime,
-                4 => ComposeMode.CustomText,
-                _ => ComposeMode.Unknown,
-			};
+                if (int.TryParse(input, out int mode))
+                {
+                    return (mode) switch
+                    {
+                        1 => ComposeMode.Numerical,
+                        2 => ComposeMode.Date,
+                        3 => ComposeMode.DateTime,
+                        4 => ComposeMode.CustomText,
+                        _ => ComposeMode.Unknown,
+                    };
+                }
+                else
+                {
+                    Console.WriteLine("");
+                    Console.Write("That is not a valid option. ");
+                    StandardTexts.SimulateWaitingWithMessage("Retry");
+                    Console.WriteLine("");
+                }
+            }
 		}
 
         internal static string RequestCustomText()

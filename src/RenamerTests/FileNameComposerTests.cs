@@ -54,13 +54,11 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingMultipleFilesNumerically_ItShouldIncrementEachFilenameByOne()
 		{
-			var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>
-	        {
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow),
-		        new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.UtcNow)
-	        });
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Numerical);
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
-	        var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 	        var expected = new Dictionary<string, string>
 	        {
 		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"},
@@ -74,13 +72,11 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingMultipleFilesNumerically_ItShouldDoSoBasedOnTheirCreationDateTime()
 		{
-			var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>
-			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow.AddDays(1)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.UtcNow)
-			});
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Numerical);
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.UtcNow.AddDays(1)), ("fileB", DateTime.Now) });
 
-			var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}2.txt"},
@@ -94,12 +90,11 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingOneFileToDate_ItShouldBeRenamedToItsCreationDate()
 		{
-			var instructions = new ComposeInstructions(ComposeMode.Date, new List<FileInformation>
-			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 12, 31, 12, 30, 01))
-			});
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Date);
+			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
-			var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231.txt"},
@@ -111,16 +106,18 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingMultipleFilesToDateWithTheSameCreationDate_ItShouldAddNumbers()
 		{
-			var instructions = new ComposeInstructions(ComposeMode.Date, new List<FileInformation>
-			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 12, 30, 12, 00, 00)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileC.txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileD.txt", new DateTime(2020, 12, 31, 12, 30, 01)),
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileE.txt", new DateTime(2021, 01, 01, 09, 00, 00))
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Date);
+			SetFiles(new List<(string, DateTime)> {
+                ("fileA", new DateTime(2020, 12, 30, 12, 00, 00)),
+                ("fileB", new DateTime(2020, 12, 31, 12, 30, 01)),
+                ("fileC", new DateTime(2020, 12, 31, 12, 30, 01)),
+                ("fileD", new DateTime(2020, 12, 31, 12, 30, 01)),
+                ("fileE", new DateTime(2021, 01, 01, 09, 00, 00)),
+
 			});
 
-			var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201230.txt"},
@@ -136,12 +133,11 @@ namespace RenamerTests
 		[Fact]
 		public void WhenRenamingOneFileToDateTime_ItShouldBeRenamedToItsCreationDateTime()
 		{
-			var instructions = new ComposeInstructions(ComposeMode.DateTime, new List<FileInformation>
-			{
-				new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 12, 31, 12, 30, 01))
-			});
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.DateTime);
+			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
-			var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_123001.txt"},
@@ -161,16 +157,12 @@ namespace RenamerTests
         [Fact]
         public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
 		{
-			var instructions = new ComposeInstructions(
-                ComposeMode.CustomText,
-                "Holiday_Pictures",
-                new List<FileInformation>
-			    {
-				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", DateTime.UtcNow),
-				    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.UtcNow)
-			    });
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.CustomText);
+			SetCustomText("Holiday_Pictures");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
-			var result = subject.Rename(instructions);
+			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
@@ -201,6 +193,11 @@ namespace RenamerTests
 					)
 				);
 			}
+		}
+
+		private void SetCustomText(string text)
+		{
+			Instructions.CustomText = text;
 		}
 	}
 }

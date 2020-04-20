@@ -51,9 +51,34 @@ namespace Renamer
 
         private void ComposeWithTruncation()
         {
-            if(!Instructions.Files.Any(x => x.Path.Contains(Instructions.CustomText)))
+            string truncationText = Instructions.CustomText;
+
+            if (!Instructions.Files.Any(x => x.Path.Contains(truncationText)))
             {
                 Proposal = ErrorMessage("Custom text to truncate not found in any filename.");
+                return;
+            }
+
+            foreach(var file in Instructions.Files)
+            {
+                string path = file.Path;
+                string newPath = string.Empty;
+
+                if(Path.GetFileName(path).Contains(truncationText))
+                {
+                    string directory = Path.GetDirectoryName(path);
+                    var extension = Path.GetExtension(path);
+
+                    int index = path.IndexOf(truncationText);
+                    int count = truncationText.Length;
+                    newPath = path.Remove(index, count);
+                }
+                else
+                {
+                    continue;
+                }
+
+                Proposal.Add(path, newPath);
             }
         }
 

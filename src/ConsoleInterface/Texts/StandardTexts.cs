@@ -7,7 +7,28 @@ namespace ConsoleInterface.Texts
 {
     public static class StandardTexts
     {
-        public static void SimulateWaitingWithMessage(string message)
+        public static void WelcomeMessage()
+        {
+			Console.WriteLine("");
+			Console.WriteLine("   * — — — — — — — — — — — — — — — — — — — — — — — — — — — *");
+			Console.WriteLine("   |                __                                     |");
+			Console.WriteLine("   |  |\\   /|      |  \\                                    |");
+			Console.WriteLine("   |  | \\ / |      |   |                                   |");
+			Console.WriteLine("   |  |     |   _  |__/    _                 _             |");
+			Console.WriteLine("   |  |     |  /   |  \\   |_ |\\ |  /\\  |\\/| |_             |");
+			Console.WriteLine("   |  |     |  \\_  |   \\  |_ | \\| /--\\ |  | |_             |");
+			Console.WriteLine("   |                                                       |");
+			Console.WriteLine("   * — — — — — — — — — — — — — — — — — — — — — — — — — — — *");
+			Console.WriteLine("");
+			Thread.Sleep(1500);
+			Console.WriteLine("      - - Batch rename files from a Desktop directory - - ");
+			Console.WriteLine("");
+			Console.WriteLine("");
+			Thread.Sleep(1500);
+		}
+
+
+		public static void SimulateWaitingWithMessage(string message)
 		{
 			Thread.Sleep(500);
 			Console.Write($"{message}");

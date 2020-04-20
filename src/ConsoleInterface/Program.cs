@@ -12,6 +12,7 @@ namespace ConsoleInterface
                 .AddSingleton<IRename, FileNameComposer>()
                 .BuildServiceProvider();
 
+            StandardTexts.WelcomeMessage();
             var instructions = PathRewriter.GetInstructions();
 
             var renamer = serviceProvider.GetService<IRename>();

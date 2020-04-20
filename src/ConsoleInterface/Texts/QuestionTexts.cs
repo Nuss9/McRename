@@ -32,6 +32,7 @@ namespace ConsoleInterface.Texts
                 Console.WriteLine("2) Date: YYYMMDD");
                 Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
                 Console.WriteLine("4) Custom text");
+                Console.WriteLine("5) Trucation");
                 Console.WriteLine("------------");
                 Console.Write("  Mode: ");
                 string input = Console.ReadLine();
@@ -45,6 +46,7 @@ namespace ConsoleInterface.Texts
                         2 => ComposeMode.Date,
                         3 => ComposeMode.DateTime,
                         4 => ComposeMode.CustomText,
+                        5 => ComposeMode.Truncation,
                         _ => ComposeMode.Unknown,
                     };
                 }
@@ -58,13 +60,23 @@ namespace ConsoleInterface.Texts
             }
 		}
 
-        internal static string RequestCustomText()
+        internal static string RequestCustomText(ComposeMode mode)
         {
             string text;
+            string requestText;
+
+            if(mode == ComposeMode.CustomText)
+            {
+                requestText = "Please specify the custom text for all files: ";
+            }
+            else
+            {
+                requestText = "Please specify the text to truncate from filenames: ";
+            }
 
             while(true)
             {
-                Console.Write("Please specify the custom text for all files: ");
+                Console.Write(requestText);
                 text = Console.ReadLine();
                 Console.WriteLine("");
 

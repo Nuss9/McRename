@@ -13,7 +13,7 @@ namespace ConsoleInterface.Texts
                 string inputDirectory = Console.ReadLine().Replace(" ", "\u0020");
                 string fullPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + inputDirectory;
 
-                if(Directory.Exists(fullPath)) {
+                if(Directory.Exists(fullPath) && !string.IsNullOrWhiteSpace(inputDirectory)) {
                     return fullPath;
                 }
                 else {

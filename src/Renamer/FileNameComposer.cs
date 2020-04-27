@@ -13,6 +13,8 @@ namespace Renamer
 
 		public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
+            RemoveHiddenFiles(ref instructions);
+
             if (instructions.Mode == ComposeMode.Unknown)
             {
                 return ErrorMessage("Compose mode unknown.");
@@ -47,6 +49,19 @@ namespace Renamer
             ControlDuplicateValues(Proposal);
 
             return Proposal;
+        }
+
+        private void RemoveHiddenFiles(ref ComposeInstructions instructions)
+        {
+            for (int i = 0; i < instructions.Files.Count; i++)
+            {
+                string filename = Path.GetFileName(instructions.Files[i].Path);
+
+                if (filename.StartsWith("."))
+                {
+                    instructions.Files.RemoveAt(i);
+                }
+            }
         }
 
         private void ComposeWithTruncation()

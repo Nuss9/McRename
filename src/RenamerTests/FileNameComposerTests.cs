@@ -36,6 +36,19 @@ namespace RenamerTests
         }
 
         [Fact]
+        public void WhenRenamings_ItShouldNotRenameHiddenFiles()
+        {
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Numerical);
+			SetFiles(new List<(string, DateTime)> { (".fileA", DateTime.Now) });
+
+			var result = subject.Rename(Instructions);
+			var expected = new Dictionary<string, string> { { "Error message", "No files found in selected directory." } };
+
+			Assert.Equal(expected, result);
+		}
+
+        [Fact]
         public void WhenRenamingOneFileNumerical_ItShouldStartAtOne()
         {
 			SetDefaultInstructions();

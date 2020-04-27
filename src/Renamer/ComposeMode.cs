@@ -8,5 +8,6 @@ namespace Renamer
         DateTime,
         CustomText,
         Truncation,
+        Extension,
     }
 }

@@ -41,6 +41,9 @@ namespace Renamer
                 case ComposeMode.Truncation:
                     ComposeWithTruncation();
                     break;
+                case ComposeMode.Extension:
+                    ComposeExtensions();
+                    break;
                 default:
                     ComposeByCreationDateTime();
                     break;
@@ -49,6 +52,22 @@ namespace Renamer
             ControlDuplicateValues(Proposal);
 
             return Proposal;
+        }
+
+        private void ComposeExtensions()
+        {
+            foreach(var file in Instructions.Files)
+            {
+                string newExtension = Instructions.CustomText.Trim('.');
+
+                string path = file.Path;
+                string newPath = Path.GetDirectoryName(path)
+                    + "/"
+                    + Path.GetFileNameWithoutExtension(path)
+                    + $".{newExtension}";
+
+                Proposal.Add(path, newPath);
+            }
         }
 
         private void RemoveHiddenFiles(ref ComposeInstructions instructions)

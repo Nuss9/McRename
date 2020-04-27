@@ -70,6 +70,12 @@ namespace ConsoleInterface.Texts
 
             foreach(KeyValuePair<string, string> pair in proposal) {
                 string originalName = Path.GetFileName(pair.Key);
+
+                if(originalName.Length > 24)
+                {
+					originalName = originalName.Substring(0, 24) + "..";
+                }
+
                 string proposedName = Path.GetFileName(pair.Value);
 				Console.WriteLine("{0, -2} {1, -26} {2, -3} {3, -26} {4, 2}", "|",  originalName, " > ", proposedName, "|");
             }

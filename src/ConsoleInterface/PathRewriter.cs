@@ -31,7 +31,7 @@ namespace ConsoleInterface
 				mode = QuestionTexts.RequestMode();
 			}
 
-            if(mode == ComposeMode.CustomText || mode == ComposeMode.Truncation) {
+            if(mode == ComposeMode.CustomText || mode == ComposeMode.Truncation || mode == ComposeMode.Extension) {
                 string customText = QuestionTexts.RequestCustomText(mode);
                 return new ComposeInstructions(mode, customText, filesInformation);
             }

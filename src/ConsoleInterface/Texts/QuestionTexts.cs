@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Renamer;
 
 namespace ConsoleInterface.Texts
@@ -33,6 +34,7 @@ namespace ConsoleInterface.Texts
                 Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
                 Console.WriteLine("4) Custom text");
                 Console.WriteLine("5) Trucation");
+                Console.WriteLine("6) Extensions");
                 Console.WriteLine("------------");
                 Console.Write("  Mode: ");
                 string input = Console.ReadLine();
@@ -47,6 +49,7 @@ namespace ConsoleInterface.Texts
                         3 => ComposeMode.DateTime,
                         4 => ComposeMode.CustomText,
                         5 => ComposeMode.Truncation,
+                        6 => ComposeMode.Extension,
                         _ => ComposeMode.Unknown,
                     };
                 }
@@ -69,6 +72,10 @@ namespace ConsoleInterface.Texts
             {
                 requestText = "Please specify the custom text for all files: ";
             }
+            else if(mode == ComposeMode.Extension)
+            {
+                requestText = "Please specify the new extension: ";
+            }
             else
             {
                 requestText = "Please specify the text to truncate from filenames: ";
@@ -78,13 +85,18 @@ namespace ConsoleInterface.Texts
             {
                 Console.Write(requestText);
                 text = Console.ReadLine();
-                Console.WriteLine("");
 
-                if(string.IsNullOrWhiteSpace(text)) {
+                if (string.IsNullOrWhiteSpace(text))
+                {
                     Console.Write("Input invalid. ");
                 }
-                else if(text.Length > 15) {
+                else if (text.Length > 15)
+                {
                     Console.Write("Input too long (max. 15 characters).");
+                }
+                else if (mode == ComposeMode.Extension && !Regex.IsMatch(text, @"^[a-zA-Z]+$"))
+                {
+                    Console.Write("Input can only contain letters. ");
                 }
                 else
                 {
@@ -93,7 +105,6 @@ namespace ConsoleInterface.Texts
 
                 StandardTexts.SimulateWaitingWithMessage("Retry");
             }
-
         }
 
         public static bool AskPermission()

@@ -62,7 +62,7 @@ namespace Renamer
 
                 string path = file.Path;
                 string newPath = Path.GetDirectoryName(path)
-                    + "/"
+                    + Separator
                     + Path.GetFileNameWithoutExtension(path)
                     + $".{newExtension}";
 

@@ -10,6 +10,8 @@ namespace Renamer
             {
                 case ComposeMode.Numerical:
                     return new NumericalComposer();
+                case ComposeMode.CustomText:
+                    return new TextComposer();
                 default:
                     throw new NotImplementedException();
             }

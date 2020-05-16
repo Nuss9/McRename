@@ -33,7 +33,8 @@ namespace Renamer
             switch (Instructions.Mode)
             {
                 case ComposeMode.Numerical:
-                    ComposeNumerically();
+                    var composer = ComposerFactory.Build(Instructions.Mode);
+                    Proposal = composer.Rename(Instructions);
                     break;
                 case ComposeMode.CustomText:
                     ComposeWithCustomText();
@@ -181,20 +182,6 @@ namespace Renamer
 
             }
         }
-
-        private void ComposeNumerically()
-		{
-			for (int i = 0; i < Instructions.Files.Count; i++)
-			{
-				var path = Instructions.Files[i].Path;
-				var directory = Path.GetDirectoryName(path);
-				var extension = Path.GetExtension(path);
-
-				string newPath = $"{directory}{Separator}{i + 1}{extension}";
-
-				Proposal.Add(path, newPath);
-			}
-		}
 
         private static void ControlDuplicateValues(Dictionary<string, string> Proposal)
         {

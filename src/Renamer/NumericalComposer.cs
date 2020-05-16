@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Renamer
 {
-    internal class NumericalComposer : ICompose
+    public class NumericalComposer : ICompose
     {
         private readonly char Separator;
 
@@ -15,6 +16,8 @@ namespace Renamer
         public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
             var proposal = new Dictionary<string, string>();
+
+            instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
             for (int i = 0; i < instructions.Files.Count; i++)
             {

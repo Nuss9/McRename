@@ -48,58 +48,6 @@ namespace RenamerTests
 			Assert.Equal(expected, result);
 		}
 
-        [Fact]
-        public void WhenRenamingOneFileNumerical_ItShouldStartAtOne()
-        {
-			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Numerical);
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
-
-	        var result = subject.Rename(Instructions);
-	        var expected = new Dictionary<string, string>
-	        {
-		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"}
-	        };
-
-            Assert.Equal(expected, result);
-        }
-
-		[Fact]
-		public void WhenRenamingMultipleFilesNumerically_ItShouldIncrementEachFilenameByOne()
-		{
-			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Numerical);
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
-
-			var result = subject.Rename(Instructions);
-	        var expected = new Dictionary<string, string>
-	        {
-		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"},
-		        { $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}2.txt"},
-
-	        };
-
-            Assert.Equal(expected, result);
-		}
-
-		[Fact]
-		public void WhenRenamingMultipleFilesNumerically_ItShouldDoSoBasedOnTheirCreationDateTime()
-		{
-			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Numerical);
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.UtcNow.AddDays(1)), ("fileB", DateTime.Now) });
-
-			var result = subject.Rename(Instructions);
-			var expected = new Dictionary<string, string>
-			{
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}2.txt"},
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}1.txt"},
-
-			};
-
-			Assert.Equal(expected, result);
-		}
-
 		[Fact]
 		public void WhenRenamingOneFileToDate_ItShouldBeRenamedToItsCreationDate()
 		{

@@ -116,24 +116,6 @@ namespace RenamerTests
 		}
 
         [Fact]
-        public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
-		{
-			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.CustomText);
-			SetCustomText("Holiday_Pictures");
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
-
-			var result = subject.Rename(Instructions);
-			var expected = new Dictionary<string, string>
-			{
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(2).txt"},
-			};
-
-			Assert.Equal(expected, result);
-		}
-
-        [Fact]
         public void WhenTruncationTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
         {
 			SetDefaultInstructions();

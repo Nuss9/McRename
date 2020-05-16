@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Renamer
 {
-    internal class TextComposer : ICompose
+    public class TextComposer : ICompose
     {
         private readonly char Separator;
 

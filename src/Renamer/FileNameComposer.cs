@@ -34,6 +34,8 @@ namespace Renamer
             {
                 case ComposeMode.Numerical:
                 case ComposeMode.CustomText:
+                case ComposeMode.Date:
+                case ComposeMode.DateTime:
                     var composer = ComposerFactory.Build(Instructions.Mode);
                     Proposal = composer.Rename(Instructions);
                     break;
@@ -44,8 +46,7 @@ namespace Renamer
                     ComposeExtensions();
                     break;
                 default:
-                    ComposeByCreationDateTime();
-                    break;
+                    throw new Exception("Should not reach this point.");
             }
 
             ControlDuplicateValues(Proposal);
@@ -112,57 +113,6 @@ namespace Renamer
                 }
 
                 Proposal.Add(path, newPath);
-            }
-        }
-
-        private void ComposeByCreationDateTime()
-        {
-            int duplicateCounter = 1;
-
-            foreach (var file in Instructions.Files)
-            {
-                var path = file.Path;
-                var directory = Path.GetDirectoryName(path);
-                var extension = Path.GetExtension(path);
-
-                string dateFormat;
-                if (Instructions.Mode == ComposeMode.Date)
-                {
-                    dateFormat = "yyyyMMdd";
-                }
-                else
-                {
-                    dateFormat = "yyyyMMdd_HHmmss";
-                }
-                var creationDate = file.CreationDateTime.ToString(dateFormat);
-
-                if (Proposal.Any())
-                {
-                    if (Proposal.Values.Last().EndsWith($"{creationDate}{extension}"))
-                    {
-                        string lastKey = Proposal.Keys.Last();
-                        Proposal.Remove(lastKey);
-                        Proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({duplicateCounter}){extension}");
-
-                        duplicateCounter++;
-                        creationDate += $"_({duplicateCounter})";
-                        duplicateCounter++;
-                    }
-                    else if (Proposal.Values.Last().Contains(creationDate))
-                    {
-                        creationDate += $"_({duplicateCounter})";
-                        duplicateCounter++;
-                    }
-                    else
-                    {
-                        duplicateCounter = 1;
-                    }
-                }
-
-                string newPath = $"{directory}{Separator}{creationDate}{extension}";
-
-                Proposal.Add(path, newPath);
-
             }
         }
 

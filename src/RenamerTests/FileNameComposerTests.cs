@@ -90,23 +90,6 @@ namespace RenamerTests
 			Assert.Equal(expected, result);
 		}
 
-        [Fact]
-        public void WhenRenamingAnExtension_ItShouldNotModifyTheFilename()
-        {
-			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Extension);
-			SetCustomText("png");
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
-
-			var result = subject.Rename(Instructions);
-			var expected = new Dictionary<string, string>
-			{
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.png"}
-			};
-
-			Assert.Equal(expected, result);
-		}
-
         private void SetDefaultInstructions()
         {
 			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());

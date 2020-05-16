@@ -36,14 +36,12 @@ namespace Renamer
                 case ComposeMode.CustomText:
                 case ComposeMode.Date:
                 case ComposeMode.DateTime:
+                case ComposeMode.Extension:
                     var composer = ComposerFactory.Build(Instructions.Mode);
                     Proposal = composer.Rename(Instructions);
                     break;
                 case ComposeMode.Truncation:
                     ComposeWithTruncation();
-                    break;
-                case ComposeMode.Extension:
-                    ComposeExtensions();
                     break;
                 default:
                     throw new Exception("Should not reach this point.");
@@ -52,22 +50,6 @@ namespace Renamer
             ControlDuplicateValues(Proposal);
 
             return Proposal;
-        }
-
-        private void ComposeExtensions()
-        {
-            foreach(var file in Instructions.Files)
-            {
-                string newExtension = Instructions.CustomText.Trim('.');
-
-                string path = file.Path;
-                string newPath = Path.GetDirectoryName(path)
-                    + Separator
-                    + Path.GetFileNameWithoutExtension(path)
-                    + $".{newExtension}";
-
-                Proposal.Add(path, newPath);
-            }
         }
 
         private void RemoveHiddenFiles(ref ComposeInstructions instructions)

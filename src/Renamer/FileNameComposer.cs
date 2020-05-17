@@ -37,11 +37,9 @@ namespace Renamer
                 case ComposeMode.Date:
                 case ComposeMode.DateTime:
                 case ComposeMode.Extension:
+                case ComposeMode.Truncation:
                     var composer = ComposerFactory.Build(Instructions.Mode);
                     Proposal = composer.Rename(Instructions);
-                    break;
-                case ComposeMode.Truncation:
-                    ComposeWithTruncation();
                     break;
                 default:
                     throw new Exception("Should not reach this point.");
@@ -62,39 +60,6 @@ namespace Renamer
                 {
                     instructions.Files.RemoveAt(i);
                 }
-            }
-        }
-
-        private void ComposeWithTruncation()
-        {
-            string truncationText = Instructions.CustomText;
-
-            if (!Instructions.Files.Any(x => x.Path.Contains(truncationText)))
-            {
-                Proposal = ErrorMessage("Custom text to truncate not found in any filename.");
-                return;
-            }
-
-            foreach(var file in Instructions.Files)
-            {
-                string path = file.Path;
-                string newPath = string.Empty;
-
-                if(Path.GetFileName(path).Contains(truncationText))
-                {
-                    string directory = Path.GetDirectoryName(path);
-                    var extension = Path.GetExtension(path);
-
-                    int index = path.IndexOf(truncationText);
-                    int count = truncationText.Length;
-                    newPath = path.Remove(index, count);
-                }
-                else
-                {
-                    continue;
-                }
-
-                Proposal.Add(path, newPath);
             }
         }
 

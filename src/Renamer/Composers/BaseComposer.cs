@@ -13,5 +13,10 @@ namespace Renamer.Composers
 
         public Dictionary<string, string> Composition { get; private set; }
         public char Separator { get; }
+
+        internal virtual Dictionary<string, string> ErrorMessage(string message)
+        {
+            return new Dictionary<string, string> { { "Error message", message } };
+        }
     }
 }

@@ -39,14 +39,6 @@ namespace Renamer.Composers
 
             return Composition;
         }
-
-        private Dictionary<string, string> ErrorMessage(string message)
-        {
-            return new Dictionary<string, string>()
-            {
-                { "Error message", message }
-            };
-        }
     }
 }
 

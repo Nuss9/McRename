@@ -7,7 +7,6 @@ namespace Renamer.Composers
 {
     public class FileNameComposer : IRename
 	{
-        private readonly char Separator = Path.DirectorySeparatorChar;
 		private ComposeInstructions Instructions;
 		private Dictionary<string, string> Proposal = new Dictionary<string, string>();
 

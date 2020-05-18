@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Renamer
+namespace Renamer.Composers
 {
     public class FileNameComposer : IRename
 	{

@@ -1,4 +1,5 @@
 ﻿using System;
+using Renamer.Composers;
 
 namespace Renamer
 {
@@ -12,6 +13,12 @@ namespace Renamer
                     return new NumericalComposer();
                 case ComposeMode.CustomText:
                     return new TextComposer();
+                case ComposeMode.DateTime:
+                    return new DateTimeComposer();
+                case ComposeMode.Extension:
+                    return new ExtensionComposer();
+                case ComposeMode.Truncation:
+                    return new TruncationComposer();
                 default:
                     throw new NotImplementedException();
             }

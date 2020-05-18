@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Renamer;
+using Renamer.Composers;
 using Xunit;
 
-namespace RenamerTests
+namespace RenamerTests.Composers
 {
     public class FileNameComposerTests
     {

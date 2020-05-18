@@ -17,4 +17,7 @@
     <ProjectReference Include="..\Renamer\Renamer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Composers\" />
+  </ItemGroup>
 </Project>

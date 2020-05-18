@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Renamer
+namespace Renamer.Composers
 {
     public class DateTimeComposer : ICompose
     {

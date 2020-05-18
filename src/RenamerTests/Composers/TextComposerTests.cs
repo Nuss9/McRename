@@ -2,28 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 using Renamer;
+using Renamer.Composers;
 using Xunit;
 
-namespace RenamerTests
+namespace RenamerTests.Composers
 {
-	public class ExtensionComposerTests
+	public class TextComposerTests
 	{
-		public ExtensionComposer subject = new ExtensionComposer();
+		public TextComposer subject = new TextComposer();
 		private ComposeInstructions Instructions;
 		readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
-		public void WhenRenamingAnExtension_ItShouldNotModifyTheFilename()
+		public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Extension);
-			SetCustomText("png");
-			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
+			SetComposeMode(ComposeMode.CustomText);
+			SetCustomText("Holiday_Pictures");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
 			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.png"}
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(2).txt"},
 			};
 
 			Assert.Equal(expected, result);

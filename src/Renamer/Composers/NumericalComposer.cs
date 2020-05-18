@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Renamer
+namespace Renamer.Composers
 {
     public class NumericalComposer : ICompose
     {

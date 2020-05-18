@@ -2,29 +2,46 @@
 using System.Collections.Generic;
 using System.IO;
 using Renamer;
+using Renamer.Composers;
 using Xunit;
 
-namespace RenamerTests
+namespace RenamerTests.Composers
 {
-	public class TextComposerTests
+	public class TruncationComposerTests
 	{
-		public TextComposer subject = new TextComposer();
+		public TruncationComposer subject = new TruncationComposer();
 		private ComposeInstructions Instructions;
 		readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
-		public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
+		public void WhenTruncationTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.CustomText);
-			SetCustomText("Holiday_Pictures");
+			SetComposeMode(ComposeMode.Truncation);
+			SetCustomText("fileC");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
 			var result = subject.Rename(Instructions);
 			var expected = new Dictionary<string, string>
 			{
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
-				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(2).txt"},
+				{ "Error message", "Custom text to truncate not found in any filename."}
+			};
+
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public void WhenTruncatingText_ItShouldOnlyModifyFilesContainingTheText()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.Truncation);
+			SetCustomText("A");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
+
+			var result = subject.Rename(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}file.txt"},
 			};
 
 			Assert.Equal(expected, result);

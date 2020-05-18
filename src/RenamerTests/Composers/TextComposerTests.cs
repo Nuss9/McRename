@@ -31,6 +31,25 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
+        [Fact]
+		public void WhenRenamingToCustomText_ItShouldNotModifyExtensions()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode.CustomText);
+			SetCustomText("Holiday_Pictures");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
+			Instructions.Files.Add(new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", DateTime.Now));
+
+			var result = subject.Rename(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(2).png"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
 		private void SetDefaultInstructions()
 		{
 			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());

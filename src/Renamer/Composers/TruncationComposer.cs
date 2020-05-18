@@ -4,19 +4,11 @@ using System.Linq;
 
 namespace Renamer.Composers
 {
-    public class TruncationComposer : ICompose
+    public class TruncationComposer : BaseComposer, ICompose
     {
-        private readonly char Separator;
-
-        public TruncationComposer()
-        {
-            Separator = Path.DirectorySeparatorChar;
-        }
-
         public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
             string truncationText = instructions.CustomText;
-            var proposal = new Dictionary<string, string>();
 
             if (!instructions.Files.Any(x => x.Path.Contains(truncationText)))
             {
@@ -42,10 +34,10 @@ namespace Renamer.Composers
                     continue;
                 }
 
-                proposal.Add(path, newPath);
+                Composition.Add(path, newPath);
             }
 
-            return proposal;
+            return Composition;
         }
 
         private Dictionary<string, string> ErrorMessage(string message)

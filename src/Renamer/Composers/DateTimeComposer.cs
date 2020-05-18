@@ -4,19 +4,11 @@ using System.Linq;
 
 namespace Renamer.Composers
 {
-    public class DateTimeComposer : ICompose
+    public class DateTimeComposer : BaseComposer, ICompose
     {
-        private readonly char Separator;
-
-        public DateTimeComposer()
-        {
-            Separator = Path.DirectorySeparatorChar;
-        }
-
         public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
             int duplicateCounter = 1;
-            var proposal = new Dictionary<string, string>();
 
             foreach (var file in instructions.Files)
             {
@@ -35,19 +27,19 @@ namespace Renamer.Composers
                 }
                 var creationDate = file.CreationDateTime.ToString(dateFormat);
 
-                if (proposal.Any())
+                if (Composition.Any())
                 {
-                    if (proposal.Values.Last().EndsWith($"{creationDate}{extension}"))
+                    if (Composition.Values.Last().EndsWith($"{creationDate}{extension}"))
                     {
-                        string lastKey = proposal.Keys.Last();
-                        proposal.Remove(lastKey);
-                        proposal.Add(lastKey, $"{directory}{Separator}{creationDate}_({duplicateCounter}){extension}");
+                        string lastKey = Composition.Keys.Last();
+                        Composition.Remove(lastKey);
+                        Composition.Add(lastKey, $"{directory}{Separator}{creationDate}_({duplicateCounter}){extension}");
 
                         duplicateCounter++;
                         creationDate += $"_({duplicateCounter})";
                         duplicateCounter++;
                     }
-                    else if (proposal.Values.Last().Contains(creationDate))
+                    else if (Composition.Values.Last().Contains(creationDate))
                     {
                         creationDate += $"_({duplicateCounter})";
                         duplicateCounter++;
@@ -60,10 +52,10 @@ namespace Renamer.Composers
 
                 string newPath = $"{directory}{Separator}{creationDate}{extension}";
 
-                proposal.Add(path, newPath);
+                Composition.Add(path, newPath);
             }
 
-            return proposal;
+            return Composition;
         }
     }
 }

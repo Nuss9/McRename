@@ -4,19 +4,10 @@ using System.IO;
 
 namespace Renamer.Composers
 {
-    public class NumericalComposer : ICompose
+    public class NumericalComposer : BaseComposer, ICompose
     {
-        private readonly char Separator;
-
-        public NumericalComposer()
-        {
-            Separator = Path.DirectorySeparatorChar;
-        }
-
         public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
-            var proposal = new Dictionary<string, string>();
-
             instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
             for (int i = 0; i < instructions.Files.Count; i++)
@@ -27,10 +18,10 @@ namespace Renamer.Composers
 
                 string newPath = $"{directory}{Separator}{i + 1}{extension}";
 
-                proposal.Add(path, newPath);
+                Composition.Add(path, newPath);
             }
 
-            return proposal;
+            return Composition;
         }
     }
 }

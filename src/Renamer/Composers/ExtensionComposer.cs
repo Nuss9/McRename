@@ -3,19 +3,10 @@ using System.IO;
 
 namespace Renamer.Composers
 {
-    public class ExtensionComposer : ICompose
+    public class ExtensionComposer : BaseComposer, ICompose
     {
-        private readonly char Separator;
-
-        public ExtensionComposer()
-        {
-            Separator = Path.DirectorySeparatorChar;
-        }
-
         public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
-            var proposal = new Dictionary<string, string>();
-
             foreach (var file in instructions.Files)
             {
                 string newExtension = instructions.CustomText.Trim('.');
@@ -26,10 +17,10 @@ namespace Renamer.Composers
                     + Path.GetFileNameWithoutExtension(path)
                     + $".{newExtension}";
 
-                proposal.Add(path, newPath);
+                Composition.Add(path, newPath);
             }
 
-            return proposal;
+            return Composition;
         }
     }
 }

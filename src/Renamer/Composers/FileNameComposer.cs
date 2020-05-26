@@ -28,20 +28,8 @@ namespace Renamer.Composers
 
             Instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
-            switch (Instructions.Mode)
-            {
-                case ComposeMode.Numerical:
-                case ComposeMode.CustomText:
-                case ComposeMode.Date:
-                case ComposeMode.DateTime:
-                case ComposeMode.Extension:
-                case ComposeMode.Truncation:
-                    var composer = ComposerFactory.Build(Instructions.Mode);
-                    Proposal = composer.Rename(Instructions);
-                    break;
-                default:
-                    throw new Exception("Should not reach this point.");
-            }
+            var composer = ComposerFactory.Build(Instructions.Mode);
+            Proposal = composer.Rename(Instructions);
 
             ControlDuplicateValues(Proposal);
 

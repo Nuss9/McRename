@@ -18,14 +18,13 @@ namespace Renamer.Composers
             {
                 return ErrorMessage("Compose mode unknown.");
             }
-            else if (instructions.Files.Count == 0)
+
+            if (instructions.Files.Count == 0)
             {
                 return ErrorMessage("No files found in selected directory.");
             }
-            else
-            {
-                Instructions = instructions;
-            }
+
+            Instructions = instructions;
 
             Instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 

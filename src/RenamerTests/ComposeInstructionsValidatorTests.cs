@@ -48,5 +48,22 @@ namespace RenamerTests
             Assert.Empty(validResult);
             Assert.Equal(expected, invalidResult);
         }
+
+        [Fact]
+        public void WhenFilesListIsEmpty_ItShouldReturnAnError()
+        {
+            var filesEmpty = new List<FileInformation>();
+            var filesNonEmpty = new List<FileInformation> {
+                    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 01, 01, 12, 01, 01)) }
+            ;
+
+            var expected = "No files found in selected directory.";
+
+            var invalidResult = validator.ValidateFilesCount(filesEmpty);
+            var validResult = validator.ValidateFilesCount(filesNonEmpty);
+
+            Assert.Empty(validResult);
+            Assert.Equal(expected, invalidResult);
+        }
     }
 }

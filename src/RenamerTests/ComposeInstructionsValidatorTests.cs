@@ -36,5 +36,17 @@ namespace RenamerTests
 
             Assert.True(instructions.Equals(expected));
         }
+    
+        [Fact]
+        public void WhenComposeModeIsUnknown_ItShouldReturnAnError()
+        {
+            var invalidResult = validator.ValidateMode(ComposeMode.Unknown);
+            var validResult = validator.ValidateMode(ComposeMode.Numerical);
+
+            var expected = "Compose mode unknown.";
+
+            Assert.Empty(validResult);
+            Assert.Equal(expected, invalidResult);
+        }
     }
 }

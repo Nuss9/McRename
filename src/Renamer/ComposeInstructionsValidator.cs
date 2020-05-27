@@ -16,5 +16,15 @@ namespace Renamer
                 }
             }
         }
+        
+        public string ValidateMode(ComposeMode mode)
+        {
+            if(mode == ComposeMode.Unknown)
+            {
+                return "Compose mode unknown.";
+            }
+
+            return string.Empty;
+        }
     }
 }

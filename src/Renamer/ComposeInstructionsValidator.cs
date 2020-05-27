@@ -5,7 +5,26 @@ namespace Renamer
 {
     public class ComposeInstructionsValidator
     {
-        public void RemoveHiddenFiles(ref ComposeInstructions instructions)
+        public (bool isValid, string errorMessage) Validate(ref ComposeInstructions instructions)
+        {
+            RemoveHiddenFiles(ref instructions);
+
+            string errorMessage = ValidateMode(instructions.Mode);
+            if(!string.IsNullOrEmpty(errorMessage))
+            {
+                return (false, errorMessage);
+            }
+
+            errorMessage = ValidateFilesCount(instructions.Files);
+            if(!string.IsNullOrEmpty(errorMessage))
+            {
+                return (false, errorMessage);
+            }
+
+            return (true, string.Empty);
+        }
+
+        private void RemoveHiddenFiles(ref ComposeInstructions instructions)
         {
             for (int i = 0; i < instructions.Files.Count; i++)
             {
@@ -17,8 +36,8 @@ namespace Renamer
                 }
             }
         }
-        
-        public string ValidateMode(ComposeMode mode)
+
+        private string ValidateMode(ComposeMode mode)
         {
             if(mode == ComposeMode.Unknown)
             {
@@ -27,8 +46,8 @@ namespace Renamer
 
             return string.Empty;
         }
-    
-        public string ValidateFilesCount(List<FileInformation> files)
+
+        private string ValidateFilesCount(List<FileInformation> files)
         {
             if(files.Count == 0)
             {

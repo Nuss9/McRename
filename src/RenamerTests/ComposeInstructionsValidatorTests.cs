@@ -32,7 +32,7 @@ namespace RenamerTests
                     new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", new DateTime(2020, 01, 01, 12, 01, 03)),
             });
 
-            validator.RemoveHiddenFiles(ref instructions);
+            validator.Validate(ref instructions);
 
             Assert.True(instructions.Equals(expected));
         }
@@ -40,30 +40,28 @@ namespace RenamerTests
         [Fact]
         public void WhenComposeModeIsUnknown_ItShouldReturnAnError()
         {
-            var invalidResult = validator.ValidateMode(ComposeMode.Unknown);
-            var validResult = validator.ValidateMode(ComposeMode.Numerical);
+            var instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation> {
+                    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 01, 01, 12, 01, 01)),
+                    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", new DateTime(2020, 01, 01, 12, 01, 03)),
+            });
 
-            var expected = "Compose mode unknown.";
+            var result = validator.Validate(ref instructions);
 
-            Assert.Empty(validResult);
-            Assert.Equal(expected, invalidResult);
+            var expected = (false, "Compose mode unknown.");
+
+            Assert.Equal(expected, result);
         }
 
         [Fact]
         public void WhenFilesListIsEmpty_ItShouldReturnAnError()
         {
-            var filesEmpty = new List<FileInformation>();
-            var filesNonEmpty = new List<FileInformation> {
-                    new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", new DateTime(2020, 01, 01, 12, 01, 01)) }
-            ;
+            var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>());
 
-            var expected = "No files found in selected directory.";
+            var expected = (false, "No files found in selected directory.");
 
-            var invalidResult = validator.ValidateFilesCount(filesEmpty);
-            var validResult = validator.ValidateFilesCount(filesNonEmpty);
+            var result = validator.Validate(ref instructions);
 
-            Assert.Empty(validResult);
-            Assert.Equal(expected, invalidResult);
+            Assert.Equal(expected, result);
         }
     }
 }

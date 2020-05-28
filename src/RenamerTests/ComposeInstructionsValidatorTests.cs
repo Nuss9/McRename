@@ -63,5 +63,43 @@ namespace RenamerTests
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void WhenInstructionsAreValid_ItShouldReturnTrue()
+        {
+            var instructions = new ComposeInstructions(
+                ComposeMode.CustomText,
+                new List<FileInformation> {
+                    { new FileInformation(
+                        $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",
+                        new DateTime(2020, 01, 01, 12, 01, 01))
+                    }
+                }
+            );
+
+            var result = validator.Validate(ref instructions);
+
+            Assert.True(result.isValid);
+            Assert.Empty(result.errorMessage);
+        }
+
+        [Fact]
+        public void WhenInstructionsAreInvalid_ItShouldReturnFalse()
+        {
+            var instructions = new ComposeInstructions(
+                ComposeMode.Unknown,
+                new List<FileInformation> {
+                    { new FileInformation(
+                        $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt",
+                        new DateTime(2020, 01, 01, 12, 01, 01))
+                    }
+                }
+            );
+
+            var result = validator.Validate(ref instructions);
+
+            Assert.False(result.isValid);
+            Assert.NotEmpty(result.errorMessage);
+        }
     }
 }

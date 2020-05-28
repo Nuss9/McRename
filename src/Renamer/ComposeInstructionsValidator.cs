@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Renamer
 {
-    public class ComposeInstructionsValidator
+    public class ComposeInstructionsValidator : IValidateComposeInstructions
     {
         public (bool isValid, string errorMessage) Validate(ref ComposeInstructions instructions)
         {

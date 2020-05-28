@@ -12,20 +12,6 @@ namespace Renamer.Composers
 
 		public Dictionary<string, string> Rename(ComposeInstructions instructions)
         {
-            RemoveHiddenFiles(ref instructions);
-
-            if (instructions.Mode == ComposeMode.Unknown)
-            {
-                return ErrorMessage("Compose mode unknown.");
-            }
-
-            if (instructions.Files.Count == 0)
-            {
-                return ErrorMessage("No files found in selected directory.");
-            }
-
-            Instructions = instructions;
-
             Instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
             var composer = ComposerFactory.Build(Instructions.Mode);
@@ -34,19 +20,6 @@ namespace Renamer.Composers
             ControlDuplicateValues(Proposal);
 
             return Proposal;
-        }
-
-        private void RemoveHiddenFiles(ref ComposeInstructions instructions)
-        {
-            for (int i = 0; i < instructions.Files.Count; i++)
-            {
-                string filename = Path.GetFileName(instructions.Files[i].Path);
-
-                if (filename.StartsWith("."))
-                {
-                    instructions.Files.RemoveAt(i);
-                }
-            }
         }
 
         private static void ControlDuplicateValues(Dictionary<string, string> Proposal)

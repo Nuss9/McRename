@@ -1,4 +1,5 @@
-﻿using ConsoleInterface.Texts;
+﻿using System.Collections.Generic;
+using ConsoleInterface.Texts;
 using Microsoft.Extensions.DependencyInjection;
 using Renamer;
 using Renamer.Composers;
@@ -11,13 +12,24 @@ namespace ConsoleInterface
         {
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IRename, FileNameComposer>()
+                .AddSingleton<IValidateComposeInstructions, ComposeInstructionsValidator>()
                 .BuildServiceProvider();
 
             StandardTexts.WelcomeMessage();
             var instructions = PathRewriter.GetInstructions();
 
-            var renamer = serviceProvider.GetService<IRename>();
-			var proposal = renamer.Rename(instructions);
+            var validator = serviceProvider.GetService<IValidateComposeInstructions>();
+            var validation = validator.Validate(ref instructions);
+
+            var proposal = new Dictionary<string, string>();
+
+            if(validation.isValid) {
+                var renamer = serviceProvider.GetService<IRename>();
+			    proposal = renamer.Rename(instructions);
+            }
+            else {
+                proposal.Add("Error message", validation.errorMessage);
+            }
 
             PathRewriter.Rewrite(proposal);
 

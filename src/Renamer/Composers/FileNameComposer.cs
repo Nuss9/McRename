@@ -17,26 +17,7 @@ namespace Renamer.Composers
             var composer = ComposerFactory.Build(Instructions.Mode);
             Proposal = composer.Rename(Instructions);
 
-            ControlDuplicateValues(Proposal);
-
             return Proposal;
         }
-
-        private static void ControlDuplicateValues(Dictionary<string, string> Proposal)
-        {
-            if (Proposal.Values.Distinct().Count() != Proposal.Values.Count())
-            {
-                Proposal.Clear();
-                Proposal.Add("Error message", "Aborted renaming due to duplicates in end result.");
-            }
-        }
-
-		private Dictionary<string, string> ErrorMessage(string message)
-		{
-			return new Dictionary<string, string>()
-			{
-				{ "Error message", message }
-			};
-		}
     }
 }

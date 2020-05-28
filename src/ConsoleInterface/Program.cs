@@ -13,6 +13,7 @@ namespace ConsoleInterface
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IRename, FileNameComposer>()
                 .AddSingleton<IValidateComposeInstructions, ComposeInstructionsValidator>()
+                .AddSingleton<IValidateCompositions, CompositionValidator>()
                 .BuildServiceProvider();
 
             StandardTexts.WelcomeMessage();
@@ -31,7 +32,19 @@ namespace ConsoleInterface
                 proposal.Add("Error message", validation.errorMessage);
             }
 
-            PathRewriter.Rewrite(proposal);
+            var compositionValidator = serviceProvider.GetService<IValidateCompositions>();
+            var compositionValidation = compositionValidator.Validate(proposal);
+
+            if(!compositionValidation.isValid)
+            {
+                PathRewriter.Rewrite(proposal);
+            }
+            else
+            {
+                proposal.Clear();
+                proposal.Add("Error message", compositionValidation.errorMessage);
+                PathRewriter.Rewrite(proposal);
+            }
 
             StandardTexts.Finished();
         }

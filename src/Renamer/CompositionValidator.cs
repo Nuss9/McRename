@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Renamer
 {
-    public class CompositionValidator
+    public class CompositionValidator : IValidateCompositions
     {
         public (bool isValid, string errorMessage) Validate(Dictionary<string, string> composition)
         {

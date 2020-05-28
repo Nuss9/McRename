@@ -11,7 +11,6 @@ namespace ConsoleInterface
         private static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-                .AddSingleton<IRename, FileNameComposer>()
                 .AddSingleton<IValidateComposeInstructions, ComposeInstructionsValidator>()
                 .AddSingleton<IValidateCompositions, CompositionValidator>()
                 .BuildServiceProvider();
@@ -22,28 +21,28 @@ namespace ConsoleInterface
             var validator = serviceProvider.GetService<IValidateComposeInstructions>();
             var validation = validator.Validate(ref instructions);
 
-            var proposal = new Dictionary<string, string>();
+            var composition = new Dictionary<string, string>();
 
             if(validation.isValid) {
-                var renamer = serviceProvider.GetService<IRename>();
-			    proposal = renamer.Rename(instructions);
+                var composer = serviceProvider.GetService<ICompose>();
+			    composition = composer.Rename(instructions);
             }
             else {
-                proposal.Add("Error message", validation.errorMessage);
+                composition.Add("Error message", validation.errorMessage);
             }
 
             var compositionValidator = serviceProvider.GetService<IValidateCompositions>();
-            var compositionValidation = compositionValidator.Validate(proposal);
+            var compositionValidation = compositionValidator.Validate(composition);
 
             if(!compositionValidation.isValid)
             {
-                PathRewriter.Rewrite(proposal);
+                PathRewriter.Rewrite(composition);
             }
             else
             {
-                proposal.Clear();
-                proposal.Add("Error message", compositionValidation.errorMessage);
-                PathRewriter.Rewrite(proposal);
+                composition.Clear();
+                composition.Add("Error message", compositionValidation.errorMessage);
+                PathRewriter.Rewrite(composition);
             }
 
             StandardTexts.Finished();

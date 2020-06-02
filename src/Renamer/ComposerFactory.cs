@@ -3,9 +3,9 @@ using Renamer.Composers;
 
 namespace Renamer
 {
-    public static class ComposerFactory
+    public class ComposerFactory : IBuildComposer
     {
-        public static ICompose Build(ComposeMode mode)
+        public ICompose Build(ComposeMode mode)
         {
             switch (mode)
             {
@@ -19,6 +19,9 @@ namespace Renamer
                     return new ExtensionComposer();
                 case ComposeMode.Truncation:
                     return new TruncationComposer();
+                case ComposeMode.Date:
+                    return new DateTimeComposer();
+                case ComposeMode.Unknown:
                 default:
                     throw new NotImplementedException();
             }

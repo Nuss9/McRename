@@ -2,7 +2,6 @@
 using ConsoleInterface.Texts;
 using Microsoft.Extensions.DependencyInjection;
 using Renamer;
-using Renamer.Composers;
 
 namespace ConsoleInterface
 {
@@ -11,6 +10,7 @@ namespace ConsoleInterface
         private static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
+                .AddSingleton<IBuildComposer, ComposerFactory>()
                 .AddSingleton<IValidateComposeInstructions, ComposeInstructionsValidator>()
                 .AddSingleton<IValidateCompositions, CompositionValidator>()
                 .BuildServiceProvider();
@@ -24,7 +24,8 @@ namespace ConsoleInterface
             var composition = new Dictionary<string, string>();
 
             if(validation.isValid) {
-                var composer = serviceProvider.GetService<ICompose>();
+                var factory = serviceProvider.GetService<IBuildComposer>();
+                var composer = factory.Build(instructions.Mode);
 			    composition = composer.Rename(instructions);
             }
             else {

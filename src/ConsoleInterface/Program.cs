@@ -35,7 +35,7 @@ namespace ConsoleInterface
             var compositionValidator = serviceProvider.GetService<IValidateCompositions>();
             var compositionValidation = compositionValidator.Validate(composition);
 
-            if(!compositionValidation.isValid)
+            if(compositionValidation.isValid)
             {
                 PathRewriter.Rewrite(composition);
             }

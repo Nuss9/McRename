@@ -1,23 +1,40 @@
 ﻿using Renamer;
 using NSubstitute;
 using Xunit;
+using System.Collections.Generic;
 
 namespace RenamerTests
 {
     public class RenameOrchestratorTests
     {
-        [Fact]
-        public void WhenInstantiated_ItShouldContainItsDependencies()
+        RenameOrchestrator subject;
+        public RenameOrchestratorTests()
         {
             var inputValidator = Substitute.For<IValidateComposeInstructions>();
             var composer = Substitute.For<ICompose>();
             var outputValidator = Substitute.For<IValidateComposeInstructions>();
 
-            var subject = new RenameOrchestrator(inputValidator, composer, outputValidator);
+            subject = new RenameOrchestrator(inputValidator, composer, outputValidator);
+        }
 
+        [Fact]
+        public void WhenInstantiated_ItShouldContainItsDependencies()
+        {
             Assert.NotNull(subject.inputValidator);
             Assert.NotNull(subject.composer);
             Assert.NotNull(subject.outputValidator);
+        }
+
+        [Fact]
+        public void WhenOrchestratingValidInstructions_ItShouldCallItsDependenciesInOrder()
+        {
+            var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>());
+
+            _ = subject.Orchestrate(instructions);
+
+            // Assert orchestrator first called inputValidator
+            // Assert orchestrator secondly called composer
+            // Assert orchestrator thirdly called outputValidator
         }
     }
 }

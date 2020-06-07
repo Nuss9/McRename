@@ -1,8 +1,9 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using Renamer.Interfaces;
 
 namespace Renamer
 {
-    public class RenameOrchestrator
+    public class RenameOrchestrator : IOrchestrate
     {
         public object inputValidator;    // Needs to be private
         public object composer;         // Needs to be private
@@ -17,6 +18,11 @@ namespace Renamer
             this.inputValidator = inputValidator;
             this.composer = composer;
             this.outputValidator = outputValidator;
+        }
+
+        public Dictionary<string, string> Orchestrate(ComposeInstructions instructions)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

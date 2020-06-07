@@ -26,7 +26,7 @@ namespace ConsoleInterface
             if(validation.isValid) {
                 var factory = serviceProvider.GetService<IBuildComposer>();
                 var composer = factory.Build(instructions.Mode);
-			    composition = composer.Rename(instructions);
+                composition = composer.Rename(instructions);
             }
             else {
                 composition.Add("Error message", validation.errorMessage);

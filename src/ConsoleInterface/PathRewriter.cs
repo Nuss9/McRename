@@ -25,13 +25,13 @@ namespace ConsoleInterface
                 );
             };
 
-			ComposeMode mode = ComposeMode.Unknown;
+            ComposeMode mode = ComposeMode.Unknown;
 
-			while(mode == ComposeMode.Unknown) {
-				mode = QuestionTexts.RequestMode();
-			}
+            while (mode == ComposeMode.Unknown) {
+                mode = QuestionTexts.RequestMode();
+            }
 
-            if(mode == ComposeMode.CustomText || mode == ComposeMode.Truncation || mode == ComposeMode.Extension) {
+            if (mode == ComposeMode.CustomText || mode == ComposeMode.Truncation || mode == ComposeMode.Extension) {
                 string customText = QuestionTexts.RequestCustomText(mode);
                 return new ComposeInstructions(mode, customText, filesInformation);
             }
@@ -40,11 +40,11 @@ namespace ConsoleInterface
         }
 
         public static void Rewrite(Dictionary<string, string> proposal)
-		{
-			if(proposal.TryGetValue("Error message", out string message)) {
-				StandardTexts.DisplayError(message);
-				StandardTexts.Finished();
-			}
+        {
+            if (proposal.TryGetValue("Error message", out string message)) {
+                StandardTexts.DisplayError(message);
+                StandardTexts.Finished();
+            }
 
             StandardTexts.ProposeFilenameChanges(proposal);
 

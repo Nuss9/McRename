@@ -5,7 +5,7 @@ namespace Renamer
 {
     public class RenameOrchestrator : IOrchestrate
     {
-        public object inputValidator;    // Needs to be private
+        public IValidateComposeInstructions inputValidator;
         public object composer;         // Needs to be private
         public object outputValidator; // Needs to be private
 
@@ -22,7 +22,11 @@ namespace Renamer
 
         public Dictionary<string, string> Orchestrate(ComposeInstructions instructions)
         {
-            throw new System.NotImplementedException();
+            var composition = new Dictionary<string, string>();
+
+            var validation = inputValidator.Validate(ref instructions);
+
+            return composition;
         }
     }
 }

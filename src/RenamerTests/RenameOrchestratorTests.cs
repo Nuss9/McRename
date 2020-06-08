@@ -7,7 +7,8 @@ namespace RenamerTests
 {
     public class RenameOrchestratorTests
     {
-        RenameOrchestrator subject;
+        readonly RenameOrchestrator subject;
+
         public RenameOrchestratorTests()
         {
             var inputValidator = Substitute.For<IValidateComposeInstructions>();
@@ -26,15 +27,13 @@ namespace RenamerTests
         }
 
         [Fact]
-        public void WhenOrchestratingValidInstructions_ItShouldCallItsDependenciesInOrder()
+        public void WhenOrchestratingInvalidInstructions_ItShouldCallInputValidatorOnce()
         {
             var instructions = new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation>());
 
             _ = subject.Orchestrate(instructions);
 
-            // Assert orchestrator first called inputValidator
-            // Assert orchestrator secondly called composer
-            // Assert orchestrator thirdly called outputValidator
+            subject.inputValidator.Received(1).Validate(ref instructions);
         }
     }
 }

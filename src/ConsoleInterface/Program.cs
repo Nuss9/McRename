@@ -18,6 +18,8 @@ namespace ConsoleInterface
             StandardTexts.WelcomeMessage();
             var instructions = PathRewriter.GetInstructions();
 
+            // Orchestrator responsibility start
+
             var validator = serviceProvider.GetService<IValidateComposeInstructions>();
             var validation = validator.Validate(ref instructions);
 
@@ -35,7 +37,10 @@ namespace ConsoleInterface
             var compositionValidator = serviceProvider.GetService<IValidateCompositions>();
             var compositionValidation = compositionValidator.Validate(composition);
 
-            if(compositionValidation.isValid)
+            // Modify return type of compositionValidator to Dictionary<string, string>
+            // Orchestrator responsibility end
+
+            if (compositionValidation.isValid)
             {
                 PathRewriter.Rewrite(composition);
             }

@@ -1,5 +1,7 @@
-﻿using NSubstitute;
+﻿using System.Collections.Generic;
+using NSubstitute;
 using Renamer;
+using Renamer.Interfaces;
 using Xunit;
 
 namespace RenamerTests
@@ -9,7 +11,17 @@ namespace RenamerTests
         [Fact]
         public void WhenOrchestrating_ItShouldValidateInputFirst()
         {
+            var inputValidator = Substitute.For<IValidateComposeInstructions>();
+            var orchestrator = new RenameOrchestrator(inputValidator);
 
+            var instructions = new ComposeInstructions(
+                    ComposeMode.Unknown,
+                    new List<FileInformation>()
+                );
+
+            _ = orchestrator.Orchestrate(instructions);
+
+            inputValidator.Received(1).Validate(ref instructions);
         }
 
         [Fact]

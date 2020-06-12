@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Renamer
+namespace Renamer.Interfaces
 {
     public interface ICompose
     {

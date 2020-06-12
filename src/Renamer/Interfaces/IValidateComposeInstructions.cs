@@ -1,4 +1,4 @@
-namespace Renamer
+namespace Renamer.Interfaces
 {
     public interface IValidateComposeInstructions
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Renamer.Composers;
+using Renamer.Interfaces;
 
 namespace Renamer
 {

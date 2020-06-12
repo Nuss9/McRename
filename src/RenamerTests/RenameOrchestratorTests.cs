@@ -9,13 +9,20 @@ namespace RenamerTests
 {
     public class RenameOrchestratorTests
     {
+        private readonly IValidateComposeInstructions inputValidator;
+        private readonly IBuildComposer composerFactory;
+        private readonly RenameOrchestrator subject;
+
+        public RenameOrchestratorTests()
+        {
+            inputValidator = Substitute.For<IValidateComposeInstructions>();
+            composerFactory = Substitute.For<IBuildComposer>();
+            subject = new RenameOrchestrator(inputValidator, composerFactory);
+        }
+
         [Fact]
         public void WhenOrchestrating_ItShouldValidateInputFirst()
         {
-            var inputValidator = Substitute.For<IValidateComposeInstructions>();
-            var composerFactory = Substitute.For<IBuildComposer>();
-            var subject = new RenameOrchestrator(inputValidator, composerFactory);
-
             var invalidInstructions = GetInvalidInstructions();
 
             _ = subject.Orchestrate(invalidInstructions);
@@ -26,10 +33,6 @@ namespace RenamerTests
         [Fact]
         public void WhenOrchestratingValidInput_ItShouldComposeNext()
         {
-            var inputValidator = Substitute.For<IValidateComposeInstructions>();
-            var composerFactory = Substitute.For<IBuildComposer>();
-            var subject = new RenameOrchestrator(inputValidator, composerFactory);
-
             var instructions = GetValidInstructions();
             inputValidator.Validate(ref instructions).ReturnsForAnyArgs((true, ""));
             _ = subject.Orchestrate(instructions);

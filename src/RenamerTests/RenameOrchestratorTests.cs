@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NSubstitute;
+﻿using NSubstitute;
 using Renamer;
 using Renamer.Interfaces;
 using Xunit;
@@ -11,10 +10,7 @@ namespace RenamerTests
         private readonly IValidateComposeInstructions inputValidator;
         private readonly IBuildComposer composerFactory;
         private readonly RenameOrchestrator subject;
-        private ComposeInstructions instructions = new ComposeInstructions(
-            ComposeMode.Unknown,
-            new List<FileInformation>()
-            );
+        private ComposeInstructions instructions = new ComposeInstructions();
 
         public RenameOrchestratorTests()
         {

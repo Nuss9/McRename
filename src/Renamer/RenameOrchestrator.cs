@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Renamer.Interfaces;
 
 namespace Renamer
 {
     public class RenameOrchestrator : IOrchestrate
     {
-        private IValidateComposeInstructions inputValidator;
-        private IBuildComposer composerFactory;
+        private readonly IValidateComposeInstructions inputValidator;
+        private readonly IBuildComposer composerFactory;
         private ICompose composer;
 
         public RenameOrchestrator(IValidateComposeInstructions inputValidator, IBuildComposer composerFactory)

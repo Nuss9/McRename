@@ -20,7 +20,7 @@ namespace RenamerTests.Composers
 			SetComposeMode(ComposeMode.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231.txt"},
@@ -43,7 +43,7 @@ namespace RenamerTests.Composers
 
 			});
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201230.txt"},
@@ -63,7 +63,7 @@ namespace RenamerTests.Composers
 			SetComposeMode(ComposeMode.DateTime);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}20201231_123001.txt"},

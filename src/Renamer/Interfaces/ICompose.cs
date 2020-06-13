@@ -4,6 +4,6 @@ namespace Renamer.Interfaces
 {
     public interface ICompose
     {
-        Dictionary<string, string> Rename(ComposeInstructions instructions);
+        Dictionary<string, string> Compose(ComposeInstructions instructions);
     }
 }

@@ -6,7 +6,7 @@ namespace Renamer.Composers
 {
     public class TextComposer : BaseComposer, ICompose
     {
-        public Dictionary<string, string> Rename(ComposeInstructions instructions)
+        public Dictionary<string, string> Compose(ComposeInstructions instructions)
         {
             string customText = instructions.CustomText;
             string directory = Path.GetDirectoryName(instructions.Files[0].Path);

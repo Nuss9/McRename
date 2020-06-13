@@ -29,7 +29,7 @@ namespace Renamer
 
             composer = composerFactory.Build(instructions.Mode);
             
-            composition = composer.Rename(instructions);
+            composition = composer.Compose(instructions);
 
             return composition;
         }

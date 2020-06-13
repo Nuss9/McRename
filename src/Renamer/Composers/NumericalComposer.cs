@@ -7,7 +7,7 @@ namespace Renamer.Composers
 {
     public class NumericalComposer : BaseComposer, ICompose
     {
-        public Dictionary<string, string> Rename(ComposeInstructions instructions)
+        public Dictionary<string, string> Compose(ComposeInstructions instructions)
         {
             instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 

@@ -7,7 +7,7 @@ namespace Renamer.Composers
 {
     public class DateTimeComposer : BaseComposer, ICompose
     {
-        public Dictionary<string, string> Rename(ComposeInstructions instructions)
+        public Dictionary<string, string> Compose(ComposeInstructions instructions)
         {
             int duplicateCounter = 1;
 

@@ -21,7 +21,7 @@ namespace RenamerTests.Composers
 			SetCustomText("fileC");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ "Error message", "Custom text to truncate not found in any filename."}
@@ -38,7 +38,7 @@ namespace RenamerTests.Composers
 			SetCustomText("A");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}file.txt"},

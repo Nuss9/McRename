@@ -21,7 +21,7 @@ namespace RenamerTests.Composers
 			SetCustomText("png");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.png"}

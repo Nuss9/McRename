@@ -21,7 +21,7 @@ namespace RenamerTests.Composers
 			SetCustomText("Holiday_Pictures");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},
@@ -40,7 +40,7 @@ namespace RenamerTests.Composers
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
 			Instructions.Files.Add(new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", DateTime.Now));
 
-			var result = subject.Rename(Instructions);
+			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_Pictures_(1).txt"},

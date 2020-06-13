@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build src/McRename.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test src/Renamertests/RenamerTests.csproj --no-restore --verbosity normal
+      run: dotnet test src/RenamerTests/RenamerTests.csproj --no-restore --verbosity normal

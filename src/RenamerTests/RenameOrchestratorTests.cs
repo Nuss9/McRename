@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NSubstitute;
 using Renamer;
 using Renamer.Interfaces;
@@ -12,6 +11,10 @@ namespace RenamerTests
         private readonly IValidateComposeInstructions inputValidator;
         private readonly IBuildComposer composerFactory;
         private readonly RenameOrchestrator subject;
+        private ComposeInstructions instructions = new ComposeInstructions(
+            ComposeMode.Unknown,
+            new List<FileInformation>()
+            );
 
         public RenameOrchestratorTests()
         {
@@ -23,17 +26,14 @@ namespace RenamerTests
         [Fact]
         public void WhenOrchestrating_ItShouldValidateInputFirst()
         {
-            var invalidInstructions = GetInvalidInstructions();
+            _ = subject.Orchestrate(instructions);
 
-            _ = subject.Orchestrate(invalidInstructions);
-
-            inputValidator.Received(1).Validate(ref invalidInstructions);
+            inputValidator.Received(1).Validate(ref instructions);
         }
         
         [Fact]
         public void WhenOrchestratingValidInput_ItShouldComposeNext()
         {
-            var instructions = GetValidInstructions();
             inputValidator.Validate(ref instructions).ReturnsForAnyArgs((true, ""));
             _ = subject.Orchestrate(instructions);
 
@@ -52,17 +52,5 @@ namespace RenamerTests
         {
 
         }
-
-        private ComposeInstructions GetInvalidInstructions() =>
-            new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
-
-        private ComposeInstructions GetValidInstructions() =>
-            new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation> {
-                    new FileInformation(
-                        "/Users/JohnDoe/Desktop/fileA.txt",
-                        new DateTime(2020, 01, 01, 12, 00, 00)
-                    )
-                }
-            );
     }
 }

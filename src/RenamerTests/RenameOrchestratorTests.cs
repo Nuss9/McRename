@@ -81,20 +81,32 @@ namespace RenamerTests
             var result = subject.Orchestrate(invalidInstructions);
 
             inputValidator.Received(1).Validate(ref invalidInstructions);
-            composerFactory.Received(0).Build(Arg.Any<ComposeMode>());
+            composerFactory.DidNotReceive().Build(Arg.Any<ComposeMode>());
+            outputValidator.DidNotReceive().Validate(Arg.Any<Dictionary<string, string>>());
             Assert.Equal(expected, result);
         }
 
         [Fact]
         public void WhenOutputValidatorFindsAnError_ItShouldBeReturnedByOrchestrator()
         {
+            var expected = new Dictionary<string, string> { { "Error", "Duplicate filenames generated." } };
 
+            var invalidInstructions = GetValidInstructions();
+            inputValidator.Validate(ref invalidInstructions).Returns((true, ""));
+            outputValidator.Validate(Arg.Any<Dictionary<string, string>>()).Returns((false, "Duplicate filenames generated."));
+
+            var result = subject.Orchestrate(invalidInstructions);
+
+            inputValidator.Received(1).Validate(ref invalidInstructions);
+            composerFactory.Received(1).Build(Arg.Any<ComposeMode>());
+            outputValidator.Received(1).Validate(Arg.Any<Dictionary<string, string>>());
+            Assert.Equal(expected, result);
         }
 
-        private ComposeInstructions GetInvalidInstructions() =>
+        private static ComposeInstructions GetInvalidInstructions() =>
             new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 
-        private ComposeInstructions GetValidInstructions() =>
+        private static ComposeInstructions GetValidInstructions() =>
             new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation> {
                     new FileInformation(
                         "/Users/JohnDoe/Desktop/fileA.txt",

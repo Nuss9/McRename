@@ -19,27 +19,22 @@ namespace Renamer
 
         public Dictionary<string, string> Orchestrate(ComposeInstructions instructions)
         {
-            var composition = new Dictionary<string, string>();
-
             var inputValidation = inputValidator.Validate(ref instructions);
 
             if (!inputValidation.isValid)
             {
-                composition.Add("Error", inputValidation.errorMessage);
-                
-                return composition;
+                return new Dictionary<string, string> {{"Error", inputValidation.errorMessage}};
             }
 
             composer = composerFactory.Build(instructions.Mode);
-            
-            composition = composer.Compose(instructions);
+
+            var composition = composer.Compose(instructions);
 
             var outputValidation = outputValidator.Validate(composition);
 
             if (!outputValidation.isValid)
             {
-                return composition;
-                // Validate error message!
+                return new Dictionary<string, string> {{ "Error", outputValidation.errorMessage }};
             }
 
             return composition;

@@ -7,28 +7,39 @@ namespace Renamer
     {
         private readonly IValidateComposeInstructions inputValidator;
         private readonly IBuildComposer composerFactory;
+        private readonly IValidateCompositions outputValidator;
         private ICompose composer;
 
-        public RenameOrchestrator(IValidateComposeInstructions inputValidator, IBuildComposer composerFactory)
+        public RenameOrchestrator(IValidateComposeInstructions inputValidator, IBuildComposer composerFactory, IValidateCompositions outputValidator)
         {
             this.inputValidator = inputValidator;
             this.composerFactory = composerFactory;
+            this.outputValidator = outputValidator;
         }
 
         public Dictionary<string, string> Orchestrate(ComposeInstructions instructions)
         {
             var composition = new Dictionary<string, string>();
 
-            var validation = inputValidator.Validate(ref instructions);
+            var inputValidation = inputValidator.Validate(ref instructions);
 
-            if (!validation.isValid)
+            if (!inputValidation.isValid)
             {
                 return composition;
+                // Validate error message!
             }
 
             composer = composerFactory.Build(instructions.Mode);
             
             composition = composer.Compose(instructions);
+
+            var outputValidation = outputValidator.Validate(composition);
+
+            if (!outputValidation.isValid)
+            {
+                return composition;
+                // Validate error message!
+            }
 
             return composition;
         }

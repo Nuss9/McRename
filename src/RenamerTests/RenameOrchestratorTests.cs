@@ -11,13 +11,15 @@ namespace RenamerTests
     {
         private readonly IValidateComposeInstructions inputValidator;
         private readonly IBuildComposer composerFactory;
+        private readonly IValidateCompositions outputValidator;
         private readonly RenameOrchestrator subject;
 
         public RenameOrchestratorTests()
         {
             inputValidator = Substitute.For<IValidateComposeInstructions>();
             composerFactory = Substitute.For<IBuildComposer>();
-            subject = new RenameOrchestrator(inputValidator, composerFactory);
+            outputValidator = Substitute.For<IValidateCompositions>();
+            subject = new RenameOrchestrator(inputValidator, composerFactory, outputValidator);
         }
 
         [Fact]
@@ -58,7 +60,14 @@ namespace RenamerTests
         [Fact]
         public void WhenOrchestrating_ItShouldValidateOutputLast()
         {
+            var invalidInstructions = GetValidInstructions();
+            inputValidator.Validate(ref invalidInstructions).Returns((true, ""));
 
+            _ = subject.Orchestrate(invalidInstructions);
+
+            inputValidator.Received(1).Validate(ref invalidInstructions);
+            composerFactory.Received(1).Build(Arg.Any<ComposeMode>());
+            outputValidator.Received(1).Validate(Arg.Any<Dictionary<string, string>>());
         }
 
         private ComposeInstructions GetInvalidInstructions() =>

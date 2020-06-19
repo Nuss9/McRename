@@ -1,4 +1,6 @@
-﻿using NSubstitute;
+﻿using System;
+using System.Collections.Generic;
+using NSubstitute;
 using Renamer;
 using Renamer.Interfaces;
 using Xunit;
@@ -10,7 +12,6 @@ namespace RenamerTests
         private readonly IValidateComposeInstructions inputValidator;
         private readonly IBuildComposer composerFactory;
         private readonly RenameOrchestrator subject;
-        private ComposeInstructions instructions = new ComposeInstructions();
 
         public RenameOrchestratorTests()
         {
@@ -22,19 +23,23 @@ namespace RenamerTests
         [Fact]
         public void WhenOrchestrating_ItShouldValidateInputFirst()
         {
-            _ = subject.Orchestrate(instructions);
+            var invalidInstructions = GetInvalidInstructions();
 
-            inputValidator.Received(1).Validate(ref instructions);
+            _ = subject.Orchestrate(invalidInstructions);
+
+            inputValidator.Received(1).Validate(ref invalidInstructions);
         }
         
         [Fact]
         public void WhenOrchestratingValidInput_ItShouldComposeNext()
         {
-            inputValidator.Validate(ref instructions).ReturnsForAnyArgs((true, ""));
-            _ = subject.Orchestrate(instructions);
+            var validInstructions = GetValidInstructions();
 
-            inputValidator.Received(1).Validate(ref instructions);
-            composerFactory.Received(1).Build(instructions.Mode);
+            inputValidator.Validate(ref validInstructions).ReturnsForAnyArgs((true, ""));
+            _ = subject.Orchestrate(validInstructions);
+
+            inputValidator.Received(1).Validate(ref validInstructions);
+            composerFactory.Received(1).Build(validInstructions.Mode);
             // Check also composer.Received(1).Compose(instructions);
         }
 
@@ -49,5 +54,17 @@ namespace RenamerTests
         {
 
         }
+
+        private ComposeInstructions GetInvalidInstructions() =>
+            new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
+
+        private ComposeInstructions GetValidInstructions() =>
+            new ComposeInstructions(ComposeMode.Numerical, new List<FileInformation> {
+                    new FileInformation(
+                        "/Users/JohnDoe/Desktop/fileA.txt",
+                        new DateTime(2020, 01, 01, 12, 00, 00)
+                    )
+                }
+            );
     }
 }

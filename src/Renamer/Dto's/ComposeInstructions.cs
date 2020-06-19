@@ -7,13 +7,7 @@ namespace Renamer
 		public ComposeMode Mode { get; set; }
 		public string CustomText { get; set; }
 		public List<FileInformation> Files { get; set; }
-
-		public ComposeInstructions()
-		{
-			Mode = ComposeMode.Unknown;
-			Files = new List<FileInformation>();
-		}
-
+		
 		public ComposeInstructions(ComposeMode mode, List<FileInformation> files)
 		{
 			Mode = mode;

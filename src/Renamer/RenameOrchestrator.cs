@@ -25,8 +25,9 @@ namespace Renamer
 
             if (!inputValidation.isValid)
             {
+                composition.Add("Error", inputValidation.errorMessage);
+                
                 return composition;
-                // Validate error message!
             }
 
             composer = composerFactory.Build(instructions.Mode);

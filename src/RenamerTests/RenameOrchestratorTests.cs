@@ -42,7 +42,6 @@ namespace RenamerTests
 
             inputValidator.Received(1).Validate(ref validInstructions);
             composerFactory.Received(1).Build(validInstructions.Mode);
-            // Check also composer.Received(1).Compose(instructions);
         }
 
         [Fact]

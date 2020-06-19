@@ -46,7 +46,13 @@ namespace RenamerTests
         [Fact]
         public void WhenOrchestratingInvalidInput_ItShouldNotCompose()
         {
+            var invalidInstructions = GetInvalidInstructions();
+            inputValidator.Validate(ref invalidInstructions).Returns((false, "Unknown compose mode."));
 
+            _ = subject.Orchestrate(invalidInstructions);
+
+            inputValidator.Received(1).Validate(ref invalidInstructions);
+            composerFactory.Received(0).Build(Arg.Any<ComposeMode>());
         }
 
         [Fact]

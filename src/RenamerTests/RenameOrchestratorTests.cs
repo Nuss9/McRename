@@ -70,6 +70,18 @@ namespace RenamerTests
             outputValidator.Received(1).Validate(Arg.Any<Dictionary<string, string>>());
         }
 
+        [Fact]
+        public void WhenInputValidatorFindsAnError_ItShouldBeReturnedByOrchestrator()
+        {
+
+        }
+
+        [Fact]
+        public void WhenOutputValidatorFindsAnError_ItShouldBeReturnedByOrchestrator()
+        {
+
+        }
+
         private ComposeInstructions GetInvalidInstructions() =>
             new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 

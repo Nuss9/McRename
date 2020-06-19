@@ -23,7 +23,7 @@ namespace Renamer
 
             if (!inputValidation.isValid)
             {
-                return new Dictionary<string, string> {{"Error", inputValidation.errorMessage}};
+                return Error(inputValidation.errorMessage);
             }
 
             composer = composerFactory.Build(instructions.Mode);
@@ -34,10 +34,13 @@ namespace Renamer
 
             if (!outputValidation.isValid)
             {
-                return new Dictionary<string, string> {{ "Error", outputValidation.errorMessage }};
+                return Error(outputValidation.errorMessage);
             }
 
             return composition;
         }
+
+        private static Dictionary<string, string> Error(string errorMessage) =>
+            new Dictionary<string, string> { { "Error", errorMessage } };
     }
 }

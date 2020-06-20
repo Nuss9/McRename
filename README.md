@@ -16,3 +16,4 @@ The following **options** are available to rename the files:
 
 **Note** that it's possible to create duplicate file names. In these cases, the program will automatically append a number between brackets. *E.g. fileA_(1).png, fileA_(2).png*
 
+![Program example](https://github.com/[Nuss9]/[McRename]/blob/[master]/Screenshot.png?raw=true)

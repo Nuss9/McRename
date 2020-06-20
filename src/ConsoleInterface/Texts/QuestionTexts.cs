@@ -5,9 +5,9 @@ using Renamer;
 
 namespace ConsoleInterface.Texts
 {
-    public class QuestionTexts
+    internal class QuestionTexts
     {
-        public static string RequestDirectory()
+        internal static string RequestDirectory()
         {
             while(true) {
                 Console.Write("Please provide the desktop folder to rename its content: ");
@@ -24,7 +24,7 @@ namespace ConsoleInterface.Texts
             }
 		}
 
-        public static ComposeMode RequestMode()
+        internal static ComposeMode RequestMode()
         {
             while (true)
             {
@@ -107,7 +107,7 @@ namespace ConsoleInterface.Texts
             }
         }
 
-        public static bool AskPermission()
+        internal static bool AskPermission()
         {
             while(true) {
                 Console.WriteLine("");

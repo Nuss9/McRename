@@ -5,9 +5,9 @@ using System.Threading;
 
 namespace ConsoleInterface.Texts
 {
-    public static class StandardTexts
+	internal static class StandardTexts
     {
-        public static void WelcomeMessage()
+		internal static void WelcomeMessage()
         {
 			Console.WriteLine("");
 			Console.WriteLine("   * — — — — — — — — — — — — — — — — — — — — — — — — — — — *");
@@ -28,7 +28,7 @@ namespace ConsoleInterface.Texts
 		}
 
 
-		public static void SimulateWaitingWithMessage(string message)
+		internal static void SimulateWaitingWithMessage(string message)
 		{
 			Thread.Sleep(500);
 			Console.Write($"{message}");
@@ -42,7 +42,7 @@ namespace ConsoleInterface.Texts
 			Thread.Sleep(2000);
 		}
 
-		public static void DisplayError(string errorMessage)
+		internal static void DisplayError(string errorMessage)
 		{
 			SimulateWaitingWithMessage("An error occurred");
 			Console.WriteLine(errorMessage);
@@ -51,14 +51,14 @@ namespace ConsoleInterface.Texts
 			Console.WriteLine("");
 		}
 
-        internal static void SuccessfullRewrite()
+		internal static void SuccessfullRewrite()
         {
 			Console.WriteLine("");
 			Console.WriteLine("Successfully changed file names.");
 			Thread.Sleep(2000);
 		}
 
-        public static void Finished()
+		internal static void Finished()
 		{
 			Console.WriteLine("----------------------------");
 			Console.WriteLine("      Finished.");
@@ -67,7 +67,7 @@ namespace ConsoleInterface.Texts
 			Environment.Exit(0);
 		}
 
-        public static void ProposeFilenameChanges(Dictionary<string, string> proposal)
+		internal static void ProposeFilenameChanges(Dictionary<string, string> proposal)
         {
             Console.WriteLine("   Proposing the following name changes:");
 			Console.WriteLine("");

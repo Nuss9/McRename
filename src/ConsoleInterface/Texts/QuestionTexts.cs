@@ -141,7 +141,7 @@ namespace ConsoleInterface.Texts
             }
         }
 
-        internal static bool AskPermission()
+        internal static bool AskPermissionToRename()
         {
             while(true) {
                 Console.WriteLine("");

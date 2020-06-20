@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
-using ConsoleInterface.Texts;
+using static ConsoleInterface.Texts.QuestionTexts;
+using static ConsoleInterface.Texts.StandardTexts;
 
 namespace ConsoleInterface
 {
@@ -8,18 +9,23 @@ namespace ConsoleInterface
     {
         internal static void Rewrite(Dictionary<string, string> proposal)
         {
-            if (proposal.TryGetValue("Error message", out string message)) {
-                StandardTexts.DisplayError(message);
-                StandardTexts.Finished();
-            }
+            CheckForErrorMessage(proposal);
 
-            StandardTexts.ProposeFilenameChanges(proposal);
+            ProposeFilenameChanges(proposal);
 
-            var execute = QuestionTexts.AskPermission();
-
-            if(execute) {
+            if (AskPermissionToRename())
+            {
                 RewriteFilePaths(proposal);
-                StandardTexts.SuccessfullRewrite();
+                SuccessfullRewrite();
+            }
+        }
+
+        private static void CheckForErrorMessage(Dictionary<string, string> proposal)
+        {
+            if (proposal.TryGetValue("Error message", out string message))
+            {
+                DisplayError(message);
+                Finished();
             }
         }
 

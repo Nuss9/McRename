@@ -124,5 +124,27 @@ namespace ConsoleInterface.Texts
                 StandardTexts.SimulateWaitingWithMessage("Error parsing input. Retry.");
             }
         }
+
+        internal static bool RenameAgain()
+        {
+            while (true)
+            {
+                Console.WriteLine("");
+                Console.Write("Continue renaming? (Y/n): ");
+                var answer = Console.ReadLine().ToLower();
+
+                if (answer == string.Empty || answer == "y")
+                {
+                    Console.WriteLine("");
+                    return true;
+                }
+                else if (answer == "n")
+                {
+                    return false;
+                }
+
+                StandardTexts.SimulateWaitingWithMessage("Error parsing input. Retry.");
+            }
+        }
     }
 }

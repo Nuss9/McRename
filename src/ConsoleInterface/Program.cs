@@ -17,12 +17,21 @@ namespace ConsoleInterface
                 .BuildServiceProvider();
 
             StandardTexts.WelcomeMessage();
-            var instructions = PathRewriter.GetInstructions();
 
+            bool repeat = true;
             var orchestrator = serviceProvider.GetService<IOrchestrate>();
-            var composition = orchestrator.Orchestrate(instructions);
 
-            PathRewriter.Rewrite(composition);
+            while(repeat)
+            {
+                var instructions = PathRewriter.GetInstructions();
+
+                var composition = orchestrator.Orchestrate(instructions);
+
+                PathRewriter.Rewrite(composition);
+
+                repeat = QuestionTexts.RenameAgain();
+            }
+
 
             StandardTexts.Finished();
         }

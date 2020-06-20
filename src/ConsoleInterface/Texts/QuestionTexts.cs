@@ -141,30 +141,12 @@ namespace ConsoleInterface.Texts
             }
         }
 
-        internal static bool AskPermissionToRename()
-        {
-            while(true) {
-                Console.WriteLine("");
-                Console.Write("Accept the proposed name changes (Y/n)? ");
-                var answer = Console.ReadLine().ToLower();
-
-                if(answer == string.Empty || answer == "y") {
-                    return true;
-                }
-                else if(answer == "n") {
-                    return false;
-                }
-
-                StandardTexts.SimulateWaitingWithMessage("Error parsing input. Retry.");
-            }
-        }
-
-        internal static bool RenameAgain()
+        internal static bool AskForBoolean(string question)
         {
             while (true)
             {
                 Console.WriteLine("");
-                Console.Write("Continue renaming? (Y/n): ");
+                Console.Write($"{question} (Y/n) ");
                 var answer = Console.ReadLine().ToLower();
 
                 if (answer == string.Empty || answer == "y")

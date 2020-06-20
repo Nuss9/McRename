@@ -13,7 +13,7 @@ namespace ConsoleInterface
 
             ProposeFilenameChanges(proposal);
 
-            if (AskPermissionToRename())
+            if (AskForBoolean("Accept the proposed name changes?"))
             {
                 RewriteFilePaths(proposal);
                 SuccessfullRewrite();

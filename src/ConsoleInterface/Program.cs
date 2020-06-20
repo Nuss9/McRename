@@ -29,7 +29,7 @@ namespace ConsoleInterface
 
                 PathRewriter.Rewrite(composition);
 
-                repeat = QuestionTexts.RenameAgain();
+                repeat = QuestionTexts.AskForBoolean("Continue renaming?");
             }
 
 

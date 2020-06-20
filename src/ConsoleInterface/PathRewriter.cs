@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using ConsoleInterface.Texts;
 using Renamer;
 
@@ -52,13 +50,8 @@ namespace ConsoleInterface
 
             if(execute) {
                 RewriteFilePaths(proposal);
+                StandardTexts.SuccessfullRewrite();
             }
-
-            Console.WriteLine("");
-            Console.WriteLine("Program finished.");
-            Console.WriteLine("Exiting...");
-            Thread.Sleep(2000);
-            Environment.Exit(0);
         }
 
         private static void RewriteFilePaths(Dictionary<string, string> proposal)

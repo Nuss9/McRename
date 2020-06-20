@@ -51,7 +51,14 @@ namespace ConsoleInterface.Texts
 			Console.WriteLine("");
 		}
 
-		public static void Finished()
+        internal static void SuccessfullRewrite()
+        {
+			Console.WriteLine("");
+			Console.WriteLine("Successfully changed file names.");
+			Thread.Sleep(2000);
+		}
+
+        public static void Finished()
 		{
 			Console.WriteLine("----------------------------");
 			Console.WriteLine("      Finished.");

@@ -23,7 +23,7 @@ namespace ConsoleInterface
 
             while(repeat)
             {
-                var instructions = PathRewriter.GetInstructions();
+                var instructions = QuestionTexts.GetInstructions();
 
                 var composition = orchestrator.Orchestrate(instructions);
 

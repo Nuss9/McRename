@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Renamer;
@@ -7,6 +8,39 @@ namespace ConsoleInterface.Texts
 {
     internal class QuestionTexts
     {
+        internal static ComposeInstructions GetInstructions()
+        {
+            string targetDirectory = RequestDirectory();
+            string[] fileEntries = Directory.GetFiles(targetDirectory);
+
+            var filesInformation = new List<FileInformation>();
+
+            foreach (string file in fileEntries)
+            {
+                filesInformation.Add(
+                    new FileInformation(
+                        file,
+                        File.GetCreationTime(file)
+                    )
+                );
+            };
+
+            ComposeMode mode = ComposeMode.Unknown;
+
+            while (mode == ComposeMode.Unknown)
+            {
+                mode = RequestMode();
+            }
+
+            if (mode == ComposeMode.CustomText || mode == ComposeMode.Truncation || mode == ComposeMode.Extension)
+            {
+                string customText = RequestCustomText(mode);
+                return new ComposeInstructions(mode, customText, filesInformation);
+            }
+
+            return new ComposeInstructions(mode, filesInformation);
+        }
+
         internal static string RequestDirectory()
         {
             while(true) {

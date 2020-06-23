@@ -24,7 +24,7 @@ namespace RenamerTests.Composers
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
-				{ "Error message", "Custom text to truncate not found in any filename."}
+				{ "Error", "Custom text to truncate not found in any filename."}
 			};
 
 			Assert.Equal(expected, result);

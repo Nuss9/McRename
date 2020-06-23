@@ -16,7 +16,7 @@ namespace Renamer.Composers
 
         internal virtual Dictionary<string, string> ErrorMessage(string message)
         {
-            return new Dictionary<string, string> { { "Error message", message } };
+            return new Dictionary<string, string> { { "Error", message } };
         }
     }
 }

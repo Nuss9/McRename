@@ -22,7 +22,7 @@ namespace ConsoleInterface
 
         private static void CheckForErrorMessage(Dictionary<string, string> proposal)
         {
-            if (proposal.TryGetValue("Error message", out string message))
+            if (proposal.TryGetValue("Error", out string message))
             {
                 DisplayError(message);
                 Finished();

@@ -51,10 +51,9 @@ namespace ConsoleInterface.Texts
                 if(Directory.Exists(fullPath) && !string.IsNullOrWhiteSpace(inputDirectory)) {
                     return fullPath;
                 }
-                else {
-					StandardTexts.SimulateWaitingWithMessage("Input directory not found. Try again");
-                    Console.WriteLine("");
-                }
+
+                StandardTexts.SimulateWaitingWithMessage("Input directory not found. Try again");
+                Console.WriteLine("");
             }
 		}
 

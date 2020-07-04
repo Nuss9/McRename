@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Nuss9</Authors>
+    <PackageDescription>This package adds functionality to rename files.</PackageDescription>
+    <RepositoryUrl>https://github.com/Nuss9/McRename</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

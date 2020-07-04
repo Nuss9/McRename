@@ -23,5 +23,4 @@ jobs:
       run: dotnet build src/McRename.sln --configuration Release --no-restore
     - name: Test
       run: dotnet test src/RenamerTests/RenamerTests.csproj --no-restore --verbosity normal
-    - name: Publish binaries
-      uses: skx/github-action-publish-binaries@release-0.14
+

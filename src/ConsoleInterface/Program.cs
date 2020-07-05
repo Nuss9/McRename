@@ -1,9 +1,9 @@
-﻿using ConsoleInterface.Texts;
+﻿using Terminal.Texts;
 using Microsoft.Extensions.DependencyInjection;
 using Renamer;
 using Renamer.Interfaces;
 
-namespace ConsoleInterface
+namespace Terminal
 {
     internal static class Program
     {

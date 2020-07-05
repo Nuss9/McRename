@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Renamer;
 
-namespace ConsoleInterface.Texts
+namespace Terminal.Texts
 {
     internal class QuestionTexts
     {

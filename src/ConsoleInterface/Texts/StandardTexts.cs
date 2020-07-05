@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
-namespace ConsoleInterface.Texts
+namespace Terminal.Texts
 {
 	internal static class StandardTexts
     {

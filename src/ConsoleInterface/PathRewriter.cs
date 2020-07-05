@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
-using static ConsoleInterface.Texts.QuestionTexts;
-using static ConsoleInterface.Texts.StandardTexts;
+using static Terminal.Texts.QuestionTexts;
+using static Terminal.Texts.StandardTexts;
 
-namespace ConsoleInterface
+namespace Terminal
 {
     public static class PathRewriter
     {

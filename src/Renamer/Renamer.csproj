@@ -5,6 +5,7 @@
     <Authors>Nuss9</Authors>
     <PackageDescription>This package adds functionality to rename files.</PackageDescription>
     <RepositoryUrl>https://github.com/Nuss9/McRename</RepositoryUrl>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

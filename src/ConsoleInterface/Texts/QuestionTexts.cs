@@ -89,7 +89,7 @@ namespace ConsoleInterface.Texts
                 else
                 {
                     Console.WriteLine("");
-                    Console.Write("That is not a valid option. ");
+                    Console.Write("Not a valid option. ");
                     StandardTexts.SimulateWaitingWithMessage("Retry");
                     Console.WriteLine("");
                 }

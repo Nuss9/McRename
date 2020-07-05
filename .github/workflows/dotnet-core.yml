@@ -23,4 +23,12 @@ jobs:
       run: dotnet build src/McRename.sln --configuration Release --no-restore
     - name: Test
       run: dotnet test src/RenamerTests/RenamerTests.csproj --no-restore --verbosity normal
-
+    - name: Publish Renamer NuGet Package
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+        # Filepath of the project to be packaged, relative to root of repository
+        PROJECT_FILE_PATH: src/Renamer.csproj
+        # NuGet package id, used for version detection & defaults to project name
+        PACKAGE_NAME: Renamer
+        # API key to authenticate with NuGet server
+        NUGET_KEY: ${{secrets.NUGET}}

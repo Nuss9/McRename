@@ -17,16 +17,8 @@ namespace Renamer.Composers
                 var directory = Path.GetDirectoryName(path);
                 var extension = Path.GetExtension(path);
 
-                string dateFormat;
-                if (instructions.Mode == ComposeMode.Date)
-                {
-                    dateFormat = "yyyyMMdd";
-                }
-                else
-                {
-                    dateFormat = "yyyyMMdd_HHmmss";
-                }
-                var creationDate = file.CreationDateTime.ToString(dateFormat);
+                string format = GetTimeFormat(instructions.Mode);
+                var creationDate = file.CreationDateTime.ToString(format);
 
                 if (Composition.Any())
                 {
@@ -57,6 +49,16 @@ namespace Renamer.Composers
             }
 
             return Composition;
+        }
+
+        private string GetTimeFormat(ComposeMode mode)
+        {
+            return mode switch
+            {
+                ComposeMode.Date => "yyyyMMdd",
+                ComposeMode.DateTime => "yyyyMMdd_HHmmss",
+                _ => throw new ShouldNotOccurException("Invalid time format."),
+            };
         }
 
         private void ResetDuplicateCounter()

@@ -7,10 +7,10 @@ namespace Renamer.Composers
 {
     public class DateTimeComposer : BaseComposer, ICompose
     {
+        private int duplicateCounter = 1;
+
         public Dictionary<string, string> Compose(ComposeInstructions instructions)
         {
-            int duplicateCounter = 1;
-
             foreach (var file in instructions.Files)
             {
                 var path = file.Path;
@@ -47,7 +47,7 @@ namespace Renamer.Composers
                     }
                     else
                     {
-                        duplicateCounter = 1;
+                        ResetDuplicateCounter();
                     }
                 }
 
@@ -57,6 +57,11 @@ namespace Renamer.Composers
             }
 
             return Composition;
+        }
+
+        private void ResetDuplicateCounter()
+        {
+            duplicateCounter = 1;
         }
     }
 }

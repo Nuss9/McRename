@@ -14,8 +14,10 @@ namespace Renamer.Composers
             foreach (var file in instructions.Files)
             {
                 var path = file.Path;
+                var fileName = Path.GetFileName(path);
                 var directory = Path.GetDirectoryName(path);
                 var extension = Path.GetExtension(path);
+                var baseName = fileName.TrimEnd(extension.ToCharArray());
 
                 string format = GetTimeFormat(instructions.Mode);
                 var creationDate = file.CreationDateTime.ToString(format);

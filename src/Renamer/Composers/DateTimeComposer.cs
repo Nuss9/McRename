@@ -20,23 +20,23 @@ namespace Renamer.Composers
                 var baseName = fileName.TrimEnd(extension.ToCharArray());
 
                 string format = GetTimeFormat(instructions.Mode);
-                var creationDate = file.CreationDateTime.ToString(format);
+                baseName = file.CreationDateTime.ToString(format);
 
                 if (Composition.Any())
                 {
-                    if (Composition.Values.Last().EndsWith($"{creationDate}{extension}"))
+                    if (Composition.Values.Last().EndsWith($"{baseName}{extension}"))
                     {
                         string lastKey = Composition.Keys.Last();
                         Composition.Remove(lastKey);
-                        Composition.Add(lastKey, $"{directory}{Separator}{creationDate}_({duplicateCounter}){extension}");
+                        Composition.Add(lastKey, $"{directory}{Separator}{baseName}_({duplicateCounter}){extension}");
 
                         duplicateCounter++;
-                        creationDate += $"_({duplicateCounter})";
+                        baseName += $"_({duplicateCounter})";
                         duplicateCounter++;
                     }
-                    else if (Composition.Values.Last().Contains(creationDate))
+                    else if (Composition.Values.Last().Contains(baseName))
                     {
-                        creationDate += $"_({duplicateCounter})";
+                        baseName += $"_({duplicateCounter})";
                         duplicateCounter++;
                     }
                     else
@@ -45,7 +45,7 @@ namespace Renamer.Composers
                     }
                 }
 
-                string newPath = $"{directory}{Separator}{creationDate}{extension}";
+                string newPath = $"{directory}{Separator}{baseName}{extension}";
 
                 Composition.Add(path, newPath);
             }

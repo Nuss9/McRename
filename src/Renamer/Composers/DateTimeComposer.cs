@@ -59,6 +59,9 @@ namespace Renamer.Composers
                 case ComposeMode2.Prepend:
                     tempFile.BaseName = tempFile.CreationDateTime + tempFile.BaseName;
                     break;
+                case ComposeMode2.Insert:
+                    tempFile.BaseName = tempFile.BaseName.Insert(instructions.InsertPosition, tempFile.CreationDateTime);
+                    break;
             }
         }
 

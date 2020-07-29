@@ -92,6 +92,24 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
+		[Fact]
+		public void WhenInsertingFileNameWithDate_ItShouldInsertCreationDateAtTheRightPlace()
+		{
+			SetDefaultInstructions();
+			Instructions.InsertPosition = 3;
+			SetComposeMode(ComposeMode2.Insert);
+			SetComposeAction(ComposeAction.Date);
+			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fil20201231eA.txt"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
 		private void SetComposeAction(ComposeAction action)
 		{
 			Instructions.Action = action;

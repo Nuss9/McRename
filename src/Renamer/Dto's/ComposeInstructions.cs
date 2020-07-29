@@ -9,8 +9,9 @@ namespace Renamer
 		public ComposeAction Action { get; set; }
 		public string CustomText { get; set; }
 		public List<FileInformation> Files { get; set; }
+        public int InsertPosition { get; set; }
 
-		public ComposeInstructions(ComposeMode2 mode2, ComposeAction action, List<FileInformation> files)
+        public ComposeInstructions(ComposeMode2 mode2, ComposeAction action, List<FileInformation> files)
 		{
 			Mode2 = mode2;
 			Action = action;

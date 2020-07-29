@@ -5,5 +5,6 @@
         Unknown,
         Replace,
         Prepend,
+        Insert,
     }
 }

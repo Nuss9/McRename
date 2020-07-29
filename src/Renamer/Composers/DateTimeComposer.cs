@@ -30,10 +30,10 @@ namespace Renamer.Composers
 
                 if (Composition.Any())
                 {
-                    baseName = HandleDuplicates(directory, extension, baseName);
+                    baseName = HandleDuplicates(directory, extension);
                 }
 
-                string newPath = GetNewPath(directory, extension, baseName);
+                string newPath = GetNewPath(directory, extension);
 
                 Composition.Add(path, newPath);
             }
@@ -43,7 +43,7 @@ namespace Renamer.Composers
 
         private void ComposeBaseName(string createdDateTime)
         {
-            switch(instructions.Mode2)
+            switch (instructions.Mode2)
             {
                 case ComposeMode2.Replace:
                     baseName = createdDateTime;
@@ -54,19 +54,19 @@ namespace Renamer.Composers
             }
         }
 
-        private string HandleDuplicates(string directory, string extension, string baseName)
+        private string HandleDuplicates(string directory, string extension)
         {
-            if (DuplicateExistsWithoutNumber(extension, baseName))
+            if (DuplicateExistsWithoutNumber(extension))
             {
-                AddNumberToLastEntry(directory, extension, baseName);
+                AddDuplicateNumberToLastEntry(directory, extension);
 
                 duplicateCounter++;
-                baseName = AddNumberToCurrentEntry(baseName);
+                AddDuplicateNumberToCurrentEntry();
                 duplicateCounter++;
             }
-            else if (DuplicateExistsWithNumber(baseName))
+            else if (DuplicateExistsWithNumber())
             {
-                baseName = AddNumberToCurrentEntry(baseName);
+                AddDuplicateNumberToCurrentEntry();
                 duplicateCounter++;
             }
             else
@@ -77,28 +77,27 @@ namespace Renamer.Composers
             return baseName;
         }
 
-        private bool DuplicateExistsWithNumber(string baseName)
+        private bool DuplicateExistsWithNumber()
         {
             return Composition.Values.Last().Contains(baseName);
         }
 
-        private bool DuplicateExistsWithoutNumber(string extension, string baseName)
+        private bool DuplicateExistsWithoutNumber(string extension)
         {
             return Composition.Values.Last().EndsWith($"{baseName}{extension}");
         }
 
-        private string GetNewPath(string directory, string extension, string baseName)
+        private string GetNewPath(string directory, string extension)
         {
             return $"{directory}{Separator}{baseName}{extension}";
         }
 
-        private string AddNumberToCurrentEntry(string baseName)
+        private void AddDuplicateNumberToCurrentEntry()
         {
             baseName += $"_({duplicateCounter})";
-            return baseName;
         }
 
-        private void AddNumberToLastEntry(string directory, string extension, string baseName)
+        private void AddDuplicateNumberToLastEntry(string directory, string extension)
         {
             string lastKey = Composition.Keys.Last();
             Composition.Remove(lastKey);

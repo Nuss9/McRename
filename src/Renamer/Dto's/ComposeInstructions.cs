@@ -5,9 +5,18 @@ namespace Renamer
     public class ComposeInstructions
 	{
 		public ComposeMode Mode { get; set; }
+		public ComposeMode2 Mode2 { get; set; }
+		public ComposeAction Action { get; set; }
 		public string CustomText { get; set; }
 		public List<FileInformation> Files { get; set; }
-		
+
+		public ComposeInstructions(ComposeMode2 mode2, ComposeAction action, List<FileInformation> files)
+		{
+			Mode2 = mode2;
+			Action = action;
+			Files = files;
+		}
+
 		public ComposeInstructions(ComposeMode mode, List<FileInformation> files)
 		{
 			Mode = mode;

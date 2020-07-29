@@ -17,7 +17,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingOneFileToDate_ItShouldBeRenamedToItsCreationDate()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Date);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
 			var result = subject.Compose(Instructions);
@@ -33,7 +34,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingMultipleFilesToDateWithTheSameCreationDate_ItShouldAddNumbers()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Date);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> {
 				("fileA", new DateTime(2020, 12, 30, 12, 00, 00)),
 				("fileB", new DateTime(2020, 12, 31, 12, 30, 01)),
@@ -60,7 +62,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingOneFileToDateTime_ItShouldBeRenamedToItsCreationDateTime()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.DateTime);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.DateTime);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
 			var result = subject.Compose(Instructions);
@@ -72,14 +75,19 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		private void SetDefaultInstructions()
+		private void SetComposeAction(ComposeAction action)
 		{
-			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
+			Instructions.Action = action;
 		}
 
-		private void SetComposeMode(ComposeMode mode)
+        private void SetDefaultInstructions()
 		{
-			Instructions.Mode = mode;
+			Instructions = new ComposeInstructions(ComposeMode2.Replace, ComposeAction.DateTime, new List<FileInformation>());
+		}
+
+		private void SetComposeMode(ComposeMode2 mode2)
+		{
+			Instructions.Mode2 = mode2;
 		}
 
 		private void SetFiles(List<(string name, DateTime created)> files)

@@ -19,7 +19,7 @@ namespace Renamer.Composers
                 var extension = Path.GetExtension(path);
                 var baseName = fileName.TrimEnd(extension.ToCharArray());
 
-                string format = GetTimeFormat(instructions.Mode);
+                string format = GetTimeFormat(instructions.Action);
                 baseName = file.CreationDateTime.ToString(format);
 
                 if (Composition.Any())
@@ -86,12 +86,12 @@ namespace Renamer.Composers
             Composition.Add(lastKey, $"{directory}{Separator}{baseName}_({duplicateCounter}){extension}");
         }
 
-        private string GetTimeFormat(ComposeMode mode)
+        private string GetTimeFormat(ComposeAction action)
         {
-            return mode switch
+            return action switch
             {
-                ComposeMode.Date => "yyyyMMdd",
-                ComposeMode.DateTime => "yyyyMMdd_HHmmss",
+                ComposeAction.Date => "yyyyMMdd",
+                ComposeAction.DateTime => "yyyyMMdd_HHmmss",
                 _ => throw new ShouldNotOccurException("Invalid time format."),
             };
         }

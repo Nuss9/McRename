@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Renamer.Interfaces;
@@ -60,10 +61,22 @@ namespace Renamer.Composers
                     tempFile.BaseName = tempFile.CreationDateTime + tempFile.BaseName;
                     break;
                 case ComposeMode2.Insert:
-                    tempFile.BaseName = tempFile.BaseName.Insert(instructions.InsertPosition, tempFile.CreationDateTime);
+                    try
+                    {
+                        tempFile.BaseName = InsertAtSpecifiedIndex();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        tempFile.BaseName = InsertAtBaseNameEnd();
+
+                    }
                     break;
             }
         }
+
+        private string InsertAtBaseNameEnd() => tempFile.BaseName.Insert(tempFile.BaseName.Count(), tempFile.CreationDateTime);
+
+        private string InsertAtSpecifiedIndex() => tempFile.BaseName.Insert(instructions.InsertPosition, tempFile.CreationDateTime);
 
         private void HandleDuplicates()
         {

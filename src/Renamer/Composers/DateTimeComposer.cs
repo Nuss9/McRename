@@ -7,20 +7,26 @@ namespace Renamer.Composers
 {
     public class DateTimeComposer : BaseComposer, ICompose
     {
+        private ComposeInstructions instructions;
         private int duplicateCounter = 1;
+        private string baseName;
 
-        public Dictionary<string, string> Compose(ComposeInstructions instructions)
+        public Dictionary<string, string> Compose(ComposeInstructions input)
         {
+            instructions = input;
+
             foreach (var file in instructions.Files)
             {
                 var path = file.Path;
                 var fileName = Path.GetFileName(path);
                 var directory = Path.GetDirectoryName(path);
                 var extension = Path.GetExtension(path);
-                var baseName = fileName.TrimEnd(extension.ToCharArray());
+                baseName = fileName.TrimEnd(extension.ToCharArray());
 
                 string format = GetTimeFormat(instructions.Action);
-                baseName = file.CreationDateTime.ToString(format);
+                string fileCreationDateTime = file.CreationDateTime.ToString(format);
+
+                ComposeBaseName(fileCreationDateTime);
 
                 if (Composition.Any())
                 {
@@ -33,6 +39,19 @@ namespace Renamer.Composers
             }
 
             return Composition;
+        }
+
+        private void ComposeBaseName(string createdDateTime)
+        {
+            switch(instructions.Mode2)
+            {
+                case ComposeMode2.Replace:
+                    baseName = createdDateTime;
+                    break;
+                case ComposeMode2.Prepend:
+                    baseName = createdDateTime + baseName;
+                    break;
+            }
         }
 
         private string HandleDuplicates(string directory, string extension, string baseName)

@@ -24,33 +24,66 @@ namespace Renamer.Composers
 
                 if (Composition.Any())
                 {
-                    if (Composition.Values.Last().EndsWith($"{baseName}{extension}"))
-                    {
-                        string lastKey = Composition.Keys.Last();
-                        Composition.Remove(lastKey);
-                        Composition.Add(lastKey, $"{directory}{Separator}{baseName}_({duplicateCounter}){extension}");
-
-                        duplicateCounter++;
-                        baseName += $"_({duplicateCounter})";
-                        duplicateCounter++;
-                    }
-                    else if (Composition.Values.Last().Contains(baseName))
-                    {
-                        baseName += $"_({duplicateCounter})";
-                        duplicateCounter++;
-                    }
-                    else
-                    {
-                        ResetDuplicateCounter();
-                    }
+                    baseName = HandleDuplicates(directory, extension, baseName);
                 }
 
-                string newPath = $"{directory}{Separator}{baseName}{extension}";
+                string newPath = GetNewPath(directory, extension, baseName);
 
                 Composition.Add(path, newPath);
             }
 
             return Composition;
+        }
+
+        private string HandleDuplicates(string directory, string extension, string baseName)
+        {
+            if (DuplicateExistsWithoutNumber(extension, baseName))
+            {
+                AddNumberToLastEntry(directory, extension, baseName);
+
+                duplicateCounter++;
+                baseName = AddNumberToCurrentEntry(baseName);
+                duplicateCounter++;
+            }
+            else if (DuplicateExistsWithNumber(baseName))
+            {
+                baseName = AddNumberToCurrentEntry(baseName);
+                duplicateCounter++;
+            }
+            else
+            {
+                ResetDuplicateCounter();
+            }
+
+            return baseName;
+        }
+
+        private bool DuplicateExistsWithNumber(string baseName)
+        {
+            return Composition.Values.Last().Contains(baseName);
+        }
+
+        private bool DuplicateExistsWithoutNumber(string extension, string baseName)
+        {
+            return Composition.Values.Last().EndsWith($"{baseName}{extension}");
+        }
+
+        private string GetNewPath(string directory, string extension, string baseName)
+        {
+            return $"{directory}{Separator}{baseName}{extension}";
+        }
+
+        private string AddNumberToCurrentEntry(string baseName)
+        {
+            baseName += $"_({duplicateCounter})";
+            return baseName;
+        }
+
+        private void AddNumberToLastEntry(string directory, string extension, string baseName)
+        {
+            string lastKey = Composition.Keys.Last();
+            Composition.Remove(lastKey);
+            Composition.Add(lastKey, $"{directory}{Separator}{baseName}_({duplicateCounter}){extension}");
         }
 
         private string GetTimeFormat(ComposeMode mode)

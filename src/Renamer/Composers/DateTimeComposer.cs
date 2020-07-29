@@ -99,25 +99,13 @@ namespace Renamer.Composers
             }
         }
 
-        private bool DuplicateExistsWithNumber()
-        {
-            return Composition.Values.Last().Contains(tempFile.BaseName);
-        }
+        private bool DuplicateExistsWithNumber() => Composition.Values.Last().Contains(tempFile.BaseName);
 
-        private bool DuplicateExistsWithoutNumber()
-        {
-            return Composition.Values.Last().EndsWith($"{tempFile.BaseName}{tempFile.Extension}");
-        }
+        private bool DuplicateExistsWithoutNumber() => Composition.Values.Last().EndsWith($"{tempFile.BaseName}{tempFile.Extension}");
 
-        private string GetNewPath()
-        {
-            return $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
-        }
+        private string GetNewPath() => $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
 
-        private void AddDuplicateNumberToCurrentEntry()
-        {
-            tempFile.BaseName += $"_({duplicateCounter})";
-        }
+        private void AddDuplicateNumberToCurrentEntry() => tempFile.BaseName += $"_({duplicateCounter})";
 
         private void AddDuplicateNumberToLastEntry()
         {
@@ -136,9 +124,6 @@ namespace Renamer.Composers
             };
         }
 
-        private void ResetDuplicateCounter()
-        {
-            duplicateCounter = 1;
-        }
+        private void ResetDuplicateCounter() => duplicateCounter = 1;
     }
 }

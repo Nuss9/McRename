@@ -9,7 +9,6 @@ namespace Renamer.Composers
     {
         private ComposeInstructions instructions;
         private int duplicateCounter = 1;
-        private string baseName;
         private TempFileInfo tempFile;
 
         public Dictionary<string, string> Compose(ComposeInstructions input)
@@ -20,25 +19,14 @@ namespace Renamer.Composers
             {
                 GetTempFileInfo(file);
 
-                var path = file.Path;
-                var fileName = Path.GetFileName(path);
-                var directory = Path.GetDirectoryName(path);
-                var extension = Path.GetExtension(path);
-                baseName = fileName.TrimEnd(extension.ToCharArray());
-
-                string format = GetTimeFormat(instructions.Action);
-                string fileCreationDateTime = file.CreationDateTime.ToString(format);
-
-                ComposeBaseName(fileCreationDateTime);
+                ComposeBaseName();
 
                 if (Composition.Any())
                 {
-                    baseName = HandleDuplicates(directory, extension);
+                    HandleDuplicates();
                 }
 
-                string newPath = GetNewPath(directory, extension);
-
-                Composition.Add(path, newPath);
+                Composition.Add(tempFile.Path, GetNewPath());
             }
 
             return Composition;
@@ -61,24 +49,24 @@ namespace Renamer.Composers
             };
         }
 
-        private void ComposeBaseName(string createdDateTime)
+        private void ComposeBaseName()
         {
             switch (instructions.Mode2)
             {
                 case ComposeMode2.Replace:
-                    baseName = createdDateTime;
+                    tempFile.BaseName = tempFile.CreationDateTime;
                     break;
                 case ComposeMode2.Prepend:
-                    baseName = createdDateTime + baseName;
+                    tempFile.BaseName = tempFile.CreationDateTime + tempFile.BaseName;
                     break;
             }
         }
 
-        private string HandleDuplicates(string directory, string extension)
+        private void HandleDuplicates()
         {
-            if (DuplicateExistsWithoutNumber(extension))
+            if (DuplicateExistsWithoutNumber())
             {
-                AddDuplicateNumberToLastEntry(directory, extension);
+                AddDuplicateNumberToLastEntry();
 
                 duplicateCounter++;
                 AddDuplicateNumberToCurrentEntry();
@@ -93,35 +81,33 @@ namespace Renamer.Composers
             {
                 ResetDuplicateCounter();
             }
-
-            return baseName;
         }
 
         private bool DuplicateExistsWithNumber()
         {
-            return Composition.Values.Last().Contains(baseName);
+            return Composition.Values.Last().Contains(tempFile.BaseName);
         }
 
-        private bool DuplicateExistsWithoutNumber(string extension)
+        private bool DuplicateExistsWithoutNumber()
         {
-            return Composition.Values.Last().EndsWith($"{baseName}{extension}");
+            return Composition.Values.Last().EndsWith($"{tempFile.BaseName}{tempFile.Extension}");
         }
 
-        private string GetNewPath(string directory, string extension)
+        private string GetNewPath()
         {
-            return $"{directory}{Separator}{baseName}{extension}";
+            return $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
         }
 
         private void AddDuplicateNumberToCurrentEntry()
         {
-            baseName += $"_({duplicateCounter})";
+            tempFile.BaseName += $"_({duplicateCounter})";
         }
 
-        private void AddDuplicateNumberToLastEntry(string directory, string extension)
+        private void AddDuplicateNumberToLastEntry()
         {
             string lastKey = Composition.Keys.Last();
             Composition.Remove(lastKey);
-            Composition.Add(lastKey, $"{directory}{Separator}{baseName}_({duplicateCounter}){extension}");
+            Composition.Add(lastKey, $"{tempFile.Directory}{Separator}{tempFile.BaseName}_({duplicateCounter}){tempFile.Extension}");
         }
 
         private string GetTimeFormat(ComposeAction action)

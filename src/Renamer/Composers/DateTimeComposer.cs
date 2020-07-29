@@ -10,6 +10,7 @@ namespace Renamer.Composers
         private ComposeInstructions instructions;
         private int duplicateCounter = 1;
         private string baseName;
+        private TempFileInfo tempFile;
 
         public Dictionary<string, string> Compose(ComposeInstructions input)
         {
@@ -17,6 +18,8 @@ namespace Renamer.Composers
 
             foreach (var file in instructions.Files)
             {
+                GetTempFileInfo(file);
+
                 var path = file.Path;
                 var fileName = Path.GetFileName(path);
                 var directory = Path.GetDirectoryName(path);
@@ -39,6 +42,23 @@ namespace Renamer.Composers
             }
 
             return Composition;
+        }
+
+        private void GetTempFileInfo(FileInformation file)
+        {
+            string path = file.Path;
+            string fileName = Path.GetFileName(path);
+            string extension = Path.GetExtension(path);
+
+            tempFile = new TempFileInfo
+            {
+                Path = file.Path,
+                FileName = Path.GetFileName(file.Path),
+                BaseName = fileName.TrimEnd(extension.ToCharArray()),
+                Directory = Path.GetDirectoryName(file.Path),
+                Extension = extension,
+                CreationDateTime = file.CreationDateTime.ToString(GetTimeFormat(instructions.Action))
+            };
         }
 
         private void ComposeBaseName(string createdDateTime)

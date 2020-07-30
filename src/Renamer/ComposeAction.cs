@@ -4,5 +4,6 @@
     {
         Date,
         DateTime,
+        Numerical,
     }
 }

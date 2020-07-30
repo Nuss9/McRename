@@ -18,7 +18,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingOneFileNumerical_ItShouldStartAtOne()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Numerical);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Numerical);
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
 
 			var result = subject.Compose(Instructions);
@@ -34,7 +35,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingMultipleFilesNumerically_ItShouldIncrementEachFilenameByOne()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Numerical);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Numerical);
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
 			var result = subject.Compose(Instructions);
@@ -52,7 +54,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingMultipleFilesNumerically_ItShouldDoSoBasedOnTheirCreationDateTime()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Numerical);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Numerical);
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.UtcNow.AddDays(1)), ("fileB", DateTime.Now) });
 
 			var result = subject.Compose(Instructions);
@@ -70,9 +73,14 @@ namespace RenamerTests.Composers
 			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 		}
 
-		private void SetComposeMode(ComposeMode mode)
+		private void SetComposeMode(ComposeMode2 mode)
 		{
-			Instructions.Mode = mode;
+			Instructions.Mode2 = mode;
+		}
+
+		private void SetComposeAction(ComposeAction action)
+		{
+			Instructions.Action = action;
 		}
 
 		private void SetFiles(List<(string name, DateTime created)> files)

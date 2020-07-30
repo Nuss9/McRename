@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NSubstitute;
 using Renamer;
+using Renamer.Dto;
 using Renamer.Interfaces;
 using Xunit;
 

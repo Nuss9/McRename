@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Renamer.Composers
+namespace Renamer.Exceptions
 {
     [Serializable]
     internal class ShouldNotOccurException : Exception

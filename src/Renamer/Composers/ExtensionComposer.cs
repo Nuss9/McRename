@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Renamer.Dto;
 using Renamer.Interfaces;
 
 namespace Renamer.Composers

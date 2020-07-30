@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Renamer;
+using Renamer.Dto;
 
 namespace Terminal.Texts
 {

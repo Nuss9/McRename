@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Renamer.Dto;
 
 namespace Renamer.Interfaces
 {

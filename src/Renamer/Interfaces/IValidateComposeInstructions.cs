@@ -1,3 +1,5 @@
+using Renamer.Dto;
+
 namespace Renamer.Interfaces
 {
     public interface IValidateComposeInstructions

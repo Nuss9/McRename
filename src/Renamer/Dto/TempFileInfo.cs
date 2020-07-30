@@ -1,4 +1,4 @@
-﻿namespace Renamer.Composers
+﻿namespace Renamer.Dto
 {
     internal class TempFileInfo
     {

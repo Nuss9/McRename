@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Renamer
+namespace Renamer.Dto
 {
     public class ComposeInstructions
 	{

@@ -1,6 +1,6 @@
 using System;
 
-namespace Renamer
+namespace Renamer.Dto
 {
 	public class FileInformation
 	{

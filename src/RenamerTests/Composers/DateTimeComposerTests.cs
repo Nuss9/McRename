@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Renamer;
 using Renamer.Composers;
+using Renamer.Dto;
+using Renamer.Exceptions;
 using Xunit;
 
 namespace RenamerTests.Composers

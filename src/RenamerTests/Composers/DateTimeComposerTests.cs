@@ -145,6 +145,18 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
+		[Fact]
+		public void WhenComposingWithInvalidComposeMode_ItShouldThrow()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode2.Unknown);
+			SetComposeAction(ComposeAction.Date);
+			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
+
+			var ex = Assert.Throws<UnknownComposeModeException>(() => subject.Compose(Instructions));
+			Assert.Equal("Invalid mode.", ex.Message);
+		}
+
 		private void SetComposeAction(ComposeAction action)
 		{
 			Instructions.Action = action;

@@ -74,6 +74,9 @@ namespace Renamer.Composers
                 case ComposeMode2.Append:
                     tempFile.BaseName += tempFile.CreationDateTime;
                     break;
+                case ComposeMode2.Unknown:
+                default:
+                    throw new UnknownComposeModeException("Invalid mode.");
             }
         }
 

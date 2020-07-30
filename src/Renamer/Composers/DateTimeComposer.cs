@@ -71,6 +71,9 @@ namespace Renamer.Composers
 
                     }
                     break;
+                case ComposeMode2.Append:
+                    tempFile.BaseName += tempFile.CreationDateTime;
+                    break;
             }
         }
 

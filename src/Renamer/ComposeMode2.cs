@@ -6,5 +6,6 @@
         Replace,
         Prepend,
         Insert,
+        Append,
     }
 }

@@ -2,28 +2,67 @@
 using System.Collections.Generic;
 using System.IO;
 using Renamer.Dto;
+using Renamer.Exceptions;
 using Renamer.Interfaces;
 
 namespace Renamer.Composers
 {
     public class NumericalComposer : BaseComposer, ICompose
     {
-        public Dictionary<string, string> Compose(ComposeInstructions instructions)
+        private TempFileInfo tempFile;
+        private ComposeInstructions instructions;
+        private int counter = 1;
+
+        public Dictionary<string, string> Compose(ComposeInstructions input)
         {
+            instructions = input;
             instructions.Files.Sort((x, y) => DateTime.Compare(x.CreationDateTime, y.CreationDateTime));
 
-            for (int i = 0; i < instructions.Files.Count; i++)
+            foreach(var file in instructions.Files)
             {
-                var path = instructions.Files[i].Path;
-                var directory = Path.GetDirectoryName(path);
-                var extension = Path.GetExtension(path);
+                GetTempFileInfo(file);
 
-                string newPath = $"{directory}{Separator}{i + 1}{extension}";
+                ComposeBaseName();
 
-                Composition.Add(path, newPath);
+                string newPath = $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
+                Composition.Add(tempFile.Path, newPath);
+
+                counter++;
             }
 
             return Composition;
+        }
+
+        private void ComposeBaseName()
+        {
+            switch (instructions.Mode2)
+            {
+                case ComposeMode2.Replace:
+                    tempFile.BaseName = counter.ToString();
+                    break;
+                case ComposeMode2.Prepend:
+                    tempFile.BaseName = counter.ToString() + tempFile.BaseName;
+                    break;
+                case ComposeMode2.Unknown:
+                default:
+                    throw new UnknownComposeModeException("Invalid mode.");
+            }
+        }
+
+        private void GetTempFileInfo(FileInformation file)
+        {
+            string path = file.Path;
+            string fileName = Path.GetFileName(path);
+            string extension = Path.GetExtension(path);
+
+            tempFile = new TempFileInfo
+            {
+                Path = file.Path,
+                FileName = Path.GetFileName(file.Path),
+                BaseName = fileName.TrimEnd(extension.ToCharArray()),
+                Directory = Path.GetDirectoryName(file.Path),
+                Extension = extension,
+            };
         }
     }
 }

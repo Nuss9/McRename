@@ -5,5 +5,6 @@
         Date,
         DateTime,
         Numerical,
+        CustomText,
     }
 }

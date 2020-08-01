@@ -18,7 +18,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingToCustomText_ItShouldAppendSequenceNumbers()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.CustomText);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.CustomText);
 			SetCustomText("Holiday_Pictures");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
@@ -36,7 +37,8 @@ namespace RenamerTests.Composers
 		public void WhenRenamingToCustomText_ItShouldNotModifyExtensions()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.CustomText);
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.CustomText);
 			SetCustomText("Holiday_Pictures");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
 			Instructions.Files.Add(new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", DateTime.Now));
@@ -51,17 +53,15 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		private void SetDefaultInstructions()
-		{
-			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
-		}
+        private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode2.Unknown, ComposeAction.CustomText, new List<FileInformation>());
 
-		private void SetComposeMode(ComposeMode mode)
-		{
-			Instructions.Mode = mode;
-		}
+        private void SetComposeMode(ComposeMode2 mode) => Instructions.Mode2 = mode;
 
-		private void SetFiles(List<(string name, DateTime created)> files)
+        private void SetComposeAction(ComposeAction action) => Instructions.Action = action;
+
+        private void SetCustomText(string text) => Instructions.CustomText = text;
+
+        private void SetFiles(List<(string name, DateTime created)> files)
 		{
 			foreach (var file in files)
 			{
@@ -72,11 +72,6 @@ namespace RenamerTests.Composers
 					)
 				);
 			}
-		}
-
-		private void SetCustomText(string text)
-		{
-			Instructions.CustomText = text;
 		}
 	}
 }

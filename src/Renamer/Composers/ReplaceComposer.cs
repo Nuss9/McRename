@@ -21,7 +21,7 @@ namespace Renamer.Composers
             textToReplace = instructions.TextToReplace;
             customText = instructions.CustomText;
 
-            if (!instructions.Files.Any(x => x.Path.Contains(textToReplace)))
+            if (TextToReplaceIsNotFoundInAnyFileName())
             {
                 return ErrorMessage("Custom text to replace not found in any filename.");
             }
@@ -97,6 +97,8 @@ namespace Renamer.Composers
                 ResetDuplicateCounter();
             }
         }
+
+        private bool TextToReplaceIsNotFoundInAnyFileName() => !instructions.Files.Any(x => x.Path.Contains(textToReplace));
 
         private bool DuplicateExistsWithNumber() => Composition.Values.Last().Contains(tempFile.BaseName);
 

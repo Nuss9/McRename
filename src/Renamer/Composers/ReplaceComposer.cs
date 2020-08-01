@@ -49,10 +49,7 @@ namespace Renamer.Composers
             switch (instructions.Mode2)
             {
                 case ComposeMode2.Replace:
-                    int index = tempFile.Path.IndexOf(textToReplace);
-                    int count = textToReplace.Length;
-                    string newPath = tempFile.Path.Remove(index, count);
-                    Composition.Add(tempFile.Path, newPath);
+                    Composition.Add(tempFile.Path, tempFile.Path.Replace(textToReplace, customText));
                     break;
                 case ComposeMode2.Unknown:
                 default:

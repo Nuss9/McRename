@@ -15,7 +15,7 @@ namespace RenamerTests.Composers
 		readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
-		public void WhenTReplacingTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
+		public void WhenTextToReplaceIsNotFoundInAnyFileName_ItShouldReturnAnError()
 		{
 			SetDefaultInstructions();
 			SetComposeMode(ComposeMode2.Replace);

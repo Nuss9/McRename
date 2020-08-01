@@ -105,6 +105,24 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
+		[Fact]
+		public void WhenAppendingNumerically_ItShouldAppendIncrementingNumberToBaseName()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode2.Append);
+			SetComposeAction(ComposeAction.Numerical);
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.UtcNow.AddDays(1)), ("fileB", DateTime.Now) });
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileA2.txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileB1.txt"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
 		private void SetDefaultInstructions()
 		{
 			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());

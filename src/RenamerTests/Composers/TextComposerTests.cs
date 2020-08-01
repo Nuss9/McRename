@@ -115,6 +115,27 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
+		[Fact]
+		public void WhenAppendingCustomText_ItShouldAppendCustomTextToBaseName()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode2.Append);
+			SetComposeAction(ComposeAction.CustomText);
+			Instructions.InsertPosition = 300;
+			SetCustomText("Holiday_Pictures");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
+			Instructions.Files.Add(new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.Now));
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileAHoliday_Pictures.txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileBHoliday_Pictures.txt"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
 		private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode2.Unknown, ComposeAction.CustomText, new List<FileInformation>());
 
         private void SetComposeMode(ComposeMode2 mode) => Instructions.Mode2 = mode;

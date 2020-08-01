@@ -58,6 +58,9 @@ namespace Renamer.Composers
                         tempFile.BaseName = InsertAtBaseNameEnd();
                     }
                     break;
+                case ComposeMode2.Append:
+                    tempFile.BaseName += customText;
+                    break;
                 case ComposeMode2.Unknown:
                 default:
                     throw new UnknownComposeModeException("Invalid mode.");

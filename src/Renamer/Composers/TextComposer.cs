@@ -105,7 +105,6 @@ namespace Renamer.Composers
             }
         }
 
-
         private bool DuplicateExistsWithNumber() => Composition.Values.Last().Contains(tempFile.BaseName);
 
         private bool DuplicateExistsWithoutNumber() => Composition.Values.Last().EndsWith($"{tempFile.BaseName}{tempFile.Extension}");

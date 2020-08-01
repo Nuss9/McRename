@@ -6,5 +6,6 @@
         DateTime,
         Numerical,
         CustomText,
+        Replace,
     }
 }

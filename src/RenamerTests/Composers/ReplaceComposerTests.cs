@@ -18,8 +18,10 @@ namespace RenamerTests.Composers
 		public void WhenTReplacingTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Truncation);
-			SetCustomText("fileC");
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Replace);
+			SetCustomText(string.Empty);
+			SetTextToReplace("fileC");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
 			var result = subject.Compose(Instructions);
@@ -31,12 +33,15 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		[Fact]
+
+        [Fact]
 		public void WhenReplacingText_ItShouldOnlyModifyFilesContainingTheText()
 		{
 			SetDefaultInstructions();
-			SetComposeMode(ComposeMode.Truncation);
-			SetCustomText("A");
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Replace);
+			SetCustomText(string.Empty);
+			SetTextToReplace("A");
 			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
 
 			var result = subject.Compose(Instructions);
@@ -48,17 +53,13 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		private void SetDefaultInstructions()
-		{
-			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
-		}
+		private void SetComposeAction(ComposeAction action) => Instructions.Action = action;
 
-		private void SetComposeMode(ComposeMode mode)
-		{
-			Instructions.Mode = mode;
-		}
+        private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 
-		private void SetFiles(List<(string name, DateTime created)> files)
+        private void SetComposeMode(ComposeMode2 mode) => Instructions.Mode2 = mode;
+
+        private void SetFiles(List<(string name, DateTime created)> files)
 		{
 			foreach (var file in files)
 			{
@@ -71,9 +72,8 @@ namespace RenamerTests.Composers
 			}
 		}
 
-		private void SetCustomText(string text)
-		{
-			Instructions.CustomText = text;
-		}
-	}
+		private void SetTextToReplace(string text) => Instructions.TextToReplace = text;
+
+		private void SetCustomText(string text) => Instructions.CustomText = text;
+    }
 }

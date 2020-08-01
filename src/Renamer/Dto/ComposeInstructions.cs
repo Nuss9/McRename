@@ -10,6 +10,7 @@ namespace Renamer.Dto
 		public string CustomText { get; set; }
 		public List<FileInformation> Files { get; set; }
         public int InsertPosition { get; set; }
+        public string TextToReplace { get; set; }
 
         public ComposeInstructions(ComposeMode2 mode2, ComposeAction action, List<FileInformation> files)
 		{

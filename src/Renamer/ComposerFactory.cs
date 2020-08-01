@@ -19,7 +19,7 @@ namespace Renamer
                 case ComposeMode.Extension:
                     return new ExtensionComposer();
                 case ComposeMode.Truncation:
-                    return new TruncationComposer();
+                    return new ReplaceComposer();
                 case ComposeMode.Date:
                     return new DateTimeComposer();
                 case ComposeMode.Unknown:

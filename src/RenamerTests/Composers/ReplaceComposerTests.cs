@@ -8,14 +8,14 @@ using Xunit;
 
 namespace RenamerTests.Composers
 {
-	public class TruncationComposerTests
+	public class ReplaceComposerTests
 	{
-		public TruncationComposer subject = new TruncationComposer();
+		public ReplaceComposer subject = new ReplaceComposer();
 		private ComposeInstructions Instructions;
 		readonly char s = Path.DirectorySeparatorChar;
 
 		[Fact]
-		public void WhenTruncationTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
+		public void WhenTReplacingTextIsNotFoundInAnyFileName_ItShouldReturnAnError()
 		{
 			SetDefaultInstructions();
 			SetComposeMode(ComposeMode.Truncation);
@@ -25,14 +25,14 @@ namespace RenamerTests.Composers
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
-				{ "Error", "Custom text to truncate not found in any filename."}
+				{ "Error", "Custom text to replace not found in any filename."}
 			};
 
 			Assert.Equal(expected, result);
 		}
 
 		[Fact]
-		public void WhenTruncatingText_ItShouldOnlyModifyFilesContainingTheText()
+		public void WhenReplacingText_ItShouldOnlyModifyFilesContainingTheText()
 		{
 			SetDefaultInstructions();
 			SetComposeMode(ComposeMode.Truncation);

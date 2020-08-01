@@ -6,7 +6,7 @@ using Renamer.Interfaces;
 
 namespace Renamer.Composers
 {
-    public class TruncationComposer : BaseComposer, ICompose
+    public class ReplaceComposer : BaseComposer, ICompose
     {
         public Dictionary<string, string> Compose(ComposeInstructions instructions)
         {
@@ -14,7 +14,7 @@ namespace Renamer.Composers
 
             if (!instructions.Files.Any(x => x.Path.Contains(truncationText)))
             {
-                return ErrorMessage("Custom text to truncate not found in any filename.");
+                return ErrorMessage("Custom text to replace not found in any filename.");
             }
 
             foreach (var file in instructions.Files)

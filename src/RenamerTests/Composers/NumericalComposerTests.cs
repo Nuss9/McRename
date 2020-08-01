@@ -106,6 +106,24 @@ namespace RenamerTests.Composers
 		}
 
 		[Fact]
+		public void WhenInsertingNumericallyOutOfRange_ItShouldInsertTheNumberAtTheEndOfBaseName()
+		{
+			SetDefaultInstructions();
+			Instructions.InsertPosition = 300;
+			SetComposeMode(ComposeMode2.Insert);
+			SetComposeAction(ComposeAction.Numerical);
+			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileA1.txt"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
 		public void WhenAppendingNumerically_ItShouldAppendIncrementingNumberToBaseName()
 		{
 			SetDefaultInstructions();

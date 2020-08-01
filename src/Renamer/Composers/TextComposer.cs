@@ -42,6 +42,9 @@ namespace Renamer.Composers
         {
             switch (instructions.Mode2)
             {
+                case ComposeMode2.Prepend:
+                    tempFile.BaseName = customText + tempFile.BaseName;
+                    break;
                 case ComposeMode2.Replace:
                     tempFile.BaseName = customText + "_(" + counter++.ToString() + ")";
                     break;

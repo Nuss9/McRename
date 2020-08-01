@@ -48,6 +48,16 @@ namespace Renamer.Composers
                 case ComposeMode2.Replace:
                     tempFile.BaseName = customText + "_(" + counter++.ToString() + ")";
                     break;
+                case ComposeMode2.Insert:
+                    try
+                    {
+                        tempFile.BaseName = InsertAtSpecifiedIndex();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        tempFile.BaseName = InsertAtBaseNameEnd();
+                    }
+                    break;
                 case ComposeMode2.Unknown:
                 default:
                     throw new UnknownComposeModeException("Invalid mode.");
@@ -107,6 +117,10 @@ namespace Renamer.Composers
         }
 
         private void ResetDuplicateCounter() => duplicateCounter = 1;
+
+        private string InsertAtBaseNameEnd() => tempFile.BaseName.Insert(tempFile.BaseName.Count(), customText);
+
+        private string InsertAtSpecifiedIndex() => tempFile.BaseName.Insert(instructions.InsertPosition, customText);
 
         private string GetNewPath() => $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
     }

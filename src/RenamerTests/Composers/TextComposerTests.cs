@@ -54,7 +54,7 @@ namespace RenamerTests.Composers
 		}
 
 		[Fact]
-		public void WhenPrependingCustomText_ItAddCustomTextToBaseName()
+		public void WhenPrependingCustomText_ItShouldAddCustomTextToBaseName()
 		{
 			SetDefaultInstructions();
 			SetComposeMode(ComposeMode2.Prepend);
@@ -68,6 +68,48 @@ namespace RenamerTests.Composers
 			{
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_PicturesfileA.txt"},
 				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", $"{s}Users{s}JohnDoe{s}Desktop{s}Holiday_PicturesfileB.png"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public void WhenInsertingCustomTextIntoBaseName_ItShouldInsertCustomTextInToBaseName()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode2.Insert);
+			SetComposeAction(ComposeAction.CustomText);
+			Instructions.InsertPosition = 3;
+			SetCustomText("Holiday_Pictures");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
+			Instructions.Files.Add(new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", DateTime.Now));
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}filHoliday_PictureseA.txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.png", $"{s}Users{s}JohnDoe{s}Desktop{s}filHoliday_PictureseB.png"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public void WhenInsertingCustomTextOutOfRange_ItShouldAppendTheCustomTextAtTheEndOfBaseName()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode2.Insert);
+			SetComposeAction(ComposeAction.CustomText);
+			Instructions.InsertPosition = 300;
+			SetCustomText("Holiday_Pictures");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now) });
+			Instructions.Files.Add(new FileInformation($"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", DateTime.Now));
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileAHoliday_Pictures.txt"},
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileB.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileBHoliday_Pictures.txt"},
 			};
 
 			Assert.Equal(expected, result);

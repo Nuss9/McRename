@@ -24,8 +24,7 @@ namespace Renamer.Composers
                 GetTempFileInfo(file);
 
                 ComposeBaseName();
-
-                string newPath = $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
+                string newPath = GetNewFileName();
                 Composition.Add(tempFile.Path, newPath);
 
                 counter++;
@@ -83,5 +82,7 @@ namespace Renamer.Composers
         private string InsertAtBaseNameEnd() => tempFile.BaseName.Insert(tempFile.BaseName.Count(), counter.ToString());
 
         private string InsertAtSpecifiedIndex() => tempFile.BaseName.Insert(instructions.InsertPosition, counter.ToString());
+
+        private string GetNewFileName() => $"{tempFile.Directory}{Separator}{tempFile.BaseName}{tempFile.Extension}";
     }
 }

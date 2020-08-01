@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Renamer.Dto;
 using Renamer.Exceptions;
 using Renamer.Interfaces;
@@ -43,6 +44,16 @@ namespace Renamer.Composers
                 case ComposeMode2.Prepend:
                     tempFile.BaseName = counter.ToString() + tempFile.BaseName;
                     break;
+                case ComposeMode2.Insert:
+                    try
+                    {
+                        tempFile.BaseName = InsertAtSpecifiedIndex();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        tempFile.BaseName = InsertAtBaseNameEnd();
+                    }
+                    break;
                 case ComposeMode2.Unknown:
                 default:
                     throw new UnknownComposeModeException("Invalid mode.");
@@ -62,7 +73,12 @@ namespace Renamer.Composers
                 BaseName = fileName.TrimEnd(extension.ToCharArray()),
                 Directory = Path.GetDirectoryName(file.Path),
                 Extension = extension,
+                CreationDateTime = file.CreationDateTime.ToString()
             };
         }
+
+        private string InsertAtBaseNameEnd() => tempFile.BaseName.Insert(tempFile.BaseName.Count(), counter.ToString());
+
+        private string InsertAtSpecifiedIndex() => tempFile.BaseName.Insert(instructions.InsertPosition, counter.ToString());
     }
 }

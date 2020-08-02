@@ -35,7 +35,7 @@ namespace RenamerTests.Composers
 
 
         [Fact]
-		public void WhenReplacingText_ItShouldOnlyModifyFilesContainingTheText()
+		public void WhenReplacingTextWithEmptyString_ItShouldRemoveTheText()
 		{
 			SetDefaultInstructions();
 			SetComposeMode(ComposeMode2.Replace);

@@ -141,20 +141,11 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		private void SetDefaultInstructions()
-		{
-			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
-		}
+		private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 
-		private void SetComposeMode(ComposeMode2 mode)
-		{
-			Instructions.Mode2 = mode;
-		}
+		private void SetComposeMode(ComposeMode2 mode) => Instructions.Mode2 = mode;
 
-		private void SetComposeAction(ComposeAction action)
-		{
-			Instructions.Action = action;
-		}
+		private void SetComposeAction(ComposeAction action) => Instructions.Action = action;
 
 		private void SetFiles(List<(string name, DateTime created)> files)
 		{

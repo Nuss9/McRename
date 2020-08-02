@@ -159,20 +159,11 @@ namespace RenamerTests.Composers
 			Assert.Equal("Invalid mode.", ex.Message);
 		}
 
-		private void SetComposeAction(ComposeAction action)
-		{
-			Instructions.Action = action;
-		}
+		private void SetComposeAction(ComposeAction action) => Instructions.Action = action;
 
-        private void SetDefaultInstructions()
-		{
-			Instructions = new ComposeInstructions(ComposeMode2.Replace, ComposeAction.DateTime, new List<FileInformation>());
-		}
+		private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode2.Replace, ComposeAction.DateTime, new List<FileInformation>());
 
-		private void SetComposeMode(ComposeMode2 mode2)
-		{
-			Instructions.Mode2 = mode2;
-		}
+		private void SetComposeMode(ComposeMode2 mode2) => Instructions.Mode2 = mode2;
 
 		private void SetFiles(List<(string name, DateTime created)> files)
 		{

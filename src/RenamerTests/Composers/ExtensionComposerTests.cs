@@ -31,15 +31,11 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		private void SetDefaultInstructions()
-		{
-			Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
-		}
+		private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 
-		private void SetComposeMode(ComposeMode mode)
-		{
-			Instructions.Mode = mode;
-		}
+		private void SetComposeMode(ComposeMode mode) => Instructions.Mode = mode;
+
+		private void SetCustomText(string text) => Instructions.CustomText = text;
 
 		private void SetFiles(List<(string name, DateTime created)> files)
 		{
@@ -53,10 +49,5 @@ namespace RenamerTests.Composers
 				);
 			}
 		}
-
-		private void SetCustomText(string text)
-		{
-			Instructions.CustomText = text;
-		}
-	}
+    }
 }

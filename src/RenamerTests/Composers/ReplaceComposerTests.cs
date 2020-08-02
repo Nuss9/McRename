@@ -74,11 +74,15 @@ namespace RenamerTests.Composers
 
 		private void SetComposeAction(ComposeAction action) => Instructions.Action = action;
 
-        private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
+		private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());
 
-        private void SetComposeMode(ComposeMode2 mode) => Instructions.Mode2 = mode;
+		private void SetComposeMode(ComposeMode2 mode) => Instructions.Mode2 = mode;
 
-        private void SetFiles(List<(string name, DateTime created)> files)
+		private void SetTextToReplace(string text) => Instructions.TextToReplace = text;
+
+		private void SetCustomText(string text) => Instructions.CustomText = text;
+
+		private void SetFiles(List<(string name, DateTime created)> files)
 		{
 			foreach (var file in files)
 			{
@@ -90,9 +94,5 @@ namespace RenamerTests.Composers
 				);
 			}
 		}
-
-		private void SetTextToReplace(string text) => Instructions.TextToReplace = text;
-
-		private void SetCustomText(string text) => Instructions.CustomText = text;
     }
 }

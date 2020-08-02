@@ -53,6 +53,25 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
+		[Fact]
+		public void WhenReplacingTextWithCustomString_ItShouldReplaceTheText()
+		{
+			SetDefaultInstructions();
+			SetComposeMode(ComposeMode2.Replace);
+			SetComposeAction(ComposeAction.Replace);
+			SetCustomText("C");
+			SetTextToReplace("A");
+			SetFiles(new List<(string, DateTime)> { ("fileA", DateTime.Now), ("fileB", DateTime.Now) });
+
+			var result = subject.Compose(Instructions);
+			var expected = new Dictionary<string, string>
+			{
+				{ $"{s}Users{s}JohnDoe{s}Desktop{s}fileA.txt", $"{s}Users{s}JohnDoe{s}Desktop{s}fileC.txt"},
+			};
+
+			Assert.Equal(expected, result);
+		}
+
 		private void SetComposeAction(ComposeAction action) => Instructions.Action = action;
 
         private void SetDefaultInstructions() => Instructions = new ComposeInstructions(ComposeMode.Unknown, new List<FileInformation>());

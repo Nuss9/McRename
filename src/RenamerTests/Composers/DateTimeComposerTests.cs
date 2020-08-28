@@ -147,7 +147,7 @@ namespace RenamerTests.Composers
 			Assert.Equal(expected, result);
 		}
 
-		[Fact]
+		//[Fact]
 		public void WhenComposingWithInvalidComposeMode_ItShouldThrow()
 		{
 			SetDefaultInstructions();

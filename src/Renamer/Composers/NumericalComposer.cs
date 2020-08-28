@@ -37,9 +37,6 @@ namespace Renamer.Composers
         {
             switch (instructions.Mode2)
             {
-                case ComposeMode2.Replace:
-                    tempFile.BaseName = counter.ToString();
-                    break;
                 case ComposeMode2.Prepend:
                     tempFile.BaseName = counter.ToString() + tempFile.BaseName;
                     break;
@@ -57,8 +54,11 @@ namespace Renamer.Composers
                     tempFile.BaseName += counter.ToString();
                     break;
                 case ComposeMode2.Unknown:
+                case ComposeMode2.Replace:
                 default:
-                    throw new UnknownComposeModeException("Invalid mode.");
+                    tempFile.BaseName = counter.ToString();
+                    //throw new UnknownComposeModeException("Invalid mode.");
+                    break;
             }
         }
 

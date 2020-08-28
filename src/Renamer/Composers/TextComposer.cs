@@ -45,9 +45,6 @@ namespace Renamer.Composers
                 case ComposeMode2.Prepend:
                     tempFile.BaseName = customText + tempFile.BaseName;
                     break;
-                case ComposeMode2.Replace:
-                    tempFile.BaseName = customText + "_(" + counter++.ToString() + ")";
-                    break;
                 case ComposeMode2.Insert:
                     try
                     {
@@ -61,9 +58,12 @@ namespace Renamer.Composers
                 case ComposeMode2.Append:
                     tempFile.BaseName += customText;
                     break;
+                case ComposeMode2.Replace:
                 case ComposeMode2.Unknown:
                 default:
-                    throw new UnknownComposeModeException("Invalid mode.");
+                    tempFile.BaseName = customText + "_(" + counter++.ToString() + ")";
+                    //throw new UnknownComposeModeException("Invalid mode.");
+                    break;
             }
         }
 

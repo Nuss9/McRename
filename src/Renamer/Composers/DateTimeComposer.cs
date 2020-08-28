@@ -56,9 +56,6 @@ namespace Renamer.Composers
         {
             switch (instructions.Mode2)
             {
-                case ComposeMode2.Replace:
-                    tempFile.BaseName = tempFile.CreationDateTime;
-                    break;
                 case ComposeMode2.Prepend:
                     tempFile.BaseName = tempFile.CreationDateTime + tempFile.BaseName;
                     break;
@@ -76,9 +73,12 @@ namespace Renamer.Composers
                 case ComposeMode2.Append:
                     tempFile.BaseName += tempFile.CreationDateTime;
                     break;
+                case ComposeMode2.Replace:
                 case ComposeMode2.Unknown:
                 default:
-                    throw new UnknownComposeModeException("Invalid mode.");
+                    tempFile.BaseName = tempFile.CreationDateTime;
+                    //throw new UnknownComposeModeException("Invalid mode.");
+                    break;
             }
         }
 

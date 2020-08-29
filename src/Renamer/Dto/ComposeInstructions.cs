@@ -31,7 +31,15 @@ namespace Renamer.Dto
 			CustomText = customText;
 			Files = files;
         }
-	
+
+		public ComposeInstructions(ComposeMode mode, string customText, string textToReplace, List<FileInformation> files)
+		{
+			Mode = mode;
+			CustomText = customText;
+			TextToReplace = textToReplace;
+			Files = files;
+		}
+
 		public bool Equals(ComposeInstructions instructions)
 		{
 			if(Mode != instructions.Mode) {

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using Renamer.Dto;
-using Renamer.Exceptions;
 using Renamer.Interfaces;
 
 namespace Renamer.Composers
@@ -49,11 +48,11 @@ namespace Renamer.Composers
             switch (instructions.Mode2)
             {
                 case ComposeMode2.Replace:
-                    Composition.Add(tempFile.Path, tempFile.Path.Replace(textToReplace, customText));
-                    break;
                 case ComposeMode2.Unknown:
                 default:
-                    throw new UnknownComposeModeException("Invalid mode.");
+                    Composition.Add(tempFile.Path, tempFile.Path.Replace(textToReplace, customText));
+                    //throw new UnknownComposeModeException("Invalid mode.");
+                    break;
             }
         }
 

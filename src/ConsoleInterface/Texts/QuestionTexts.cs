@@ -33,10 +33,16 @@ namespace Terminal.Texts
                 mode = RequestMode();
             }
 
-            if (mode == ComposeMode.CustomText || mode == ComposeMode.Truncation || mode == ComposeMode.Extension)
+            if (mode == ComposeMode.CustomText || mode == ComposeMode.Extension)
             {
                 string customText = RequestCustomText(mode);
                 return new ComposeInstructions(mode, customText, filesInformation);
+            }
+            else if(mode == ComposeMode.Truncation)
+            {
+                string textToReplace = RequestTextToReplace();
+                string customText = RequestCustomText(mode);
+                return new ComposeInstructions(mode, customText, textToReplace, filesInformation);
             }
 
             return new ComposeInstructions(mode, filesInformation);
@@ -67,7 +73,7 @@ namespace Terminal.Texts
                 Console.WriteLine("2) Date: YYYMMDD");
                 Console.WriteLine("3) Date_Time: YYYYMMDD_HHMMSS");
                 Console.WriteLine("4) Custom text");
-                Console.WriteLine("5) Trucation");
+                Console.WriteLine("5) Replace substring");
                 Console.WriteLine("6) Extensions");
                 Console.WriteLine("------------");
                 Console.Write("  Mode: ");
@@ -112,7 +118,7 @@ namespace Terminal.Texts
             }
             else
             {
-                requestText = "Please specify the text to truncate from filenames: ";
+                requestText = "Please specify the text to insert: ";
             }
 
             while(true)
@@ -138,6 +144,26 @@ namespace Terminal.Texts
                 }
 
                 StandardTexts.SimulateWaitingWithMessage("Retry");
+            }
+        }
+
+        internal static string RequestTextToReplace()
+        {
+            while (true)
+            {
+                Console.Write("Please specify the substring to select from filenames: : ");
+                string text = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    Console.Write("Input invalid. ");
+                    StandardTexts.SimulateWaitingWithMessage("Retry");
+                    continue;
+                }
+                else
+                {
+                    return text;
+                }
             }
         }
 

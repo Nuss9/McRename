@@ -23,6 +23,8 @@ namespace RenamerTests.Composers
 			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
+			Instructions.Mode = ComposeMode.Date; // temp fix
+
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
@@ -47,6 +49,8 @@ namespace RenamerTests.Composers
 
 			});
 
+			Instructions.Mode = ComposeMode.Date; // temp fix
+
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
@@ -68,6 +72,8 @@ namespace RenamerTests.Composers
 			SetComposeAction(ComposeAction.DateTime);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
+			Instructions.Mode = ComposeMode.DateTime; // temp fix
+
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
@@ -84,6 +90,8 @@ namespace RenamerTests.Composers
 			SetComposeMode(ComposeMode2.Prepend);
 			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
+
+			Instructions.Mode = ComposeMode.Date; // temp fix
 
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
@@ -103,6 +111,8 @@ namespace RenamerTests.Composers
 			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
+			Instructions.Mode = ComposeMode.Date; // temp fix
+
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
@@ -121,6 +131,8 @@ namespace RenamerTests.Composers
 			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
 
+			Instructions.Mode = ComposeMode.Date; // temp fix
+
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>
 			{
@@ -137,6 +149,8 @@ namespace RenamerTests.Composers
 			SetComposeMode(ComposeMode2.Append);
 			SetComposeAction(ComposeAction.Date);
 			SetFiles(new List<(string, DateTime)> { ("fileA", new DateTime(2020, 12, 31, 12, 30, 01)) });
+
+			Instructions.Mode = ComposeMode.Date; // temp fix
 
 			var result = subject.Compose(Instructions);
 			var expected = new Dictionary<string, string>

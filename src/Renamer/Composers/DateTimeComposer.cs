@@ -18,6 +18,11 @@ namespace Renamer.Composers
         {
             instructions = input;
 
+            instructions.Files.Sort(delegate (FileInformation first, FileInformation second)
+            {
+                return first.CreationDateTime.CompareTo(second.CreationDateTime);
+            });
+
             foreach (var file in instructions.Files)
             {
                 GetTempFileInfo(file);

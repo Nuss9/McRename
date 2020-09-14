@@ -2,6 +2,7 @@
 using Renamer;
 using Renamer.Interfaces;
 using Terminal.Texts;
+using Terminal.Interfaces;
 
 namespace Terminal
 {
@@ -18,26 +19,29 @@ namespace Terminal
                 .AddSingleton<IBuildComposer, ComposerFactory>()
                 .AddSingleton<IValidateComposeInstructions, ComposeInstructionsValidator>()
                 .AddSingleton<IValidateCompositions, CompositionValidator>()
+                .AddSingleton<IProvideTexts, TextProvider>()
+                .AddSingleton<IRewrite, PathRewriter>()
                 .BuildServiceProvider();
 
+            var textProvider = serviceProvider.GetService<IProvideTexts>();
+            textProvider.WelcomeMessage();
 
-            StandardTexts.WelcomeMessage();
-
-            bool repeat = true;
             var orchestrator = serviceProvider.GetService<IOrchestrate>();
+            var rewriter = serviceProvider.GetService<IRewrite>();
+            bool repeat = true;
 
             while (repeat)
             {
-                var instructions = QuestionTexts.GetInstructions();
+                var instructions = textProvider.GetInstructions();
 
                 var composition = orchestrator.Orchestrate(instructions);
 
-                PathRewriter.Rewrite(composition);
+                rewriter.Rewrite(composition);
 
-                repeat = QuestionTexts.AskForBoolean("Continue renaming?");
+                repeat = textProvider.AskForBoolean("Continue renaming?");
             }
 
-            StandardTexts.Finished();
+            textProvider.Finished();
         }
     }
 }

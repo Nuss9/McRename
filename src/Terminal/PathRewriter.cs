@@ -5,9 +5,9 @@ using static Terminal.Texts.StandardTexts;
 
 namespace Terminal
 {
-    public static class PathRewriter
+    public class PathRewriter : IRewrite
     {
-        internal static void Rewrite(Dictionary<string, string> proposal)
+        public void Rewrite(Dictionary<string, string> proposal)
         {
             CheckForErrorMessage(proposal);
 

@@ -64,7 +64,7 @@ namespace Terminal.Texts
 			Console.WriteLine("      Finished.");
 			Console.WriteLine("");
 			SimulateWaitingWithMessage("Closing application");
-			Environment.Exit(0);
+			//Environment.Exit(0); <<- IS THIS THE CAUSE OF THE NOT FINISHING TESTS????
 		}
 
 		internal static void ProposeFilenameChanges(Dictionary<string, string> proposal)

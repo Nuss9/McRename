@@ -40,7 +40,7 @@ namespace Renamer.Dto
 			Files = files;
 		}
 
-		public bool Equals(ComposeInstructions instructions)
+        public bool Equals(ComposeInstructions instructions)
 		{
 			if(Mode != instructions.Mode) {
 				return false;

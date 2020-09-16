@@ -1,33 +1,25 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Renamer;
-using Renamer.Interfaces;
-using Terminal.Texts;
+﻿using Renamer.Interfaces;
 using Terminal.Interfaces;
 
 namespace Terminal
 {
     internal class Session
     {
-        public Session()
+        private readonly IProvideTexts textProvider;
+        private readonly IOrchestrate orchestrator;
+        private readonly IRewrite rewriter;
+
+        public Session(IProvideTexts textProvider, IOrchestrate orchestrator, IRewrite rewriter)
         {
+            this.textProvider = textProvider;
+            this.orchestrator = orchestrator;
+            this.rewriter = rewriter;
         }
 
         public void Execute()
         {
-            var serviceProvider = new ServiceCollection()
-                .AddSingleton<IOrchestrate, RenameOrchestrator>()
-                .AddSingleton<IBuildComposer, ComposerFactory>()
-                .AddSingleton<IValidateComposeInstructions, ComposeInstructionsValidator>()
-                .AddSingleton<IValidateCompositions, CompositionValidator>()
-                .AddSingleton<IProvideTexts, TextProvider>()
-                .AddSingleton<IRewrite, PathRewriter>()
-                .BuildServiceProvider();
-
-            var textProvider = serviceProvider.GetService<IProvideTexts>();
             textProvider.WelcomeMessage();
 
-            var orchestrator = serviceProvider.GetService<IOrchestrate>();
-            var rewriter = serviceProvider.GetService<IRewrite>();
             bool repeat = true;
 
             while (repeat)

@@ -34,12 +34,6 @@ namespace TerminalTests
             rewriter.Rewrite(Arg.Any<Dictionary<string, string>>());
             textProvider.AskForBoolean(Arg.Any<string>()).Returns(false);
 
-            using StringWriter sw = new StringWriter();
-            using StringReader sr = new StringReader(string.Format("pics{0}1{0}Y{0}n{0}", Environment.NewLine));
-
-            Console.SetOut(sw);
-            Console.SetIn(sr);
-
             subject.Execute();
 
             textProvider.Received(1).WelcomeMessage();

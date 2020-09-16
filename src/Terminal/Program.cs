@@ -7,7 +7,7 @@ namespace Terminal
 {
     internal static class Program
     {
-        private static void Main()
+        internal static void Main()
         {
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IOrchestrate, RenameOrchestrator>()

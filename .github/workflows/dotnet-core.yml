@@ -59,4 +59,5 @@ jobs:
       run: dotnet build src/Terminal/Terminal.csproj --configuration Release --no-restore
       
     - name: Test
+      if: success()
       run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal

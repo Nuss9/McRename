@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build, test & pack:
 
     runs-on: ubuntu-latest
 
@@ -21,16 +21,13 @@ jobs:
       run: dotnet restore src/McRename.sln
     - name: Build
       run: dotnet build src/McRename.sln --configuration Release --no-restore
-  
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Test
+
+    - name: Test Renamer
       run: dotnet test src/RenamerTests/RenamerTests.csproj --no-restore --verbosity normal
-      
-  pack:
-    runs-on: ubuntu-latest
-    steps:
+
+    - name: Test Terminal
+      run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal
+
     - name: Publish Renamer NuGet Package
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:

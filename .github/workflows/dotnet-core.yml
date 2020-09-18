@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-test-pack:
+  Renamer:
 
     runs-on: ubuntu-latest
 
@@ -23,12 +23,11 @@ jobs:
       run: dotnet build src/McRename.sln --configuration Release --no-restore
 
     - name: Test Renamer
+      if: success()
       run: dotnet test src/RenamerTests/RenamerTests.csproj --no-restore --verbosity normal
 
-    - name: Test Terminal
-      run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal
-
     - name: Publish Renamer NuGet Package
+      if: success()
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
         # Filepath of the project to be packaged, relative to root of repository
@@ -37,3 +36,10 @@ jobs:
         PACKAGE_NAME: Renamer
         # API key to authenticate with NuGet server
         NUGET_KEY: ${{secrets.NUGET}}
+
+  Terminal:
+    needs: Renamer
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal

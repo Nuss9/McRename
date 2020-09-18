@@ -13,20 +13,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+    
     - name: Install dependencies
       run: dotnet restore src/McRename.sln
+      
     - name: Build
       run: dotnet build src/McRename.sln --configuration Release --no-restore
 
-    - name: Test Renamer
+    - name: Test
       if: success()
       run: dotnet test src/RenamerTests/RenamerTests.csproj --no-restore --verbosity normal
 
-    - name: Publish Renamer NuGet Package
+    - name: Publish NuGet Package
       if: success()
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
@@ -42,4 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal
+      - name: Build
+        run: dotnet build src/Terminal/Terminal.csproj --configuration Release --no-restore
+      
+      - name: Test
+        run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal

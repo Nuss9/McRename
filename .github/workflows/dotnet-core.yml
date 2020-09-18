@@ -23,7 +23,7 @@ jobs:
       run: dotnet restore src/McRename.sln
       
     - name: Build
-      run: dotnet build src/McRename.sln --configuration Release --no-restore
+      run: dotnet build src/Renamer/Renamer.csproj --configuration Release --no-restore
 
     - name: Test
       if: success()
@@ -45,8 +45,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Build
-        run: dotnet build src/Terminal/Terminal.csproj --configuration Release --no-restore
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
       
-      - name: Test
-        run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal
+    - name: Build
+      run: dotnet build src/Terminal/Terminal.csproj --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test src/TerminalTests/TerminalTests.csproj --no-restore --verbosity normal

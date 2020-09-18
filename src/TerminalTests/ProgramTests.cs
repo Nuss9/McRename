@@ -16,8 +16,8 @@ namespace TerminalTests
         {
             testDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "TestFolder");
             testFileAPath = Path.Combine(testDirectoryPath, "fileA.png");
-            testFileAPath = Path.Combine(testDirectoryPath, "fileB.png");
-            testFileAPath = Path.Combine(testDirectoryPath, "fileC.png");
+            testFileBPath = Path.Combine(testDirectoryPath, "fileB.png");
+            testFileCPath = Path.Combine(testDirectoryPath, "fileC.png");
         }
 
         [Fact]

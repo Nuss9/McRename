@@ -41,7 +41,7 @@ namespace TerminalTests
             textProvider.Received(1).Finished();
         }
 
-        [Fact]
+        //[Fact]
         public void WhenExecutingADoubleSession_ItShouldCallInOrder()
         {
             textProvider.GetInstructions().Returns(new ComposeInstructions(Renamer.ComposeMode2.Replace, Renamer.ComposeAction.Numerical, new List<FileInformation>()));

@@ -18,23 +18,26 @@ namespace TerminalTests
             testFileAPath = Path.Combine(testDirectoryPath, "fileA.png");
             testFileBPath = Path.Combine(testDirectoryPath, "fileB.png");
             testFileCPath = Path.Combine(testDirectoryPath, "fileC.png");
+
+            Directory.CreateDirectory(testDirectoryPath);
+            var streamA = File.Create(testFileAPath);
+            streamA.Close();
+            var streamB = File.Create(testFileBPath);
+            streamB.Close();
+            var streamC = File.Create(testFileCPath);
+            streamC.Close();
         }
 
         [Fact]
-        public void WhenStartingProgramTests_ItShouldCreateTempTestFiles()
+        public void A_WhenStartingProgramTests_ItShouldCreateTempTestFiles()
         {
-            Directory.CreateDirectory(testDirectoryPath);
-            File.Create(testFileAPath);
-            File.Create(testFileBPath);
-            File.Create(testFileCPath);
-
             Assert.True(File.Exists(testFileAPath));
             Assert.True(File.Exists(testFileBPath));
             Assert.True(File.Exists(testFileCPath));
         }
 
         [Fact]
-        public void WhenExecuting_ItShouldAlwaysPrintSplashScreen()
+        public void B_WhenExecuting_ItShouldAlwaysPrintSplashScreen()
         {
             using StringWriter sw = new StringWriter();
             using StringReader sr = new StringReader(string.Format("TestFolder{0}1{0}Y{0}n{0}", Environment.NewLine));
@@ -48,11 +51,14 @@ namespace TerminalTests
         }
 
         [Fact]
-        public void WhenFinishingProgramTests_ItShouldDeleteTempTestFiles()
+        public void C_WhenFinishingProgramTests_ItShouldDeleteTempTestFiles()
         {
-            File.Delete(testFileAPath);
-            File.Delete(testFileBPath);
-            File.Delete(testFileCPath);
+            var paths = Directory.GetFiles(testDirectoryPath);
+            foreach(string path in paths)
+            {
+                File.Delete(path);
+            }
+
             Directory.Delete(testDirectoryPath);
 
             Assert.False(File.Exists(testFileAPath));

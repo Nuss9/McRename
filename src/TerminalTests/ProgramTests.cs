@@ -21,7 +21,7 @@ namespace TerminalTests
             File.Create(testFileCPath);
         }
 
-        //[Fact]
+        [Fact]
         public void ProgramShouldAlwaysPrintSplashScreen()
         {
             using StringWriter sw = new StringWriter();

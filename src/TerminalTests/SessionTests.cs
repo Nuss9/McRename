@@ -41,13 +41,13 @@ namespace TerminalTests
             textProvider.Received(1).Finished();
         }
 
-        //[Fact]
+        [Fact]
         public void WhenExecutingADoubleSession_ItShouldCallInOrder()
         {
             textProvider.GetInstructions().Returns(new ComposeInstructions(Renamer.ComposeMode2.Replace, Renamer.ComposeAction.Numerical, new List<FileInformation>()));
             orchestrator.Orchestrate(Arg.Any<ComposeInstructions>()).Returns(new Dictionary<string, string>());
             rewriter.Rewrite(Arg.Any<Dictionary<string, string>>());
-            textProvider.AskForBoolean(Arg.Any<string>()).Returns(false);
+            textProvider.AskForBoolean("Continue renaming?").Returns(x => true, x => false, x => { throw new System.Exception("Should not occur."); });
 
             subject.Execute();
 
@@ -55,6 +55,7 @@ namespace TerminalTests
             textProvider.Received(2).GetInstructions();
             orchestrator.Received(2).Orchestrate(Arg.Any<ComposeInstructions>());
             rewriter.Received(2).Rewrite(Arg.Any<Dictionary<string, string>>());
+            textProvider.Received(2).AskForBoolean(Arg.Any<string>());
             textProvider.Received(1).Finished();
         }
     }

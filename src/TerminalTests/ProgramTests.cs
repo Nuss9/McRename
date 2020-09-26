@@ -22,10 +22,24 @@ namespace TerminalTests
         }
 
         [Fact]
-        public void ProgramShouldAlwaysPrintSplashScreen()
+        public void SingleSession_ShouldPrintWelcomeOnce()
         {
             using StringWriter sw = new StringWriter();
             using StringReader sr = new StringReader(string.Format("TestFolder{0}1{0}Y{0}n{0}", Environment.NewLine));
+
+            Console.SetOut(sw);
+            Console.SetIn(sr);
+
+            Program.Main();
+
+            Assert.Contains("- - Batch rename files from a Desktop directory - -", sw.ToString());
+        }
+
+        [Fact]
+        public void DoubleSession_ShouldPrintWelcomeOnce()
+        {
+            using StringWriter sw = new StringWriter();
+            using StringReader sr = new StringReader(string.Format("TestFolder{0}1{0}Y{0}Y{0}TestFolder{0}2{0}Y{0}n{0}", Environment.NewLine));
 
             Console.SetOut(sw);
             Console.SetIn(sr);

@@ -19,17 +19,22 @@ namespace TerminalTests
         }
 
         [Fact]
-        public void WhenExecutingSplashSreen_ItShouldOnlyUseConsoleWriter()
+        public void ExecuteSplashSreen_ShouldOnlyCall()
         {
             int counter = 0;
 
             consoleWriter.When(writer => writer.PrintSplashScreen())
                 .Do(writer => counter++); ;
 
-
             subject.ExecuteSplashScreen();
 
             Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void CollectComposeIntstructions_ShouldCallInOrder()
+        {
+
         }
     }
 }

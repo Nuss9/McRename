@@ -2,6 +2,6 @@
 {
     public interface IHandleIO
     {
-
+        public void ExecuteSplashScreen();
     }
 }

@@ -1,8 +1,9 @@
-﻿using Terminal.Interfaces;
+﻿using System;
+using Terminal.Interfaces;
 
 namespace Terminal
 {
-    public class IOHandler
+    public class IOHandler : IHandleIO
     {
         private readonly IWriteToConsole consoleWriter;
         private readonly IReadFromConsole consoleReader;
@@ -11,6 +12,11 @@ namespace Terminal
         {
             this.consoleWriter = consoleWriter;
             this.consoleReader = consoleReader;
+        }
+
+        public void ExecuteSplashScreen()
+        {
+            consoleWriter.PrintSplashScreen();
         }
     }
 }

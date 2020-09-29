@@ -2,6 +2,6 @@
 {
     public interface IWriteToConsole
     {
-
+        public void PrintSplashScreen();
     }
 }
